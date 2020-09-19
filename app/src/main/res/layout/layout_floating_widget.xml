@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:id="@+id/root_container"
+    android:layout_height="wrap_content">
+
+    <!--Root container-->
+<!--    <RelativeLayout-->
+
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="0dp">-->
+        <!--tools:ignore="UselessParent">-->
+
+        <!--View while view is collapsed-->
+        <RelativeLayout
+            android:id="@+id/recordView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/collapse_view"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:visibility="visible"
+                    android:background="@drawable/shadow"
+                    android:src="@drawable/recording_256x256"
+                    tools:ignore="ContentDescription" />
+
+<!--            android:layout_marginLeft="55dp"-->
+
+<!--            android:layout_marginLeft="75dp"-->
+<!--            android:layout_marginTop="61dp"-->
+
+                <ImageView
+                    android:id="@+id/collapse_view_stop"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/shadow"
+                    android:src="@drawable/ic_stop"
+                    android:visibility="gone"
+                    tools:ignore="ContentDescription" />
+
+<!--            android:layout_marginLeft="55dp"-->
+
+            <ImageView
+
+                android:id="@+id/close_btn"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/ic_close"
+                tools:ignore="ContentDescription" />
+<!--            android:layout_marginLeft="80dp"-->
+<!--            android:layout_marginLeft="100dp"-->
+<!--            android:layout_marginTop="65dp"-->
+        </RelativeLayout>
+<!--    </RelativeLayout>-->
+</FrameLayout>

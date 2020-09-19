@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="white">#ffffffff</color>
+    <color name="splashBlue">#0380ff</color>
+
+    <color name="color_material_metaphor">#039BE5</color>
+    <color name="color_material_bold">#EC407A</color>
+    <color name="color_material_motion">#6A1B9A</color>
+    <color name="color_material_shadow">#E0E0E0</color>
+
+    <color name="color_dark_material_metaphor">#0277BD</color>
+    <color name="color_dark_material_bold">#D81B60</color>
+    <color name="color_dark_material_motion">#4A148C</color>
+    <color name="color_dark_material_shadow">#BDBDBD</color>
+
+    <color name="colorTranspernt">#00FFFFFF</color>
+    <color name="colorSmall">#1759F1</color>
+    <color name="transBalck">#50000000</color>
+    <color name="videoDurationBG">#80000000</color>
+    <color name="videoListStrip">#50666666</color>
+    <color name="balck">#000000</color>
+
+    <color name="transpermt">#00000000</color>
+
+    <color name="colorSemiTranspernt">#A6FFFFFF</color>
+
+</resources>

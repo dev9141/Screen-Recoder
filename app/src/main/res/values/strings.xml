@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">ScreenRecorder</string>
+    <string name="title_1">Title 1</string>
+    <string name="description_1">description 1</string>
+    <string name="title_menu_reset_first_start">Reset "First start" flag</string>
+    <string name="description_material_metaphor">There is now an abundance of readable dummy texts. These are usually used when a text is required purely to fill a space. These alternatives to the classic Lorem Ipsum texts are often amusing and tell short, funny or nonsensical stories.</string>
+
+    <string-array name="Resolution">
+        <item>1080P</item>
+        <item>720P</item>
+        <item>480P</item>
+        <item>240P</item>
+        <item>144P</item>
+    </string-array>
+
+    <string-array name="Quality">
+        <item>HD</item>
+        <item>Medium</item>
+        <item>Low</item>
+    </string-array>
+
+    <string-array name="FPS">
+        <item>60FPS</item>
+        <item>40FPS</item>
+        <item>30FPS</item>
+        <item>25FPS</item>
+        <item>15FPS</item>
+        <item>5FPS</item>
+    </string-array>
+
+    <string-array name="Orientation">
+        <item>Landscape</item>
+        <item>Portrait</item>
+    </string-array>
+
+    <string-array name="Camera">
+        <item>Front</item>
+        <item>Rear</item>
+    </string-array>
+
+    <string-array name="CameraPreview">
+        <item>Large</item>
+        <item>Medium</item>
+        <item>Small</item>
+    </string-array>
+</resources>
