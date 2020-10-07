@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">ScreenRecorder</string>
+    <string name="app_name">Screen Recorder</string>
     <string name="title_1">Title 1</string>
     <string name="description_1">description 1</string>
     <string name="title_menu_reset_first_start">Reset "First start" flag</string>
     <string name="description_material_metaphor">There is now an abundance of readable dummy texts. These are usually used when a text is required purely to fill a space. These alternatives to the classic Lorem Ipsum texts are often amusing and tell short, funny or nonsensical stories.</string>
+    <string name="settings">Settings</string>
 
     <string-array name="Resolution">
         <item>1080P</item>

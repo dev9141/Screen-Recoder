@@ -67,7 +67,8 @@ public class VideoListAdaper extends RecyclerView.Adapter<VideoListAdaper.ViewHo
         holder.ivVideoThum.setImageURI(Uri.parse(lstVideo.get(position).vTempPath));
 
         holder.ivVideoThum.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        holder.ivVideoThum.setBackgroundColor(Color.rgb(200, 200, 200));
+        //holder.ivVideoThum.setBackgroundColor(Color.rgb(200, 200, 200));
+        holder.ivVideoThum.setBackgroundColor(Color.parseColor("#f0ecec"));
 
         holder.tvVideoDuration.setText(lstVideo.get(position).vDuration);
         holder.tvVideoName.setText(lstVideo.get(position).vName);

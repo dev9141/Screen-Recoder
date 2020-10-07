@@ -23,7 +23,6 @@
                 android:layout_alignParentLeft="true"
                 android:scaleType="centerInside"
                 android:layout_margin="10dp"
-                android:background="@color/videoListStrip"
                 android:src="@drawable/video_thum" />
 
             <TextView
@@ -65,24 +64,25 @@
             android:orientation="vertical">
         </RelativeLayout>-->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:padding="5dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvVideoName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="SR_yyyy_MM_dd_hh_mm_ss"
+                    android:text="SR_yyyy_MM_dd_hh_mm_ss"
                     android:textColor="@color/balck"
-                    android:textSize="13sp" />
+                    android:textSize="12sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -103,44 +103,53 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:hint="1080 x 480"
+                        android:layout_marginEnd="10dp"
                         android:textColor="@color/balck"
                         android:textSize="10sp" />
                 </RelativeLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+                <ImageButton
+                    android:id="@+id/ib_Share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:tint="@color/coloryellow"
+                    android:src="@drawable/ic_share" />
+
+                <ImageButton
+                    android:id="@+id/ib_Edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="5dp"
+                    android:background="#00000000"
+                    android:tint="@color/coloryellow"
+                    android:src="@drawable/ic_edit" />
+
+                <ImageButton
+                    android:id="@+id/ib_Delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="5dp"
+                    android:tint="@color/coloryellow"
+                    android:background="#00000000"
+                    android:src="@drawable/ic_delete" />
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="3dp">
 
-            <ImageButton
-                android:id="@+id/ib_Share"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="#00000000"
-                android:layout_weight="1"
-                android:src="@drawable/ic_share" />
 
-            <ImageButton
-                android:id="@+id/ib_Edit"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp"
-                android:background="#00000000"
-                android:layout_weight="1"
-                android:src="@drawable/ic_edit" />
-
-            <ImageButton
-                android:id="@+id/ib_Delete"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:layout_marginTop="5dp"
-                android:background="#00000000"
-                android:src="@drawable/ic_delete" />
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

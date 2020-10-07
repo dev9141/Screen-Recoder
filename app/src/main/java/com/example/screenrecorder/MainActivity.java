@@ -23,7 +23,9 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewConfiguration;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     public int width, height, heightU, heightB = 0;
 
     RecyclerView rvVideoList;
+    ImageView ivsettings;
     VideoListAdaper adaper;
     ArrayList<VideoModel> lstVideo;
 
@@ -92,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 //        int heightU= ((20*height)/100);
 //        int heightB= ((80*height)/100);
         //508 - 2032
-        findViewById(R.id.rootLayout).setBackgroundColor(getResources().getColor(R.color.transpermt));
+//        findViewById(R.id.rootLayout).setBackgroundColor(getResources().getColor(R.color.transpermt));
 
         DisplayMetrics realDisplayMetrics = new DisplayMetrics();
         display.getRealMetrics(realDisplayMetrics);
@@ -418,6 +421,7 @@ public class MainActivity extends AppCompatActivity {
         rvVideoList.setLayoutManager(new LinearLayoutManager(this));
     }
 
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -427,22 +431,27 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*if (item.getItemId() == R.id.menu_item_reset_first_start) {
+        */
+/*if (item.getItemId() == R.id.menu_item_reset_first_start) {
             PreferenceManager.getDefaultSharedPreferences(this).edit()
                     .putBoolean(PREF_KEY_FIRST_START, true)
                     .apply();
             return true;
-        }*/
+        }*//*
+
 
         if (item.getItemId() == R.id.menu_item_setting) {
-            startActivity(new Intent(this, SettingActivity.class));
+
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+*/
 
     private void initializeView() {
 
+
+        ivsettings=findViewById(R.id.ivsetting);
         MainActivity.this.startService(new Intent(MainActivity.this, FloatingViewService.class));
         //finish();
 
@@ -464,6 +473,13 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });*/
+    }
+
+    public void SettingClick(View view) {
+
+        startActivity(new Intent(this, SettingActivity.class));
+
+
     }
 
     class openBubble extends AsyncTask{
