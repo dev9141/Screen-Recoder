@@ -63,7 +63,7 @@
                 android:right="1.5dp"
                 android:top="0dp" />
 
-            <solid android:color="#50888888" />
+            <solid android:color="@color/coloryellow" />
 
             <corners android:radius="3dp" />
         </shape>
@@ -82,7 +82,7 @@
 <!--            android:right="1dp"-->
 <!--            android:top="0dp" />-->
 
-        <solid android:color="#00BDBDBD" />
+        <solid android:color="@color/coloryellow" />
 
         <corners android:radius="3dp" />
     </shape>
@@ -91,7 +91,7 @@
     <!-- Background Color (white) -->
     <item>
         <shape android:shape="oval">
-            <solid android:color="@color/white" />
+            <solid android:color="@color/coloryellow" />
 <!--            <gradient-->
 <!--                android:startColor="#ffcc1111"-->
 <!--                android:centerColor="#ffdd3322"-->

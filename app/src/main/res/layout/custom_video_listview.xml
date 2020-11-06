@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -82,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:text="SR_yyyy_MM_dd_hh_mm_ss"
                     android:textColor="@color/balck"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -123,7 +124,7 @@
                     android:layout_weight="1"
                     android:background="#00000000"
                     android:tint="@color/coloryellow"
-                    android:src="@drawable/ic_share" />
+                    android:src="@drawable/ic_baseline_share_24" />
 
                 <ImageButton
                     android:id="@+id/ib_Edit"
@@ -133,7 +134,7 @@
                     android:layout_marginTop="5dp"
                     android:background="#00000000"
                     android:tint="@color/coloryellow"
-                    android:src="@drawable/ic_edit" />
+                    android:src="@drawable/ic_baseline_edit_24" />
 
                 <ImageButton
                     android:id="@+id/ib_Delete"
@@ -143,7 +144,7 @@
                     android:layout_marginTop="5dp"
                     android:tint="@color/coloryellow"
                     android:background="#00000000"
-                    android:src="@drawable/ic_delete" />
+                    android:src="@drawable/ic_baseline_delete_24" />
             </LinearLayout>
 
         </LinearLayout>

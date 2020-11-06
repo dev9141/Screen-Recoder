@@ -1,520 +1,702 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".SettingActivity">
 
-    <LinearLayout
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#ffffff"
+        android:fitsSystemWindows="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/settings"
+                android:textColor="@color/coloryellow"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ivbackbutton"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24" />
+
+            <ImageView
+                android:id="@+id/llAppIntro"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_baseline_info_24" />
+
+
+        </RelativeLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         android:orientation="vertical"
-        android:background="@color/balck"
-        tools:context=".SettingActivity">
+        app:layout_constraintStart_toStartOf="parent"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@+id/appbar">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="1dp"
-            android:background="@drawable/rounded_ractangle">
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:orientation="vertical">
 
-            <TextView
+
+            <RelativeLayout
+                android:id="@+id/relative"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Video setting"
-                android:textColor="@android:color/holo_orange_dark"
-                android:background="#20ff8800"
-                android:textSize="15sp"
-                android:layout_marginTop="15dp"
-                android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/llResolution"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="1dp"
-                android:background="@drawable/rounded_ractangle"
-                android:padding="15dp">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="center_vertical"
-                    android:alpha="0.7"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_resolution"/>
 
                 <TextView
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
-                    android:text="Resolution"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_title_font_size" />
-
-                <TextView
-                    android:id="@+id/tvResolution"
+                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="720 p"
-                    android:layout_weight="1"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_value_font_size" />
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:hint="RECORDING PARAMETERS "
+                    android:padding="2dp"
+                    android:textSize="13sp" />
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#888888"/>
-
-            <LinearLayout
-                android:id="@+id/llQuality"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_ractangle"
-                android:padding="15dp">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="center_vertical"
-                    android:alpha="0.7"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_quality" />
-
-                <TextView
-                    android:layout_width="210dp"
+                <RelativeLayout
+                    android:id="@+id/llResolution"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
-                    android:text="Quality"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_title_font_size" />
+                    android:layout_below="@id/textView"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvQuality"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:text="Auto"
-                    android:textStyle="bold"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_value_font_size" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#888888"/>
-
-            <LinearLayout
-                android:id="@+id/llFPS"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_ractangle"
-                android:padding="15dp">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="center_vertical"
-                    android:alpha="0.7"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_fps" />
-
-                <TextView
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
-                    android:text="FPS"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_title_font_size" />
-
-                <TextView
-                    android:id="@+id/tvFPS"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:text="Auto"
-                    android:textStyle="bold"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_value_font_size" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#888888"/>
-
-            <LinearLayout
-                android:id="@+id/llOrientation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_ractangle"
-                android:padding="15dp">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="center_vertical"
-                    android:alpha="0.7"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oriantation" />
-
-                <TextView
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
-                    android:text="Orientation"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_title_font_size" />
-
-                <TextView
-                    android:id="@+id/tvOrientation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:text="Auto"
-                    android:textStyle="bold"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_value_font_size" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="1dp"
-            android:background="@drawable/rounded_ractangle">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Audio and Other setting"
-                android:textColor="@android:color/holo_orange_dark"
-                android:background="#20ff8800"
-                android:textSize="15sp"
-                android:layout_marginTop="15dp"
-                android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"/>
-
-            <LinearLayout
-                android:id="@+id/llRecordAudio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_ractangle"
-                android:padding="15dp">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="center_vertical"
-                    android:alpha="0.7"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_audio" />
-
-                <TextView
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
-                    android:text="Record Audio"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_title_font_size" />
-
-                <Switch
-                    android:id="@+id/swRecordAudio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:padding="0dp"
-                    android:text=""/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#888888"/>
-
-            <LinearLayout
-                android:id="@+id/llFileLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_ractangle"
-                android:padding="15dp">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="center_vertical"
-                    android:alpha="0.7"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_folder" />
-
-                <LinearLayout
-                    android:layout_width="250dp"
-                    android:layout_height="52dp"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="15dp">
 
                     <TextView
-                        android:layout_width="230dp"
-                        android:layout_height="wrap_content"
-                        android:text="File Location"
-                        android:textColor="@color/balck"
-                        android:textSize="@dimen/setting_title_font_size" />
-
-                    <TextView
+                        android:id="@+id/tvresolution"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="/storage/emulated/0/ScreenRecorder_ss/Recording"
-                        android:textColor="@color/balck"
-                        android:textSize="@dimen/setting_sub_font_size" />
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:padding="3dp"
+                        android:text="Resolution"
+                        android:textColor="@color/coloryellow"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-            </LinearLayout>
-            <LinearLayout
+                    <TextView
+                        android:id="@+id/tv"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvresolution"
+                        android:layout_marginStart="25dp"
+                        android:hint="@string/videos_with_higher_resolution_look_sharper"
+                        android:textAlignment="inherit"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/tvResolution"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="5dp"
+                            android:hint="1080P"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10dp"
+                            android:tintMode="add"
+                            app:srcCompat="@drawable/rightarrow" />
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+
+
+
+
+                <RelativeLayout
+                    android:id="@+id/llQuality"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/llResolution"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tvvideo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:padding="3dp"
+                        android:text="Video Quality"
+                        android:textColor="@color/coloryellow"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvvideodesc"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvvideo"
+                        android:layout_marginStart="25dp"
+                        android:hint="@string/videoquality"
+                        android:textAlignment="inherit"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/tvQuality"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="5dp"
+                            android:hint="@string/hd"
+                            android:textSize="13sp" />
+
+
+                        <ImageView
+                            android:id="@+id/ivdone"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10dp"
+                            android:tintMode="add"
+                            app:srcCompat="@drawable/rightarrow" />
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/llFPS"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/llQuality"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tvfps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:padding="3dp"
+                        android:text="@string/fps"
+                        android:textColor="@color/coloryellow"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvfp"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvfps"
+                        android:layout_marginStart="25dp"
+                        android:hint="fps for resolution"
+                        android:textAlignment="inherit"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/tvFPS"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="5dp"
+                            android:hint="@string/_60fps"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:id="@+id/ivfps"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10dp"
+                            android:tintMode="add"
+                            app:srcCompat="@drawable/rightarrow" />
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/llOrientation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/llFPS"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tvorientation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:padding="3dp"
+                        android:text="Orientation"
+                        android:textColor="@color/coloryellow"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvori"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvorientation"
+                        android:layout_marginStart="25dp"
+                        android:hint="@string/orientation"
+                        android:textAlignment="inherit"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/tvOrientation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="5dp"
+                            android:hint="Portrait"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:id="@+id/ivorientation"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10dp"
+                            android:tintMode="add"
+                            app:srcCompat="@drawable/rightarrow" />
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/relativeforaudioandsettings"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#888888"/>
-
-            <LinearLayout
-                android:id="@+id/llCountDown"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_ractangle"
-                android:padding="15dp">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="center_vertical"
-                    android:alpha="0.7"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_countdown" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
-                    android:text="Countdown Before Start"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_title_font_size" />
-
-                <Switch
-                    android:id="@+id/swCountDown"
+                    android:id="@+id/tv3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:padding="0dp"
-                    android:text=""/>
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/audio_camera_setting"
+                    android:padding="1dp"
+                    android:textSize="14sp" />
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#888888"/>
-
-            <LinearLayout
-                android:id="@+id/llCamera"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_ractangle"
-                android:padding="15dp">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="center_vertical"
-                    android:alpha="0.7"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_camera_black" />
-
-                <TextView
-                    android:layout_width="210dp"
+                <RelativeLayout
+                    android:id="@+id/llRecordAudio"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
-                    android:text="Camera"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_title_font_size" />
+                    android:layout_below="@id/tv3"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvCamera"
-                    android:layout_width="wrap_content"
+
+                    <TextView
+                        android:id="@+id/tvsound"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:padding="3dp"
+                        android:text="@string/recordaudio"
+                        android:textColor="@color/coloryellow"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvsou"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvsound"
+                        android:layout_marginStart="25dp"
+                        android:hint="@string/soundrecord"
+                        android:textAlignment="inherit"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <Switch
+                            android:id="@+id/swRecordAudio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            tools:ignore="Suspicious0dp,UseSwitchCompatOrMaterialXml" />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/llFileLocation"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:text="Front"
-                    android:textStyle="bold"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_value_font_size" />
+                    android:layout_below="@id/llRecordAudio"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical">
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#888888"/>
+                    <TextView
+                        android:id="@+id/tvfilelocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:padding="3dp"
+                        android:text="@string/filelocation"
+                        android:textColor="@color/coloryellow"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/llCameraPreview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_ractangle"
-                android:padding="15dp">
+                    <TextView
+                        android:id="@+id/tvfile"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvfilelocation"
+                        android:layout_marginStart="25dp"
+                        android:hint="@string/storage_emulated_0_screenrecorder_ss_recording"
+                        android:textAlignment="textStart"
+                        android:textSize="13sp" />
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="center_vertical"
-                    android:alpha="0.7"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_camera_black" />
 
-                <TextView
-                    android:layout_width="210dp"
+                </RelativeLayout>
+
+
+
+
+
+
+
+                <RelativeLayout
+                    android:id="@+id/llCountDown"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
-                    android:text="Camera Preview Size"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_title_font_size" />
+                    android:layout_below="@id/llFileLocation"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvCameraPreview"
-                    android:layout_width="wrap_content"
+
+                    <TextView
+                        android:id="@+id/tvcount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:padding="3dp"
+                        android:text="@string/counting"
+                        android:textColor="@color/coloryellow"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvcount1"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvcount"
+                        android:layout_marginStart="25dp"
+                        android:hint="@string/count_down_before_start_the_screen_recording"
+                        android:textAlignment="inherit"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <Switch
+                            android:id="@+id/swCountDown"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            tools:ignore="Suspicious0dp,UseSwitchCompatOrMaterialXml" />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/llCamera"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:text="Medium"
-                    android:textStyle="bold"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_value_font_size" />
+                    android:layout_below="@id/llCountDown"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical">
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#888888"/>
+                    <TextView
+                        android:id="@+id/tvcamera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:padding="3dp"
+                        android:text="Camera"
+                        android:textColor="@color/coloryellow"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/llShowBubble"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_ractangle"
-                android:padding="15dp">
+                    <TextView
+                        android:id="@+id/tvcamerafaces"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvcamera"
+                        android:layout_marginStart="25dp"
+                        android:hint="@string/camerafaces"
+                        android:textAlignment="inherit"
+                        android:textSize="13sp" />
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="center_vertical"
-                    android:alpha="0.7"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_v_cam_black" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
 
-                <TextView
-                    android:layout_width="210dp"
+                        <TextView
+                            android:id="@+id/tvCamera"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="5dp"
+                            android:hint="Front"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:id="@+id/ivcamerafacing"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10dp"
+                            android:tintMode="add"
+                            app:srcCompat="@drawable/rightarrow" />
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+
+
+                <RelativeLayout
+                    android:id="@+id/llCameraPreview"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
-                    android:text="Show bubble while recordeing"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_title_font_size" />
+                    android:layout_below="@id/llCamera"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical">
 
-                <Switch
-                    android:id="@+id/swShowBubble"
-                    android:layout_width="wrap_content"
+
+                    <TextView
+                        android:id="@+id/tvcamerapreview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:padding="3dp"
+                        android:text="@string/camera_preview"
+                        android:textColor="@color/coloryellow"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvcamerapre"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvcamerapreview"
+                        android:layout_marginStart="25dp"
+                        android:hint="@string/preview_to_show_video"
+                        android:textAlignment="inherit"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/tvCameraPreview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="5dp"
+                            android:hint="Small"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:id="@+id/ivcamerapreview"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10dp"
+                            android:tintMode="add"
+                            app:srcCompat="@drawable/rightarrow" />
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/llShowBubble"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:padding="0dp"
-                    android:text=""/>
+                    android:layout_below="@id/llCameraPreview"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical">
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#888888"/>
 
-            <LinearLayout
-                android:id="@+id/llAppIntro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_ractangle"
-                android:padding="15dp">
+                    <TextView
+                        android:id="@+id/tvbubble"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:padding="3dp"
+                        android:text="@string/bubble"
+                        android:textColor="@color/coloryellow"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="center_vertical"
-                    android:alpha="0.7"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_intro" />
+                    <TextView
+                        android:id="@+id/tvbubble1"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvbubble"
+                        android:layout_marginStart="25dp"
+                        android:hint="@string/show_bubble_while_recording"
+                        android:textAlignment="inherit"
+                        android:textSize="13sp" />
 
-                <TextView
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
-                    android:text="Show app introduction"
-                    android:textColor="@color/balck"
-                    android:textSize="@dimen/setting_title_font_size" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
 
-                <!--<Switch
-                    android:id="@+id/swAppIntro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:padding="0dp"
-                    android:text=""/>-->
+                        <Switch
+                            android:id="@+id/swShowBubble"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            tools:ignore="Suspicious0dp,UseSwitchCompatOrMaterialXml" />
+                    </LinearLayout>
 
-            </LinearLayout>
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
 
         </LinearLayout>
 
 
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

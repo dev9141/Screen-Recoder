@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <stroke android:width="2dp" android:color="@color/white"/>
-
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/listview_background_shape">
+    <stroke android:width="2dp" android:color="@color/white" />
     <padding android:left="2dp"
         android:top="1dp"
         android:right="1dp"
@@ -10,7 +8,4 @@
     <corners android:topLeftRadius="16dp"
         android:topRightRadius="16dp"/>
     <solid android:color="#ffffffff" />
-
-
-
 </shape>

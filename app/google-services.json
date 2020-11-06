@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "214711105093",
+    "firebase_url": "https://screen-recorder-5748d.firebaseio.com",
+    "project_id": "screen-recorder-5748d",
+    "storage_bucket": "screen-recorder-5748d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214711105093:android:e43462665268eb3a1fd52c",
+        "android_client_info": {
+          "package_name": "com.manddprojectconsultant.screenrecorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214711105093-93u5fginodl6m6bjps0nagg8co3cfe7c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.manddprojectconsultant.screenrecorder",
+            "certificate_hash": "a6f37583abf4dd4cda91092ba1dc906b6ea9b1cb"
+          }
+        },
+        {
+          "client_id": "214711105093-25como04t2id7u85k9gnh3sreb8q3a2m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD159q5em0ykIF2408gDxxGqmarsOYtcSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214711105093-25como04t2id7u85k9gnh3sreb8q3a2m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

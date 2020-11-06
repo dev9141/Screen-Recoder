@@ -5,6 +5,37 @@
     <string name="title_menu_reset_first_start">Reset "First start" flag</string>
     <string name="description_material_metaphor">There is now an abundance of readable dummy texts. These are usually used when a text is required purely to fill a space. These alternatives to the classic Lorem Ipsum texts are often amusing and tell short, funny or nonsensical stories.</string>
     <string name="settings">Settings</string>
+    <string name="recording_parameters">RECORDING PARAMETERS</string>
+    <string name="resolution">Resolution</string>
+    <string name="videos_with_higher_resolution_look_sharper">Videos with higher resolution</string>
+    <string name="_1280_720">1280*720</string>
+    <string name="hd">HD</string>
+    <string name="orientation">Orientation</string>
+    <string name="orientation_of_recorded_videos">Orientation of recorded videos</string>
+    <string name="fps">FPS</string>
+    <string name="_60fps">60FPS</string>
+    <string name="audio_camera_setting"><![CDATA[AUDIO & CAMERA SETTING]]></string>
+
+
+    <string name="videoswithhigher">Videos with higher resolution look sharper</string>
+    <string name="videoquality">Higher quality means bigger file size</string>
+    <string name="recordaudio">Record Audio</string>
+    <string name="soundrecord">Sound record or not</string>
+    <string name="filelocation">File Location</string>
+
+    <string name="camerafaces">Camera view</string>
+
+    <string name="appintro">App Introduction</string>
+    <string name="othersetting">OTHER SETTING</string>
+    <string name="storage_emulated_0_screenrecorder_ss_recording">/storage/emulated/0/ScreenRecorder_ss/Recording</string>
+    <string name="count_down_before_start_the_screen_recording">Count Down Before Start the Recording</string>
+    <string name="counting">Counting</string>
+    <string name="preview_to_show_video">Preview the video size</string>
+    <string name="medium">Medium</string>
+    <string name="camera_preview">Camera Preview</string>
+    <string name="show_bubble_while_recording">Show Bubble While Recording</string>
+    <string name="bubble">Bubble</string>
+
 
     <string-array name="Resolution">
         <item>1080P</item>
@@ -44,4 +75,14 @@
         <item>Medium</item>
         <item>Small</item>
     </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="_40fps">40FPS</string>
+    <string name="_30fps">30FPS</string>
+    <string name="_25fps">25FPS</string>
+    <string name="_15fps">15FPS</string>
+    <string name="_5fps">5FPS</string>
+    <string name="landscape">Landscape</string>
+    <string name="portraxit">Portrait</string>
+    <string name="cancel">Cancel</string>
 </resources>
