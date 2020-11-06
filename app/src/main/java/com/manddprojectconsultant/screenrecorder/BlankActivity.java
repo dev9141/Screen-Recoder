@@ -883,4 +883,6 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         }
         return dir.delete();
     }
+
+
 }

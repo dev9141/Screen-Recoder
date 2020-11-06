@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
         File temp_file = new File(new File(Environment.getExternalStorageDirectory(),"ScreenRecorder_ss"), "temp");
         File[] files = file.listFiles();
         File[] temp_files = temp_file.listFiles();
-        if(files.length>0){
+        if(files!=null &&  files.length>0){
 
             for(int i = 0; i <files.length; i++){
                 File f = files[i];
@@ -216,7 +216,8 @@ public class MainActivity extends AppCompatActivity {
                 File tf = new File(temp_file, FName);
                 VideoModel videoModel = new VideoModel();
                 //if (f.getName().startsWith("EDMT") && f.getName().endsWith(".mp4") && f.length()>0){
-                if (f.getName().startsWith("Rec_") && f.getName().endsWith(".mp4") && f.length()>0){
+                if (f.getName().endsWith(".mp4") && f.length()>0){
+                    //f.getName().startsWith("Rec_") &&
                     videoModel.vPath = f.getPath();
                     long size = f.length();
                     videoModel.vSize = size(size);
