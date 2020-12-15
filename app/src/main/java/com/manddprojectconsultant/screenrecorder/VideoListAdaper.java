@@ -181,8 +181,12 @@ public class VideoListAdaper extends RecyclerView.Adapter<VideoListAdaper.ViewHo
             @Override
             public void onClick(View view) {
                 final View vv = view;
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
                 ViewGroup viewGroup = view.findViewById(android.R.id.content);
+
+
+
+
                 View dialogView = LayoutInflater.from(view.getContext()).inflate(R.layout.custom_dialog_remane, viewGroup, false);
                 String ss = lstVideo.get(position).vPath;
                 final File file = new File(ss);
@@ -191,7 +195,7 @@ public class VideoListAdaper extends RecyclerView.Adapter<VideoListAdaper.ViewHo
                 String name = file.getName().toString();
                 name = name.substring(0, name.length() - 4);
                 etRename.setText(name);
-                builder.setMessage("You want to rename this recording.")
+                builder.setMessage("Do you want to rename this recording file ?")
                         .setCancelable(false)
                         .setPositiveButton("Rename", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {

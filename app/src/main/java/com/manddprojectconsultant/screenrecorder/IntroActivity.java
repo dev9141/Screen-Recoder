@@ -21,15 +21,15 @@ public class IntroActivity extends com.heinrichreimersoftware.materialintro.app.
         setButtonCtaTintMode(BUTTON_CTA_TINT_MODE_TEXT);
 
         addSlide(new SimpleSlide.Builder()
-                .title("Title 1")
-                .description(R.string.description_material_metaphor)
-                .image(R.drawable.art_material_metaphor)
+                .title("Home Screen")
+                .description(R.string.description_home_screen)
+                .image(R.drawable.dashboard)
                 .background(R.color.color_material_metaphor)
                 .backgroundDark(R.color.color_dark_material_metaphor)
                 .build());
 
         addSlide(new SimpleSlide.Builder()
-                .title("Title 2")
+                .title("Settings")
                 .image(R.drawable.art_material_metaphor)
                 .image(R.drawable.art_material_bold)
                 .background(R.color.color_material_bold)
@@ -37,7 +37,7 @@ public class IntroActivity extends com.heinrichreimersoftware.materialintro.app.
                 .build());
 
         addSlide(new SimpleSlide.Builder()
-                .title("Title 3")
+                .title("Screen Video")
                 .image(R.drawable.art_material_metaphor)
                 .image(R.drawable.art_material_motion)
                 .background(R.color.color_material_motion)
