@@ -263,9 +263,9 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
         llAppIntro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, IntroActivity.class);
+                Intent intent = new Intent(SettingActivity.this, Welcome_Screen.class);
                 startActivityForResult(intent, REQUEST_CODE_INTRO);
-                finish();
+                //finish();
             }
         });
 //        swAppIntro.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

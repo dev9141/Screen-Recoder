@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/transpermt"
-    tools:context=".MainActivity">
+    tools:context=".GridLayoutActivity">
 
     <LinearLayout
-        android:id="@+id/llscreen"
+        android:id="@+id/llscreenfordashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -17,16 +17,16 @@
         app:layout_constraintTop_toBottomOf="@id/appbar">
 
         <ImageView
-            android:id="@+id/ivlistforgridview"
+            android:id="@+id/ivlistnormallist"
             android:layout_width="40dp"
             android:layout_height="30dp"
             android:layout_gravity="end"
             android:layout_marginEnd="10dp"
             android:clickable="true"
             android:padding="5dp"
-            android:onClick="SettingClick"
+            android:onClick="ListClickforDashboard"
             app:tint="@color/coloryellow"
-            android:src="@drawable/list"
+            android:src="@drawable/normallist"
             android:focusable="true" />
 
 
@@ -69,14 +69,13 @@
 
 
             <ImageView
-                android:id="@+id/ivsetting"
+                android:id="@+id/ivsettings"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
                 android:clickable="true"
-                android:onClick="SettingClick"
                 app:tint="@color/coloryellow"
                 android:src="@drawable/ic_baseline_settings_24"
                 android:focusable="true" />
@@ -90,23 +89,18 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-
-
-
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvVideoList1"
+        android:id="@+id/rvVideoListforgridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="368dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llscreen"
-        app:layout_constraintVertical_bias="0.0" >
-
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

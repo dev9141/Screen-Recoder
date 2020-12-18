@@ -23,6 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".GridLayoutActivity"></activity>
         <activity android:name=".Welcome_Screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,14 +47,11 @@
         <activity android:name=".SettingActivity" />
         <activity
             android:name=".IntroActivity"
-            android:theme="@style/IntroTheme">
-
-
-        </activity>
+            android:theme="@style/IntroTheme" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashTheme" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".BlankActivity"
             android:launchMode="singleTop" />

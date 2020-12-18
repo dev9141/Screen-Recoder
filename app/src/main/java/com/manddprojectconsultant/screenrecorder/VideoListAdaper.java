@@ -41,6 +41,7 @@ public class VideoListAdaper extends RecyclerView.Adapter<VideoListAdaper.ViewHo
         this.context = context;
     }
 
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_video_listview, parent, false);
@@ -236,7 +237,7 @@ public class VideoListAdaper extends RecyclerView.Adapter<VideoListAdaper.ViewHo
 
     @Override
     public long getItemId(int position) {
-        return super.getItemId(position);
+            return super.getItemId(position);
     }
 
     @Override
