@@ -124,21 +124,22 @@ public class MainActivity extends AppCompatActivity {
             //setAllSP if SP is empty
             setSP(MainActivity.this);
             checkOrCreateFolder();
-            if (firstStart) {
+            /*if (firstStart) {
                 //Toast.makeText(MainActivity.this, "intro", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, IntroActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_INTRO);
                 if (introActivity.isIntroDone) {
                     initializeView();
                 }
-            } else {
-                //Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
-                //loadRecordedVideos();
-                //Toast.makeText(MainActivity.this, "2", Toast.LENGTH_SHORT).show();
-                //new LoadVideos(MainActivity.this, true).execute();
-                initializeView();
-                //new openBubble(MainActivity.this).execute();
-            }
+            } else {*/
+            //Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
+            //loadRecordedVideos();
+            //Toast.makeText(MainActivity.this, "2", Toast.LENGTH_SHORT).show();
+            //new LoadVideos(MainActivity.this, true).execute();
+            initializeView();
+            new LoadVideos(MainActivity.this, false).execute();
+            //new openBubble(MainActivity.this).execute();
+            //}
 //                Intent i = new Intent(this, MainActivity.class);
 //                startActi0vity(i);
 //                finish();
@@ -156,12 +157,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //loadFragment(new FirstFragment());
-
-                Intent gridlayout=new Intent(MainActivity.this,GridLayoutActivity.class);
+                Intent gridlayout = new Intent(MainActivity.this, GridLayoutActivity.class);
                 gridlayout.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(gridlayout);
-                overridePendingTransition(0,0);
-
+                overridePendingTransition(0, 0);
             }
         });
     }
@@ -180,17 +179,21 @@ public class MainActivity extends AppCompatActivity {
     }*/
 
     protected void checkOrCreateFolder() {
-        File file = new File(Environment.getExternalStorageDirectory(), "ScreenRecorder_ss");
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        File recordFolder = new File(file, "Recording");
-        if (!recordFolder.exists()) {
-            recordFolder.mkdirs();
-        }
-        File tempFolder = new File(file, "temp");
-        if (!tempFolder.exists()) {
-            tempFolder.mkdirs();
+        try {
+            File file = new File(Environment.getExternalStorageDirectory(), "ScreenRecorder_ss");
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            File recordFolder = new File(file, "Recording");
+            if (!recordFolder.exists()) {
+                recordFolder.mkdirs();
+            }
+            File tempFolder = new File(file, "temp");
+            if (!tempFolder.exists()) {
+                tempFolder.mkdirs();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -347,31 +350,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_INTRO) {
-            if (resultCode == RESULT_OK) {
-                PreferenceManager.getDefaultSharedPreferences(this).edit()
-                        .putBoolean(PREF_KEY_FIRST_START, false)
-                        .apply();
-                //loadRecordedVideos();
-                new LoadVideos(MainActivity.this, false).execute();
-//                lstVideo = getVideoList();
-//                adaper = new VideoListAdaper(lstVideo, MainActivity.this);
-//                rvVideoList.setAdapter(adaper);
-//                rvVideoList.setLayoutManager(new LinearLayoutManager(this));
-                initializeView();
-            } else {
-                PreferenceManager.getDefaultSharedPreferences(this).edit()
-                        .putBoolean(PREF_KEY_FIRST_START, true)
-                        .apply();
-                //User cancelled the intro so we'll finish this activity too.
-                //finish();
-            }
-        }
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         //loadRecordedVideos();
@@ -387,13 +365,6 @@ public class MainActivity extends AppCompatActivity {
         new LoadVideos(MainActivity.this, false).execute();
     }
 
-    public void loadRecordedVideos() {
-        lstVideo = getVideoList();
-        //lstVideo.add(videoModel);
-        adaper = new VideoListAdaper(lstVideo, MainActivity.this);
-        rvVideoList.setAdapter(adaper);
-        rvVideoList.setLayoutManager(new LinearLayoutManager(this));
-    }
 
 /*
     @Override
@@ -426,13 +397,13 @@ public class MainActivity extends AppCompatActivity {
         ivsettings = findViewById(R.id.ivsetting);
         MainActivity.this.startService(new Intent(MainActivity.this, FloatingViewService.class));
         //finish();
-        if (SPVariables.getInt("AFTER_INSTALL_FIRST_OPEN", MainActivity.this) == 0) {
+        /*if (SPVariables.getInt("AFTER_INSTALL_FIRST_OPEN", MainActivity.this) == 0) {
             SPVariables.setInt("AFTER_INSTALL_FIRST_OPEN", 1, MainActivity.this);
         } else {
             if (!getIntent().hasExtra("OpenHome")) {
                 finish();
             }
-        }
+        }*/
         /*findViewById(R.id.notify_me).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -443,9 +414,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void SettingClick(View view) {
+
         startActivity(new Intent(this, SettingActivity.class));
     }
-
 
     class openBubble extends AsyncTask {
         Context context;
@@ -527,38 +498,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setSP(Context context) {
-        if (SPVariables.getString("Resolution", context) == null || SPVariables.getString("Resolution", context).isEmpty()) {
-            SPVariables.setString("Resolution", "720P", context);
-        }
-        if (SPVariables.getString("Quality", context) == null || SPVariables.getString("Quality", context).isEmpty()) {
-            SPVariables.setString("Quality", "HD", context);
-        }
-        if (SPVariables.getString("FPS", context) == null || SPVariables.getString("FPS", context).isEmpty()) {
-            SPVariables.setString("FPS", "60FPS", context);
-        }
-        if (SPVariables.getString("Orientation", context) == null || SPVariables.getString("Orientation", context).isEmpty()) {
-            SPVariables.setString("Orientation", "Portrait", context);
-        }
-        if (SPVariables.getString("Camera", context) == null || SPVariables.getString("Camera", context).isEmpty()) {
-            SPVariables.setString("Camera", "Front", context);
-        }
-        if (SPVariables.getString("CameraPreview", context) == null || SPVariables.getString("CameraPreview", context).isEmpty()) {
-            SPVariables.setString("CameraPreview", "Medium", context);
-        }
-        if (SPVariables.getString("RecordAudio", context) == null || SPVariables.getString("RecordAudio", context).isEmpty()) {
-            SPVariables.setString("RecordAudio", "TRUE", context);
-        }
-        if (SPVariables.getString("CountDown", context) == null || SPVariables.getString("CountDown", context).isEmpty()) {
-            SPVariables.setString("CountDown", "TRUE", context);
-        }
-        if (SPVariables.getString("AppIntro", context) == null || SPVariables.getString("AppIntro", context).isEmpty()) {
-            SPVariables.setString("AppIntro", "TRUE", context);
-        }
-        if (SPVariables.getString("ShowBubble", context) == null || SPVariables.getString("ShowBubble", context).isEmpty()) {
-            SPVariables.setString("ShowBubble", "TRUE", context);
-        }
-        if (SPVariables.getString("RecordStartOrStop", context) == null || SPVariables.getString("RecordStartOrStop", context).isEmpty()) {
-            SPVariables.setString("RecordStartOrStop", "NOTSTARTED", context);
+        try {
+            if (SPVariables.getString("Resolution", context) == null || SPVariables.getString("Resolution", context).isEmpty()) {
+                SPVariables.setString("Resolution", "720P", context);
+            }
+            if (SPVariables.getString("Quality", context) == null || SPVariables.getString("Quality", context).isEmpty()) {
+                SPVariables.setString("Quality", "HD", context);
+            }
+            if (SPVariables.getString("FPS", context) == null || SPVariables.getString("FPS", context).isEmpty()) {
+                SPVariables.setString("FPS", "60FPS", context);
+            }
+            if (SPVariables.getString("Orientation", context) == null || SPVariables.getString("Orientation", context).isEmpty()) {
+                SPVariables.setString("Orientation", "Portrait", context);
+            }
+            if (SPVariables.getString("Camera", context) == null || SPVariables.getString("Camera", context).isEmpty()) {
+                SPVariables.setString("Camera", "Front", context);
+            }
+            if (SPVariables.getString("CameraPreview", context) == null || SPVariables.getString("CameraPreview", context).isEmpty()) {
+                SPVariables.setString("CameraPreview", "Medium", context);
+            }
+            if (SPVariables.getString("RecordAudio", context) == null || SPVariables.getString("RecordAudio", context).isEmpty()) {
+                SPVariables.setString("RecordAudio", "TRUE", context);
+            }
+            if (SPVariables.getString("CountDown", context) == null || SPVariables.getString("CountDown", context).isEmpty()) {
+                SPVariables.setString("CountDown", "TRUE", context);
+            }
+            if (SPVariables.getString("AppIntro", context) == null || SPVariables.getString("AppIntro", context).isEmpty()) {
+                SPVariables.setString("AppIntro", "TRUE", context);
+            }
+            if (SPVariables.getString("ShowBubble", context) == null || SPVariables.getString("ShowBubble", context).isEmpty()) {
+                SPVariables.setString("ShowBubble", "TRUE", context);
+            }
+            if (SPVariables.getString("RecordStartOrStop", context) == null || SPVariables.getString("RecordStartOrStop", context).isEmpty()) {
+                SPVariables.setString("RecordStartOrStop", "NOTSTARTED", context);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

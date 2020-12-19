@@ -28,7 +28,7 @@
             android:focusableInTouchMode="true"
             android:text="Hello World"
             android:textAlignment="textStart"
-            android:textColor="@color/balck"
+            android:textColor="@color/black"
             android:textSize="18sp" />
     </LinearLayout>
 

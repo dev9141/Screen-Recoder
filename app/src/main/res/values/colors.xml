@@ -22,8 +22,8 @@
     <color name="transBalck">#50000000</color>
     <color name="videoDurationBG">#80000000</color>
     <color name="videoListStrip">#50666666</color>
-    <color name="balck">#000000</color>
-
+    <color name="black">#000000</color>
+    <color name="menu_devider">#F3F3F3</color>
     <color name="transpermt">#00000000</color>
 
     <color name="colorSemiTranspernt">#A6FFFFFF</color>

@@ -1,79 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="200dp"
+        android:layout_margin="5dp"
+        app:cardElevation="10dp"
+        app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01" >
+        app:layout_constraintVertical_bias="0.01">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:gravity="center"
-            android:padding="10dp"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:alpha="0.9"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/ic_setting" />
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-                android:orientation="vertical">
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tvVideogridlistname"
+                    <ImageView
+                        android:id="@+id/ivVideoGridThum"
+                        android:layout_width="120dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentLeft="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/video_thum" />
+
+                    <TextView
+                        android:id="@+id/tvVideoGridDuration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="61dp"
+                        android:background="@drawable/rect_bg"
+                        android:paddingLeft="2.5dp"
+                        android:paddingRight="2dp"
+                        android:text="00:00"
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
+
+                    <LinearLayout
+                        android:id="@+id/ivVideoGridPlay"
+                        android:layout_width="120dp"
+                        android:layout_height="80dp"
+                        android:gravity="center">
+
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentLeft="true"
+                            android:alpha="0.9"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_play_white" />
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SR_yyyy_MM_dd_hh_mm_ss"
-                    android:textColor="@color/balck"
-                    android:textSize="13sp" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingTop="3dp">
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tvVideogridFileSize"
+                        android:id="@+id/tvVideogridlistname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="1024.00 kB"
-                        android:textColor="@color/balck"
-                        android:textSize="10sp" />
+                        android:text="SR_yyyy_MM_dd_hh_mm_ss"
+                        android:textColor="@color/black"
+                        android:textSize="13sp" />
 
-                    <TextView
-                        android:id="@+id/tvVideogridResolution"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="3dp">
+
+                        <TextView
+                            android:id="@+id/tvVideogridFileSize"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="1024.00 kB"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/tvVideogridResolution"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginEnd="10dp"
+                            android:hint="1080 x 480"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:hint="1080 x 480"
-                        android:layout_marginEnd="10dp"
-                        android:textColor="@color/balck"
-                        android:textSize="10sp" />
-                </RelativeLayout>
+                        android:orientation="horizontal"
+                        android:padding="3dp">
+
+                        <ImageButton
+                            android:id="@+id/ib_Share"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:background="#00000000"
+                            android:tint="@color/coloryellow"
+                            android:src="@drawable/ic_baseline_share_24" />
+
+                        <ImageButton
+                            android:id="@+id/ib_Edit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:background="#00000000"
+                            android:tint="@color/coloryellow"
+                            android:src="@drawable/ic_baseline_edit_24" />
+
+                        <ImageButton
+                            android:id="@+id/ib_Delete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:tint="@color/coloryellow"
+                            android:background="#00000000"
+                            android:src="@drawable/ic_baseline_delete_24" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
-
-
         </LinearLayout>
+
+
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

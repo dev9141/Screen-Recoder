@@ -82,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="SR_yyyy_MM_dd_hh_mm_ss"
-                    android:textColor="@color/balck"
+                    android:textColor="@color/black"
                     android:textSize="13sp" />
 
                 <RelativeLayout
@@ -95,7 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="1024.00 kB"
-                        android:textColor="@color/balck"
+                        android:textColor="@color/black"
                         android:textSize="10sp" />
 
                     <TextView
@@ -105,7 +105,7 @@
                         android:layout_alignParentRight="true"
                         android:hint="1080 x 480"
                         android:layout_marginEnd="10dp"
-                        android:textColor="@color/balck"
+                        android:textColor="@color/black"
                         android:textSize="10sp" />
                 </RelativeLayout>
             </LinearLayout>
