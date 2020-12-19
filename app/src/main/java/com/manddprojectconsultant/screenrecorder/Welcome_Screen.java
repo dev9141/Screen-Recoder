@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 public class Welcome_Screen extends AppCompatActivity {
@@ -24,7 +25,8 @@ public class Welcome_Screen extends AppCompatActivity {
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
-    private Button btnSkip, btnNext;
+    private Button btnNext;
+    ImageView btnSkip;
     private PrefManager prefManager;
 
     @Override
@@ -63,7 +65,13 @@ public class Welcome_Screen extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchHomeScreen();
+                int current=getItem(-1);
+                if (current<layouts.length)
+                {
+                    viewPager.setCurrentItem(current);
+                }else{
+                    launchHomeScreen();
+                }
             }
         });
 
