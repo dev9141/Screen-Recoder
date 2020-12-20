@@ -72,8 +72,8 @@
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
-                android:layout_marginEnd="10dp"
                 android:clickable="true"
+               android:layout_marginStart="15dp"
                 android:padding="5dp"
                 app:tint="@color/coloryellow"
                 android:src="@drawable/list"
@@ -103,14 +103,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvVideoList1"
         android:layout_width="0dp"
-        android:layout_height="560dp"
-        android:scrollbars="vertical"
+        android:layout_height="615dp"
+        android:layout_marginBottom="20dp"
+        android:elevation="5dp"
         android:fadeScrollbars="true"
-        android:elevation="10dp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llscreen">
+        app:layout_constraintTop_toBottomOf="@+id/llscreen"
+        app:layout_constraintVertical_bias="0.0">
 
     </androidx.recyclerview.widget.RecyclerView>
 
