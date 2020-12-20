@@ -7,20 +7,21 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="5dp"
-        app:cardElevation="10dp"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="5dp"
+        android:layout_marginTop="10dp"
         app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01">
+        app:layout_constraintVertical_bias="0.00">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -31,9 +32,9 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:tools="http://schemas.android.com/tools"
+                <RelativeLayout
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content">
 
                     <ImageView
@@ -81,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -102,6 +103,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="1024.00 kB"
+                            android:layout_marginTop="5dp"
                             android:textColor="@color/black"
                             android:textSize="10sp" />
 
@@ -112,6 +114,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_marginEnd="10dp"
                             android:hint="1080 x 480"
+                            android:layout_marginTop="5dp"
                             android:textColor="@color/black"
                             android:textSize="10sp" />
 
@@ -121,7 +124,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="3dp">
+                        android:elevation="10dp"
+                       android:padding="5dp"
+                       >
 
                         <ImageButton
                             android:id="@+id/ib_Share"
@@ -137,6 +142,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_weight="1"
+
                             android:background="#00000000"
                             android:tint="@color/coloryellow"
                             android:src="@drawable/ic_baseline_edit_24" />
@@ -146,6 +152,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_weight="1"
+
                             android:tint="@color/coloryellow"
                             android:background="#00000000"
                             android:src="@drawable/ic_baseline_delete_24" />

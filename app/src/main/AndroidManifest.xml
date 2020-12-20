@@ -25,10 +25,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".GridLayoutActivity"></activity>
         <activity android:name=".Welcome_Screen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity android:name=".NotiRecordingStart" />
         <activity android:name=".NotiRecordingStop" />
@@ -46,7 +43,13 @@
         <activity android:name=".SettingActivity" />
         <activity
             android:name=".IntroActivity"
-            android:theme="@style/IntroTheme" />
+            android:theme="@style/IntroTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashTheme" />
