@@ -16,18 +16,7 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/appbar">
 
-        <ImageView
-            android:id="@+id/ivlistnormallist"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="10dp"
-            android:clickable="true"
-            android:padding="5dp"
-            android:onClick="ListClickforDashboard"
-            app:tint="@color/coloryellow"
-            android:src="@drawable/normallist"
-            android:focusable="true" />
+
 
 
 
@@ -59,14 +48,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:gravity="center"
                 android:padding="10dp"
                 android:text="@string/app_name"
                 android:textColor="@color/coloryellow"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="RelativeOverlap" />
+                android:textStyle="bold"/>
 
+            <ImageView
+                android:id="@+id/ivlistnormallist"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="ListClickforDashboard"
+                android:padding="5dp"
+                android:src="@drawable/normallist"
+                app:tint="@color/coloryellow" />
 
             <ImageView
                 android:id="@+id/ivsettings"

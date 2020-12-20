@@ -15,7 +15,7 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/appbar">
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/ivlistforgridview"
             android:layout_width="40dp"
             android:layout_height="30dp"
@@ -26,7 +26,7 @@
             android:onClick="SettingClick"
             app:tint="@color/coloryellow"
             android:src="@drawable/list"
-            android:focusable="true" />
+            android:focusable="true" />-->
 
 
 
@@ -66,6 +66,18 @@
                 android:textStyle="bold"
                 tools:ignore="RelativeOverlap" />
 
+            <ImageView
+                android:id="@+id/ivlistforgridview"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="10dp"
+                android:clickable="true"
+                android:padding="5dp"
+                app:tint="@color/coloryellow"
+                android:src="@drawable/list"
+                android:focusable="true" />
 
             <ImageView
                 android:id="@+id/ivsetting"

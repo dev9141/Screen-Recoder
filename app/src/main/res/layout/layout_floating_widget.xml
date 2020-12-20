@@ -2,30 +2,30 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
     android:id="@+id/root_container"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/recordView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingLeft="5dp"
-        android:paddingBottom="5dp"
         android:paddingTop="5dp"
-        android:orientation="vertical">
+        android:paddingBottom="5dp">
 
-    <ImageView
-        android:id="@+id/collapse_view"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:visibility="visible"
-        android:background="@drawable/shadow"
-        app:tint="@color/white"
-        android:scaleType="fitXY"
-        android:padding="8dp"
-        android:src="@drawable/ic_baseline_videocam_24"
-        tools:ignore="ContentDescription" />
+        <ImageView
+            android:id="@+id/collapse_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/shadow"
+            android:padding="8dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_baseline_videocam_24"
+            android:visibility="visible"
+            app:tint="@color/white"
+            tools:ignore="ContentDescription" />
 
 
         <ImageView
@@ -47,8 +47,6 @@
             android:background="@drawable/shadow_small"
             android:src="@drawable/ic_baseline_close_24"
             tools:ignore="ContentDescription" />
-
-
 
 
     </RelativeLayout>

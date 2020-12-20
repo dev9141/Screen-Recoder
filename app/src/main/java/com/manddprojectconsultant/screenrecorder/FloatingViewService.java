@@ -137,7 +137,7 @@ public class FloatingViewService extends Service {
         //new countdown(getApplicationContext()).execute();
 
         //The root element of the collapsed view layout
-        final View collapsedView = mFloatingView.findViewById(R.id.collapse_view);
+        //final View collapsedView = mFloatingView.findViewById(R.id.collapse_view);
         //The root element of the expanded view layout
         expandedView = mFloatingViewExpand.findViewById(R.id.expanded_container);
         //final View expandedViewClose = mFloatingView.findViewById(R.id.expanded_container_close);
@@ -321,9 +321,9 @@ public class FloatingViewService extends Service {
                     backgroundActivity.finish();
                     expandedView.setVisibility(View.GONE);
 
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) collapsedView.getLayoutParams();
-                    params.setMargins(0, dpToPx(collapsedView, 60), 0, 0);
-                    collapsedView.setLayoutParams(params);
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mFloatingView.findViewById(R.id.collapse_view).getLayoutParams();
+                    params.setMargins(0, dpToPx(mFloatingView.findViewById(R.id.collapse_view), 60), 0, 0);
+                    mFloatingView.findViewById(R.id.collapse_view).setLayoutParams(params);
                     //expandedViewClose.setVisibility(View.VISIBLE);
                     //close_iv.setVisibility(View.GONE);
                 }
@@ -406,7 +406,7 @@ public class FloatingViewService extends Service {
                             //Toast.makeText(FloatingViewService.this, "hello", Toast.LENGTH_SHORT).show();
                         case MotionEvent.ACTION_MOVE:
                             //Calculate the X and Y coordinates of the view.
-                            params.x = initialX + (int) (event.getRawX() - initialTouchX);
+                            //params.x = initialX + (int) (event.getRawX() - initialTouchX);
                             params.y = initialY + (int) (event.getRawY() - initialTouchY);
 
                             //Update the layout with new X & Y coordinate
