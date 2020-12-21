@@ -91,11 +91,7 @@
                 app:tint="@color/coloryellow"
                 android:src="@drawable/ic_baseline_settings_24"
                 android:focusable="true" />
-
-
-
-
-        </RelativeLayout>
+                                  </RelativeLayout>
 
 
     </com.google.android.material.appbar.AppBarLayout>
