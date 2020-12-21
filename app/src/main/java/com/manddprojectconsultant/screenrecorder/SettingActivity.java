@@ -263,6 +263,8 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
         llAppIntro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PrefManager prefManager = new PrefManager(SettingActivity.this);
+                prefManager.setFirstTimeLaunch(true);
                 Intent intent = new Intent(SettingActivity.this, Welcome_Screen.class);
                 startActivityForResult(intent, REQUEST_CODE_INTRO);
                 //finish();

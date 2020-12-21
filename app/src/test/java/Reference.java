@@ -4,6 +4,7 @@ public class Reference {
     *   -- Floating Camera Design
     *   --Check SpVariables Name
     *   --Once Close the floating then if open the app then floating button service is not showing
+    *   floting button is expanded every time when app started
     *   --Home Screen design improve
     * *   ++Check Floating button direction change
     *   --Setting Activity while scrolling the screen
