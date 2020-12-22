@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,24 +16,175 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 public class Welcome_Screen extends AppCompatActivity {
-    private ViewPager viewPager;
+    /*private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
     private Button btnNext;
     ImageView btnSkip;
-    private PrefManager prefManager;
+    private PrefManager prefManager;*/
+
+
+    private ViewPager screenPager;
+    MyViewPagerAdapter myViewPagerAdapter ;
+    TabLayout tabIndicator;
+    Button btnNext;
+    int position = 0 ;
+    Button btnGetStarted;
+    Animation btnAnim ;
+    TextView tvSkip;
+    PrefManager prefManager;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Checking for first time launch - before calling setContentView()
+
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+
+        // when this activity is about to be launch we need to check if its openened before or not
+
+        prefManager = new PrefManager(this);
+        if (!prefManager.isFirstTimeLaunch()) {
+
+            restorePrefData();
+            finish();
+
+        }
+
+        setContentView(R.layout.activity_welcome__screen);
+
+//        getSupportActionBar().hide();
+
+        initforscreenrecoder();
+
+
+
+        final List<ScreenItem> mList = new ArrayList<>();
+        mList.add(new ScreenItem("DashBoard","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.settingsvideo));
+        mList.add(new ScreenItem("Video + Screen Record","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.videorecoder));
+        mList.add(new ScreenItem("Screen Record","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.screenshortforrecosing));
+
+        // setup viewpager
+        screenPager =findViewById(R.id.screen_viewpager);
+        myViewPagerAdapter   = new MyViewPagerAdapter(Welcome_Screen.this,mList);
+        screenPager.setAdapter(myViewPagerAdapter);
+
+        // setup tablayout with viewpager
+
+        tabIndicator.setupWithViewPager(screenPager);
+
+        // next button click Listner
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                position = screenPager.getCurrentItem();
+                if (position < mList.size()) {
+
+                    position++;
+                    screenPager.setCurrentItem(position);
+
+
+                }
+
+                if (position == mList.size()-1) { // when we rech to the last screen
+
+
+
+                    loaddLastScreen();
+
+
+                }
+
+
+
+            }
+        });
+
+
+
+        tabIndicator.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                if (tab.getPosition() == mList.size()-1) {
+
+                    loaddLastScreen();
+
+                }
+
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
+
+        // Get Started button click listener
+
+        btnGetStarted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                //open main activity
+
+                Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(mainActivity);
+                prefManager.setFirstTimeLaunch(false);
+                finish();
+
+
+
+            }
+        });
+
+        // skip button click listener
+
+        tvSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                screenPager.setCurrentItem(mList.size());
+            }
+        });
+
+
+
+
+
+
+       /* // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         if (!prefManager.isFirstTimeLaunch()) {
@@ -42,7 +194,7 @@ public class Welcome_Screen extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
-        setContentView(R.layout.activity_welcome__screen);
+
         initforWelcomeScreen();
 
 
@@ -187,4 +339,51 @@ public class Welcome_Screen extends AppCompatActivity {
             container.removeView(view);
         }
     }
+*/
+    }
+
+
+
+
+    private void initforscreenrecoder() {
+
+
+        btnNext=findViewById(R.id.btn_next);
+        btnGetStarted=findViewById(R.id.btn_get_started);
+        tabIndicator=findViewById(R.id.tab_indicator);
+        btnAnim= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.button_animation);
+        tvSkip=findViewById(R.id.tv_skip);
+
+
+    }
+
+    private void  restorePrefData() {
+
+
+
+
+        prefManager.setFirstTimeLaunch(false);
+        startActivity(new Intent(Welcome_Screen.this, MainActivity.class));
+        finish();
+
+
+        }
+
+
+
+
+    private void loaddLastScreen() {
+
+        btnNext.setVisibility(View.INVISIBLE);
+        btnGetStarted.setVisibility(View.VISIBLE);
+        tvSkip.setVisibility(View.INVISIBLE);
+        tabIndicator.setVisibility(View.INVISIBLE);
+        btnGetStarted.setAnimation(btnAnim);
+
+
+
+    }
+
+
+
 }
