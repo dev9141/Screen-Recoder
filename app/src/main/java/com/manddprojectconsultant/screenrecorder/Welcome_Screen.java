@@ -81,9 +81,9 @@ public class Welcome_Screen extends AppCompatActivity {
 
 
         final List<ScreenItem> mList = new ArrayList<>();
-        mList.add(new ScreenItem("DashBoard","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.settingsvideo));
-        mList.add(new ScreenItem("Video + Screen Record","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.videorecoder));
-        mList.add(new ScreenItem("Screen Record","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.screenshortforrecosing));
+        mList.add(new ScreenItem("DashBoard","How to use Dashboard,it show the process on this video",R.drawable.settingsvideo));
+        mList.add(new ScreenItem("Video + Screen Record","How to use Video + Screen Recorder,it show the process on this video",R.drawable.videorecoder));
+        mList.add(new ScreenItem("Screen Record","How to use Screen Recorder,it show the process on this video",R.drawable.screenshortforrecosing));
 
         // setup viewpager
         screenPager =findViewById(R.id.screen_viewpager);
