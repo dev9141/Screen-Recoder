@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import static com.manddprojectconsultant.screenrecorder.FloatingViewService.mFloatingViewExpand;
 public class BackgroundActivity extends AppCompatActivity {
 
     public Context context = BackgroundActivity.this;
@@ -24,6 +25,12 @@ public class BackgroundActivity extends AppCompatActivity {
         rootBGView = findViewById(R.id.rootBGView);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        View expandedView = mFloatingViewExpand.findViewById(R.id.expanded_container);
+        if(expandedView.getVisibility() == View.GONE) {
+            this.finish();
+        }
+
+
 
         rootBGView.setOnClickListener(new View.OnClickListener() {
             @Override

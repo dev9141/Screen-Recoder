@@ -143,13 +143,10 @@ public class FloatingViewService extends Service {
         //final View expandedViewClose = mFloatingView.findViewById(R.id.expanded_container_close);
 
         if(expandedView.getVisibility() == View.GONE) {
-            expandedView.setVisibility(View.VISIBLE);
+            //expandedView.setVisibility(View.VISIBLE);
             Intent intent = new Intent(getApplicationContext(), BackgroundActivity.class);
-            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-
-            // intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             backgroundActivity.finish();
         }
