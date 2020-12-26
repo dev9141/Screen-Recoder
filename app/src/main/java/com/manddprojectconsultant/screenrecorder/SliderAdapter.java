@@ -63,7 +63,7 @@ public class SliderAdapter extends PagerAdapter {
 
         gifImageView.setImageResource(gif[position]);
         tvtitle.setText(tittle[position]);
-        tvdescription.setText(description[position]);
+        tvdescription.setHint(description[position]);
 
         container.addView(view);
 
