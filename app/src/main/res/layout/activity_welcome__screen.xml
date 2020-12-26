@@ -64,7 +64,7 @@
             android:layout_alignParentBottom="true"
             android:backgroundTint="@color/coloryellow"
             android:src="@drawable/mi_ic_next"
-            android:paddingBottom="20dp"
+            android:paddingBottom="30dp"
             android:scaleType="fitXY"
             android:onClick="next"
             app:tint="@color/coloryellow"
