@@ -39,7 +39,7 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
     public static final String VideoQuality = "Quality";
     public static final String FPS = "FPS";
     public static final String Orientation = "Orientation";
-    public static final String Camera= "Camera";
+    public static final String CameraFacing= "CameraFacing";
     public static final String CameraPreview = "CameraPreview";
 
 
@@ -76,7 +76,7 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
         tvOrientation.setText(orientationpre);
 
         //CameraFacing preference
-        String camerafacingpre = SPVariables.getString(Camera, SettingActivity.this);
+        String camerafacingpre = SPVariables.getString(CameraFacing, SettingActivity.this);
         tvCamera.setText(camerafacingpre);
 
 
@@ -130,11 +130,11 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
         }
 
         //Camera Facing
-        String camerafacingpre = SPVariables.getString(Camera, SettingActivity.this);
-        if (SPVariables.getString("Camera", SettingActivity.this).isEmpty()) {
+        String camerafacingpre = SPVariables.getString(CameraFacing, SettingActivity.this);
+        if (SPVariables.getString("CameraFacing", SettingActivity.this).isEmpty()) {
             tvCamera.setText(camerafacingpre);
         } else {
-            tvCamera.setText(SPVariables.getString("Camera", SettingActivity.this));
+            tvCamera.setText(SPVariables.getString("CameraFacing", SettingActivity.this));
         }
 
         //Camera Preview
@@ -220,7 +220,7 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
                 SingleChoiceDialog.show(getSupportFragmentManager(), "Single Choice Dialog");*/
 
                 CameraFacingFragment cameraFacingFragment=new CameraFacingFragment();
-                cameraFacingFragment.show(getSupportFragmentManager(),"Camera Facing");
+                cameraFacingFragment.show(getSupportFragmentManager(),"CameraFacing");
 
 
             }
@@ -400,7 +400,7 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
     @Override
     public void onItemClickcamerafacing(String camerafacing) {
         String camera = camerafacing.toString();
-        SPVariables.setString(Camera, camera, SettingActivity.this);
+        SPVariables.setString(CameraFacing, camera, SettingActivity.this);
         startActivity(new Intent(SettingActivity.this, SettingActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
         finish();
         overridePendingTransition(0, 0);

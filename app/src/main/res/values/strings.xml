@@ -90,4 +90,10 @@
     <string name="cancel">Cancel</string>
     <string name="skip">Skip</string>
     <string name="settings">Settings</string>
+    <string name="HomePage">HomePage</string>
+    <string name="Videoscreenshort">Video+ScreenRecord</string>
+    <string name="screenshort">Screen Record</string>
+    <string name="HomePagedescription">How to use Dashboard,it show the process on this video</string>
+    <string name="Videoscreenshortdescription">How to use Video + Screen Recorder,it show the process on this video</string>
+    <string name="screenshortdescriptioon">How to use Screen Recorder,it show the process on this video</string>
 </resources>
