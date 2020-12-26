@@ -39,7 +39,7 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
     public static final String VideoQuality = "Quality";
     public static final String FPS = "FPS";
     public static final String Orientation = "Orientation";
-    public static final String CameraFacing = "CameraFacing";
+    public static final String CameraFacing= "CameraFacing";
     public static final String CameraPreview = "CameraPreview";
 
 
@@ -220,7 +220,7 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
                 SingleChoiceDialog.show(getSupportFragmentManager(), "Single Choice Dialog");*/
 
                 CameraFacingFragment cameraFacingFragment=new CameraFacingFragment();
-                cameraFacingFragment.show(getSupportFragmentManager(),"Camera Facing");
+                cameraFacingFragment.show(getSupportFragmentManager(),"CameraFacing");
 
 
             }

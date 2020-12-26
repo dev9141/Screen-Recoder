@@ -20,6 +20,8 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -38,6 +40,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -64,12 +69,113 @@ public class MainActivity extends AppCompatActivity {
     VideoModel videoModel = new VideoModel();
     boolean firstStart;
     public static IntroActivity introActivity = new IntroActivity();
+    PrefManager prefManager;
+
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_main);
+
+        prefManager=new PrefManager(this);
+       if (prefManager.isFirstTimeLaunch())
+       {
+
+
+           prefManager.setFirstTimeLaunch(false);
+
+           final SpannableString spannableStringforgridview = new SpannableString("See the Gridview while clicking");
+           spannableStringforgridview.setSpan(new UnderlineSpan(), spannableStringforgridview.length() - "TapTargetview".length(), spannableStringforgridview.length(), 0);
+           //Tape Target View Design
+           TapTargetView.showFor(this, TapTarget.forView(findViewById(R.id.ivlistforgridview), "Gridview", spannableStringforgridview)
+                           .cancelable(true)
+                           .drawShadow(true)
+                           .titleTextDimen(R.dimen.showcaseview)
+                           .tintTarget(false)
+                           .id(1)
+                   , new TapTargetView.Listener() {
+                       @Override
+                       public void onTargetClick(TapTargetView view) {
+                           super.onTargetClick(view);
+
+
+
+                           view.dismiss(true);
+
+                       }
+
+                       @Override
+                       public void onOuterCircleClick(TapTargetView view) {
+                           super.onOuterCircleClick(view);
+
+                           view.dismiss(true);
+
+
+                       }
+                   });
+
+
+
+
+           final SpannableString spannableString = new SpannableString("See the Settings of Screen Recorder while clicking ");
+           spannableString.setSpan(new UnderlineSpan(), spannableString.length() - "TapTargetview".length(), spannableString.length(), 0);
+           //Tape Target View Design
+           TapTargetView.showFor(this, TapTarget.forView(findViewById(R.id.ivsetting), "Settings", spannableString)
+                           .cancelable(false)
+                           .drawShadow(true)
+                           .titleTextDimen(R.dimen.showcaseview)
+                           .tintTarget(false)
+                   , new TapTargetView.Listener() {
+                       @Override
+                       public void onTargetClick(TapTargetView view) {
+                           super.onTargetClick(view);
+                           view.dismiss(true);
+
+                       }
+
+                       @Override
+                       public void onOuterCircleClick(TapTargetView view) {
+                           super.onOuterCircleClick(view);
+
+                           view.dismiss(true);
+
+                           Toast.makeText(view.getContext(), "Setting Detail", Toast.LENGTH_SHORT).show();
+                       }
+                   });
+
+
+
+
+
+
+
+
+
+       }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         ivlistforgridview = findViewById(R.id.ivlistforgridview);
         onclickforgridview();
         firstStart = PreferenceManager.getDefaultSharedPreferences(this)
@@ -150,6 +256,15 @@ public class MainActivity extends AppCompatActivity {
             RequestMultiplePermission();
         }
         //}
+    }
+
+    private void restorePrefData() {
+
+        prefManager.setFirstTimeLaunch(false);
+
+
+
+
     }
 
     private void onclickforgridview() {
@@ -414,7 +529,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void SettingClick(View view) {
-
         startActivity(new Intent(this, SettingActivity.class));
     }
 

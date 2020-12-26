@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:layout_marginTop="10dp"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/appbar">
 
@@ -91,18 +90,23 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvVideoListforgridview"
         android:layout_width="0dp"
-        android:layout_height="615dp"
-        android:layout_marginBottom="20dp"
+        android:layout_height="0dp"
         android:fadeScrollbars="false"
         android:fadingEdge="vertical"
         android:fastScrollAlwaysVisible="true"
         android:fastScrollEnabled="true"
         android:scrollbars="vertical"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         app:elevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llscreenfordashboard"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
 

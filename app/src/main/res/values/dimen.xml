@@ -3,4 +3,5 @@
     <dimen name="setting_title_font_size">15sp</dimen>
     <dimen name="setting_sub_font_size">12sp</dimen>
     <dimen name="setting_value_font_size">12sp</dimen>
+    <dimen name="showcaseview">20dp</dimen>
 </resources>

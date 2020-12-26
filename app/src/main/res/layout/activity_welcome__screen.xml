@@ -1,55 +1,75 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorforoffwhite"
+    android:padding="10dp"
     >
 
+<androidx.viewpager.widget.ViewPager
+    android:id="@+id/slider"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/welcomepager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <LinearLayout
-        android:id="@+id/layoutdots"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="25dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:alpha=".5"
-        android:layout_marginBottom="18dp"
-        android:layout_above="@id/layoutdots"
-        android:background="@android:color/white" />
+    </androidx.viewpager.widget.ViewPager>
 
     <Button
-        android:id="@+id/btnnrext"
+        android:id="@+id/btn_skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        app:background="@null"
-        android:text="@string/next"
-        android:textSize="18sp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:textStyle="bold"
-        android:textColor="@color/white" />
+        android:background="#00000000"
+        android:onClick="skip"
+        android:padding="10dp"
+        android:text="@string/skip"
+        android:textColor="@color/coloryellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/btnskip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentBottom="true"
-        app:srcCompat="@android:drawable/ic_media_previous" />
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/get_started_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            android:onClick="letgo"
+            android:text="LETS GET STARTED"
+            android:visibility="invisible" />
+
+        <LinearLayout
+            android:id="@+id/dots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp" />
+
+        <ImageView
+            android:id="@+id/btnnext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="@color/coloryellow"
+            android:src="@drawable/mi_ic_next"
+            android:paddingBottom="20dp"
+            android:scaleType="fitXY"
+            android:onClick="next"
+            app:tint="@color/coloryellow"
+             />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
