@@ -26,7 +26,8 @@
 
     <string name="appintro">App Introduction</string>
     <string name="othersetting">OTHER SETTING</string>
-    <string name="storage_emulated_0_screenrecorder_ss_recording">/storage/emulated/0/ScreenRecorder_ss/Recording</string>
+    <string name="storage_emulated_0_screen_cam_recording">/storage/emulated/0/ScreenCam/Recording</string>
+    <string name="main_folder_name">ScreenCam</string>
     <string name="count_down_before_start_the_screen_recording">Count Down Before Start the Recording</string>
     <string name="counting">Counting</string>
     <string name="preview_to_show_video">Preview the video size</string>

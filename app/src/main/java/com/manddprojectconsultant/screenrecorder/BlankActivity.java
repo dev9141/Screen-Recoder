@@ -359,13 +359,14 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
             }
             mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
             int aa = MediaRecorder.VideoSource.SURFACE;
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
 //            videoUri = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 //                    + new StringBuilder("/EDMTRecord_").append(new SimpleDateFormat("dd-MM-yyyy_hh_mm_ss").format(new Date())).append(".mp4").toString();
-            File mainFolerPath = new File(Environment.getExternalStorageDirectory(), "ScreenRecorder_ss");
-            File subFolderPath = new File(mainFolerPath, "temp");
+            String FolderName = getResources().getString(R.string.main_folder_name);
+            File mainFolerPath = new File(Environment.getExternalStorageDirectory(), FolderName);
+            File subFolderPath = new File(mainFolerPath, ".temp");
             File recordingSubFolderPath = new File(mainFolerPath, "Recording");
-            videoUri = recordingSubFolderPath.getPath() + new StringBuilder("/Rec_").append(new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date())).append(".mp4").toString();
+            videoUri = recordingSubFolderPath.getPath() + new StringBuilder("/SC_").append(new SimpleDateFormat("yyMMdd_HHmmss").format(new Date())).append(".mp4").toString();
             CamcorderProfile profile = null;
             String resolution = SPVariables.getString("Resolution", BlankActivity.this);
             if (resolution.equals("1080P")) {
@@ -419,13 +420,13 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
             //DISPLAY_HEIGHT= profile.videoFrameWidth;
             mediaRecorder.setVideoSize(DISPLAY_WIDTH, DISPLAY_HEIGHT);
             //mediaRecorder.setVideoSize(420, 720);
-            mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+            mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
             int FPS = Integer.parseInt(SPVariables.getString("FPS", BlankActivity.this).substring(0, 2));
 //            mediaRecorder.setVideoFrameRate(30);
             mediaRecorder.setVideoFrameRate(FPS);
             mediaRecorder.setVideoEncodingBitRate(profile != null ? profile.videoBitRate : 25000000); // 512000  //30000000
             if (checkAudio) {
-                mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+                mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
                 //mediaRecorder.setAudioSamplingRate(1); //16000
             }
             String ori = SPVariables.getString("Orientation", BlankActivity.this);

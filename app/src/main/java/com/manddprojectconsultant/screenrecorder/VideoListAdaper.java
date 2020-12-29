@@ -165,13 +165,15 @@ public class VideoListAdaper extends RecyclerView.Adapter<VideoListAdaper.ViewHo
                 Uri uri = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
                         ? FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file)
                         : Uri.fromFile(file);
-                Intent shareIntent =
-                        ShareCompat.IntentBuilder.from((Activity) context)
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_PICK);
+                  shareIntent= ShareCompat.IntentBuilder.from((Activity) context)
                                 .setChooserTitle("Share to")
-                                .setType("video/mp4")
+                                .setType("video/*")
                                 .setStream(uri)
                                 .getIntent();
                 if (shareIntent.resolveActivity(context.getPackageManager()) != null) {
+
                     shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     // shareIntent.setPackage("com.whatsapp");
                     context.startActivity(shareIntent);

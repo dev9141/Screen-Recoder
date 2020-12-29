@@ -214,8 +214,9 @@ public class GridLayoutActivity extends AppCompatActivity {
     private ArrayList<VideoModel> getVideoList() {
         ArrayList<VideoModel> lstvideoModel = new ArrayList<>();
         //File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        File file = new File(new File(Environment.getExternalStorageDirectory(), "ScreenRecorder_ss"), "Recording");
-        File temp_file = new File(new File(Environment.getExternalStorageDirectory(), "ScreenRecorder_ss"), "temp");
+        String FolderName = getResources().getString(R.string.main_folder_name);
+        File file = new File(new File(Environment.getExternalStorageDirectory(), FolderName), "Recording");
+        File temp_file = new File(new File(Environment.getExternalStorageDirectory(), FolderName), ".temp");
         File[] files = file.listFiles();
         File[] temp_files = temp_file.listFiles();
         if (files != null && files.length > 0) {
@@ -254,7 +255,7 @@ public class GridLayoutActivity extends AppCompatActivity {
                     lstvideoModel.add(videoModel);
                 }
                 //if (f.getName().startsWith("EDMT") && f.getName().endsWith(".mp4") && f.length()==0){
-                if (f.getName().startsWith("Rec_") && f.getName().endsWith(".mp4") && f.length() == 0) {
+                if (f.getName().startsWith("SC_") && f.getName().endsWith(".mp4") && f.length() == 0) {
                     f.delete();
                 }
             }

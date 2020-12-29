@@ -4,7 +4,7 @@
     package="com.manddprojectconsultant.screenrecorder">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission
+        <uses-permission
         android:name="android.permission.INTERNAL_SYSTEM_WINDOW"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-feature android:glEsVersion="0x00010001" android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -23,13 +24,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GridLayoutActivity"></activity>
+
+        <activity android:name=".GridLayoutActivity" />
         <activity android:name=".Welcome_Screen">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+
+                    </activity>
         <activity android:name=".NotiRecordingStart" />
         <activity android:name=".NotiRecordingStop" />
         <activity
@@ -46,14 +51,18 @@
         <activity android:name=".SettingActivity" />
         <activity
             android:name=".IntroActivity"
-            android:theme="@style/IntroTheme" >
-
-
-        </activity>
+            android:theme="@style/IntroTheme"></activity>
         <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashTheme" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" >
+
+
+
+
+
+
+        </activity>
         <activity
             android:name=".BlankActivity"
             android:launchMode="singleTop" />

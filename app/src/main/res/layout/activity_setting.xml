@@ -445,11 +445,11 @@
 
                     <TextView
                         android:id="@+id/tvfile"
-                        android:layout_width="240dp"
+                        android:layout_width="265dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvfilelocation"
                         android:layout_marginStart="25dp"
-                        android:hint="@string/storage_emulated_0_screenrecorder_ss_recording"
+                        android:hint="@string/storage_emulated_0_screen_cam_recording"
                         android:textAlignment="textStart"
                         android:textSize="13sp" />
 
