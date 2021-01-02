@@ -492,10 +492,6 @@ public class MainActivity extends AppCompatActivity {
         });*/
     }
 
-
-
-
-
     public void SettingClick(View view) {
 
         if (view.getId()==R.id.ivsetting) {
@@ -524,12 +520,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
-
-
 
     class openBubble extends AsyncTask {
         Context context;
@@ -606,11 +596,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
-
-
-
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -635,8 +620,11 @@ public class MainActivity extends AppCompatActivity {
             if (SPVariables.getString("Orientation", context) == null || SPVariables.getString("Orientation", context).isEmpty()) {
                 SPVariables.setString("Orientation", "Portrait", context);
             }
-            if (SPVariables.getString("Camera", context) == null || SPVariables.getString("Camera", context).isEmpty()) {
-                SPVariables.setString("Camera", "Front", context);
+            if (SPVariables.getString("CameraFacing", context) == null || SPVariables.getString("CameraFacing", context).isEmpty()) {
+                SPVariables.setString("CameraFacing", "Front", context);
+            }
+            if (SPVariables.getString("CameraFrame", context) == null || SPVariables.getString("CameraFrame", context).isEmpty()) {
+                SPVariables.setString("CameraFrame", "Round", context);
             }
             if (SPVariables.getString("CameraPreview", context) == null || SPVariables.getString("CameraPreview", context).isEmpty()) {
                 SPVariables.setString("CameraPreview", "Medium", context);
@@ -646,9 +634,6 @@ public class MainActivity extends AppCompatActivity {
             }
             if (SPVariables.getString("CountDown", context) == null || SPVariables.getString("CountDown", context).isEmpty()) {
                 SPVariables.setString("CountDown", "TRUE", context);
-            }
-            if (SPVariables.getString("AppIntro", context) == null || SPVariables.getString("AppIntro", context).isEmpty()) {
-                SPVariables.setString("AppIntro", "TRUE", context);
             }
             if (SPVariables.getString("ShowBubble", context) == null || SPVariables.getString("ShowBubble", context).isEmpty()) {
                 SPVariables.setString("ShowBubble", "TRUE", context);

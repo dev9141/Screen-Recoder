@@ -5,12 +5,14 @@
     android:id="@+id/camPreivew"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@drawable/round"
     app:backgroundTint="@color/colorSemiTranspernt">
 
 
     <FrameLayout
-        android:id="@+id/camera_preview"
+        android:id="@+id/camera_preview_round"
         android:layout_width="100dp"
-        android:layout_height="100dp"/>
+        android:layout_height="100dp"
+        android:background="@drawable/round" />
 
 </LinearLayout>

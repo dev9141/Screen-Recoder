@@ -31,8 +31,10 @@
     <string name="count_down_before_start_the_screen_recording">Count Down Before Start the Recording</string>
     <string name="counting">Counting</string>
     <string name="preview_to_show_video">Preview the video size</string>
+    <string name="preview_frame_to_show_cam">Frame design of camera preview</string>
     <string name="medium">Medium</string>
     <string name="camera_preview">Camera Preview</string>
+    <string name="camera_frame_preview">Camera Preview Frame</string>
     <string name="show_bubble_while_recording">Show Bubble While Recording</string>
     <string name="bubble">Bubble</string>
 

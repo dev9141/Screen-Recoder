@@ -725,9 +725,20 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                     mCamera = getCameraInstance();
                 }
                 mPreview = new CameraPreview(BlankActivity.this, mCamera, wmCam);
-                preview = camPreivew.findViewById(R.id.camera_preview);
 
+                String CameraFrame = SPVariables.getString("CameraFrame", BlankActivity.this);
+                preview = camPreivew.findViewById(R.id.camera_preview);
                 preview.setBackgroundResource(R.drawable.rounded);
+
+
+//                if (CameraFrame.equals("Square")) {
+//
+//                    preview.setBackgroundResource(R.drawable.rounded);
+//                } else {
+//                    //preview = camPreivew.findViewById(R.id.camera_preview_round);
+//                    preview.setBackgroundResource(R.drawable.round);
+//                }
+
 
                 String ratio = SPVariables.getString("CameraPreview", BlankActivity.this);
 
