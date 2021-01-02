@@ -303,6 +303,8 @@ public class MainActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+
+                    //mobile use thase app install kari joie lau
                     videoModel.vTempPath = tf.getPath();
                     videoModel.vResolution = getResolution(f.getPath());
 
