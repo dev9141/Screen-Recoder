@@ -706,7 +706,7 @@
                     android:id="@+id/llShowBubble"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/llCameraFramePreview"
+                    android:layout_below="@id/llCameraPreview"
                     android:layout_marginTop="6dp"
                     android:orientation="vertical">
 
