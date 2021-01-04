@@ -667,7 +667,7 @@ public class FloatingViewService extends Service {
         builder.setSmallIcon(R.drawable.logo);
         builder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
                 R.drawable.logo));
-        builder.setContentTitle("Screen Recorder App");
+        builder.setContentTitle("Screen Cam");
         if(!Recording.isEmpty() && Recording.equals("Start")){
             builder.setContentText("Click here to stop");
         }

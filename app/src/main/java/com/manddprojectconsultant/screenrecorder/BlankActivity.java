@@ -472,7 +472,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
             builder.setSmallIcon(R.drawable.ic_v_cam);
             builder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
                     R.drawable.ic_v_cam));
-            builder.setContentTitle("Screen Recorder App");
+            builder.setContentTitle("Screen Cam");
             builder.setContentText("");
             //builder.setContentText("Description of Notification");
             //builder.setPriority(NotificationCompat.PRIORITY_HIGH);
