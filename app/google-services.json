@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:214711105093:android:e43462665268eb3a1fd52c",
         "android_client_info": {
-          "package_name": "com.manddprojectconsultant.screenrecorder"
+          "package_name": "com.manddprojectconsultant.screencam"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "214711105093-93u5fginodl6m6bjps0nagg8co3cfe7c.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.manddprojectconsultant.screenrecorder",
+            "package_name": "com.manddprojectconsultant.screencam",
             "certificate_hash": "a6f37583abf4dd4cda91092ba1dc906b6ea9b1cb"
           }
         },
