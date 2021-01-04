@@ -553,14 +553,21 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        @SuppressLint("UseCompatLoadingForDrawables")
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             if (onLoad == false) {
                 progressDialog = new ProgressDialog(context);
                 progressDialog.setCancelable(false);
-                progressDialog.setTitle("Loading...");
-                progressDialog.setMessage("Please wait a few seconds");
+                progressDialog.setTitle("Loading");
+               // progressDialog.setIcon(getResources().getDrawable(R.drawable.loading));
+               //progressDialog.setProgressDrawable(getResources().getDrawable(R.drawable.loading));
+
+               progressDialog.setIndeterminateDrawable(getResources().getDrawable(R.drawable.loading));
+
+               // progressDialog.setProgress(getResources().getDrawable(R.drawable.loading));
+                progressDialog.setMessage("Please wait for few seconds while loading the files.... ");
                 progressDialog.show();
             }
         }
