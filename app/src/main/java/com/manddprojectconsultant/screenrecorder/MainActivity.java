@@ -1,5 +1,6 @@
 package com.manddprojectconsultant.screenrecorder;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.shapes.OvalShape;
 import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
@@ -41,9 +43,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetView;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -52,6 +51,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
+
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
+import uk.co.deanwild.materialshowcaseview.shape.RectangleShape;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.RECORD_AUDIO;
@@ -63,120 +67,27 @@ public class MainActivity extends AppCompatActivity {
     public static final int RequestPermissionCode = 7;
     public int width, height, heightU, heightB = 0;
     RecyclerView rvVideoList;
+    String SHOWCASE_ID="custom example";
     ImageView ivsettings, ivlistforgridview;
     VideoListAdaper adaper;
     ArrayList<VideoModel> lstVideo;
     VideoModel videoModel = new VideoModel();
     boolean firstStart;
-    public static IntroActivity introActivity = new IntroActivity();
     PrefManager prefManager;
 
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         setContentView(R.layout.activity_main);
 
-        prefManager=new PrefManager(this);
-       if (prefManager.isFirstTimeLaunch())
-       {
-
-
-           prefManager.setFirstTimeLaunch(false);
-
-           final SpannableString spannableStringforgridview = new SpannableString("See the Gridview while clicking");
-           spannableStringforgridview.setSpan(new UnderlineSpan(), spannableStringforgridview.length() - "TapTargetview".length(), spannableStringforgridview.length(), 0);
-           //Tape Target View Design
-           TapTargetView.showFor(this, TapTarget.forView(findViewById(R.id.ivlistforgridview), "Gridview", spannableStringforgridview)
-                           .cancelable(true)
-                           .drawShadow(true)
-                           .titleTextDimen(R.dimen.showcaseview)
-                           .tintTarget(false)
-                           .id(1)
-                   , new TapTargetView.Listener() {
-                       @Override
-                       public void onTargetClick(TapTargetView view) {
-                           super.onTargetClick(view);
-
-
-
-                           view.dismiss(true);
-
-                       }
-
-                       @Override
-                       public void onOuterCircleClick(TapTargetView view) {
-                           super.onOuterCircleClick(view);
-
-                           view.dismiss(true);
-
-
-                       }
-                   });
-
-
-
-
-           final SpannableString spannableString = new SpannableString("See the Settings of Screen Recorder while clicking ");
-           spannableString.setSpan(new UnderlineSpan(), spannableString.length() - "TapTargetview".length(), spannableString.length(), 0);
-           //Tape Target View Design
-           TapTargetView.showFor(this, TapTarget.forView(findViewById(R.id.ivsetting), "Settings", spannableString)
-                           .cancelable(false)
-                           .drawShadow(true)
-                           .titleTextDimen(R.dimen.showcaseview)
-                           .tintTarget(false)
-                   , new TapTargetView.Listener() {
-                       @Override
-                       public void onTargetClick(TapTargetView view) {
-                           super.onTargetClick(view);
-                           view.dismiss(true);
-
-                       }
-
-                       @Override
-                       public void onOuterCircleClick(TapTargetView view) {
-                           super.onOuterCircleClick(view);
-
-                           view.dismiss(true);
-
-                           Toast.makeText(view.getContext(), "Setting Detail", Toast.LENGTH_SHORT).show();
-                       }
-                   });
-
-
-
-
-
-
-
-
-
-       }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         ivlistforgridview = findViewById(R.id.ivlistforgridview);
+
+
+
+
+
+
+
         onclickforgridview();
         firstStart = PreferenceManager.getDefaultSharedPreferences(this)
                 .getBoolean(PREF_KEY_FIRST_START, true);
@@ -258,27 +169,70 @@ public class MainActivity extends AppCompatActivity {
         //}
     }
 
-    private void restorePrefData() {
-
-        prefManager.setFirstTimeLaunch(false);
 
 
 
-
-    }
 
     private void onclickforgridview() {
         ivlistforgridview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //loadFragment(new FirstFragment());
+
+
+
                 Intent gridlayout = new Intent(MainActivity.this, GridLayoutActivity.class);
                 gridlayout.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(gridlayout);
                 overridePendingTransition(0, 0);
+
+
+
+
+
             }
         });
     }
+
+    private void presentShowcaseSequence() {
+
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(500); // half second between each showcase view
+
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this, SHOWCASE_ID);
+
+        sequence.setOnItemShownListener(new MaterialShowcaseSequence.OnSequenceItemShownListener() {
+            @Override
+            public void onShow(MaterialShowcaseView itemView, int position) {
+                //Toast.makeText(itemView.getContext(), "Item #" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        sequence.setConfig(config);
+
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(ivlistforgridview)
+                        .setDismissText("GOT IT")
+                        .setContentText("GridView,When you click on this button then it sorts Medium List")
+                        .setMaskColour(getResources().getColor(R.color.coloryellow))
+                        .build()
+        );
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(ivsettings)
+                        .setDismissText("GOT IT")
+                        .setContentText("Settings,When you click on this button then it show Settings Screen")
+                        .setMaskColour(getResources().getColor(R.color.coloryellow))
+                        .build()
+        );
+
+        sequence.start();
+
+    }
+
 
     private void loadFragment(Fragment gridLayoutFragment) {
       /*  FragmentManager fm = getFragmentManager();
@@ -295,7 +249,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void checkOrCreateFolder() {
         try {
-            File file = new File(Environment.getExternalStorageDirectory(), "ScreenRecorder_ss");
+            String FolderName = getResources().getString(R.string.main_folder_name);
+            File file = new File(Environment.getExternalStorageDirectory(), FolderName);
             if (!file.exists()) {
                 file.mkdirs();
             }
@@ -303,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
             if (!recordFolder.exists()) {
                 recordFolder.mkdirs();
             }
-            File tempFolder = new File(file, "temp");
+            File tempFolder = new File(file, ".temp");
             if (!tempFolder.exists()) {
                 tempFolder.mkdirs();
             }
@@ -315,8 +270,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<VideoModel> getVideoList() {
         ArrayList<VideoModel> lstvideoModel = new ArrayList<>();
         //File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        File file = new File(new File(Environment.getExternalStorageDirectory(), "ScreenRecorder_ss"), "Recording");
-        File temp_file = new File(new File(Environment.getExternalStorageDirectory(), "ScreenRecorder_ss"), "temp");
+        String FolderName = getResources().getString(R.string.main_folder_name);
+        File file = new File(new File(Environment.getExternalStorageDirectory(), FolderName), "Recording");
+        File temp_file = new File(new File(Environment.getExternalStorageDirectory(), FolderName), ".temp");
         File[] files = file.listFiles();
         File[] temp_files = temp_file.listFiles();
         if (files != null && files.length > 0) {
@@ -347,6 +303,8 @@ public class MainActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+
+                    //mobile use thase app install kari joie lau
                     videoModel.vTempPath = tf.getPath();
                     videoModel.vResolution = getResolution(f.getPath());
 
@@ -355,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
                     lstvideoModel.add(videoModel);
                 }
                 //if (f.getName().startsWith("EDMT") && f.getName().endsWith(".mp4") && f.length()==0){
-                if (f.getName().startsWith("Rec_") && f.getName().endsWith(".mp4") && f.length() == 0) {
+                if (f.getName().startsWith("SC_") && f.getName().endsWith(".mp4") && f.length() == 0) {
                     f.delete();
                 }
             }
@@ -510,6 +468,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeView() {
         ivsettings = findViewById(R.id.ivsetting);
+        presentShowcaseSequence();
+
+
+
+
+
         MainActivity.this.startService(new Intent(MainActivity.this, FloatingViewService.class));
         //finish();
         /*if (SPVariables.getInt("AFTER_INSTALL_FIRST_OPEN", MainActivity.this) == 0) {
@@ -529,7 +493,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void SettingClick(View view) {
+
+        if (view.getId()==R.id.ivsetting) {
+            presentShowCaseforSettings(0);
+        }
         startActivity(new Intent(this, SettingActivity.class));
+    }
+
+    private void presentShowCaseforSettings(int i) {
+
+        new MaterialShowcaseView.Builder(this)
+                .setTarget(ivsettings)
+                .setGravity(32)
+                .setContentText("Settings, When you click on this button it show Settings.")
+                .setDismissText("GOT IT")
+                .setShapePadding(30)
+                .setDelay(3000)
+                .setTooltipMargin(30)
+                .setSequence(true)
+                .setDismissOnTouch(true)
+                .setContentTextColor(getResources().getColor(R.color.colorforoffwhite))
+                .setMaskColour(getResources().getColor(R.color.coloryellow))
+                .setDelay(i) // optional but starting animations immediately in onCreate can make them choppy
+                .singleUse(SHOWCASE_ID) // provide a unique ID used to ensure it is only shown once
+                .show();
+
+
     }
 
     class openBubble extends AsyncTask {
@@ -560,14 +549,25 @@ public class MainActivity extends AppCompatActivity {
             this.onLoad = onLoad;
         }
 
+
+
+
+
+        @SuppressLint("UseCompatLoadingForDrawables")
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             if (onLoad == false) {
                 progressDialog = new ProgressDialog(context);
                 progressDialog.setCancelable(false);
-                progressDialog.setTitle("Loading...");
-                progressDialog.setMessage("Please wait a few seconds");
+                progressDialog.setTitle("Loading");
+               // progressDialog.setIcon(getResources().getDrawable(R.drawable.loading));
+               //progressDialog.setProgressDrawable(getResources().getDrawable(R.drawable.loading));
+
+               progressDialog.setIndeterminateDrawable(getResources().getDrawable(R.drawable.loading));
+
+               // progressDialog.setProgress(getResources().getDrawable(R.drawable.loading));
+                progressDialog.setMessage("Please wait for few seconds while loading the files.... ");
                 progressDialog.show();
             }
         }
@@ -599,6 +599,8 @@ public class MainActivity extends AppCompatActivity {
                 return "NoVideo";
             }
         }
+
+
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
@@ -625,8 +627,11 @@ public class MainActivity extends AppCompatActivity {
             if (SPVariables.getString("Orientation", context) == null || SPVariables.getString("Orientation", context).isEmpty()) {
                 SPVariables.setString("Orientation", "Portrait", context);
             }
-            if (SPVariables.getString("Camera", context) == null || SPVariables.getString("Camera", context).isEmpty()) {
-                SPVariables.setString("Camera", "Front", context);
+            if (SPVariables.getString("CameraFacing", context) == null || SPVariables.getString("CameraFacing", context).isEmpty()) {
+                SPVariables.setString("CameraFacing", "Front", context);
+            }
+            if (SPVariables.getString("CameraFrame", context) == null || SPVariables.getString("CameraFrame", context).isEmpty()) {
+                SPVariables.setString("CameraFrame", "Round", context);
             }
             if (SPVariables.getString("CameraPreview", context) == null || SPVariables.getString("CameraPreview", context).isEmpty()) {
                 SPVariables.setString("CameraPreview", "Medium", context);
@@ -636,9 +641,6 @@ public class MainActivity extends AppCompatActivity {
             }
             if (SPVariables.getString("CountDown", context) == null || SPVariables.getString("CountDown", context).isEmpty()) {
                 SPVariables.setString("CountDown", "TRUE", context);
-            }
-            if (SPVariables.getString("AppIntro", context) == null || SPVariables.getString("AppIntro", context).isEmpty()) {
-                SPVariables.setString("AppIntro", "TRUE", context);
             }
             if (SPVariables.getString("ShowBubble", context) == null || SPVariables.getString("ShowBubble", context).isEmpty()) {
                 SPVariables.setString("ShowBubble", "TRUE", context);

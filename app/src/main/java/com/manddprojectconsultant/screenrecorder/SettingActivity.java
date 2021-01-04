@@ -34,12 +34,12 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
     ImageView llAppIntro, ivbackbutton;
     //final String[] list = getActivity().getResources().getStringArray(R.array.Choice_items);
     String[] ResolutionList, QualityList, FPSList, OrientationList, CameraList, CameraListPreview;
-    public static final String mypreference = "mypref";
     public static final String Resolution = "Resolution";
     public static final String VideoQuality = "Quality";
     public static final String FPS = "FPS";
     public static final String Orientation = "Orientation";
     public static final String CameraFacing= "CameraFacing";
+    public static final String CameraFrame= "CameraFrame";
     public static final String CameraPreview = "CameraPreview";
 
 

@@ -184,7 +184,13 @@ public class Welcome_Screen extends AppCompatActivity {
     }
 
     public void next(View view) {
-        viewPager.setCurrentItem(currentPos + 1);
+        if(letsGetStarted.getVisibility() == View.INVISIBLE){
+            viewPager.setCurrentItem(currentPos + 1);
+        }
+        else{
+            letgo(view);
+        }
+
     }
 
     public void letgo(View view) {

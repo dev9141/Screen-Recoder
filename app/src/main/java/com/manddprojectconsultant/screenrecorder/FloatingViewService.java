@@ -12,8 +12,15 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
+import android.icu.number.Scale;
 import android.os.Build;
 import android.os.IBinder;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.TransitionManager;
+import android.transition.TransitionSet;
+import android.transition.Visibility;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -22,7 +29,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -31,6 +41,9 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import java.util.Random;
 
@@ -181,10 +194,31 @@ public class FloatingViewService extends Service {
             private float initialTouchX;
             private float initialTouchY;
 
+
+
+
+
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
+
+
+                TransitionSet set = new TransitionSet();
+                set.setOrdering(TransitionSet.MATCH_INSTANCE);
+                set.setDuration(100);
+                set.addTransition(new Fade());
+                set.addTarget(v);
+
+
+
+
+
                 if (gestureDetector.onTouchEvent(event)) {
+
+
+
+
 
                     int Xdiff = (int) (event.getRawX() - initialTouchX);
                     int Ydiff = (int) (event.getRawY() - initialTouchY);
@@ -208,7 +242,6 @@ public class FloatingViewService extends Service {
 
                             expandedView.setVisibility(View.VISIBLE);
 
-
                             Intent intent = new Intent(getApplicationContext(), BackgroundActivity.class);
                             //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -222,7 +255,7 @@ public class FloatingViewService extends Service {
                             isExpand = 0;
                             expandedView.setVisibility(View.GONE);
 //                            FrameLayout.LayoutParams params =
-//                                    (FrameLayout.LayoutParams)recordView.getLayoutParams();
+//                                    (Fra  meLayout.LayoutParams)recordView.getLayoutParams();
 //                            params.setMargins(0, 0, 0, 0);
 //                            recordView.setLayoutParams(params);
 //                            backgroundActivity.rootBGView.setBackgroundColor(getResources().getColor(R.color.transpermt));
@@ -310,6 +343,7 @@ public class FloatingViewService extends Service {
         });
 
 
+
         mFloatingView.findViewById(R.id.collapse_view).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -380,6 +414,8 @@ public class FloatingViewService extends Service {
                             mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.VISIBLE);
                             mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.GONE);
                             mFloatingView.findViewById(R.id.close_btn).setVisibility(View.VISIBLE);
+
+
 
 
 
@@ -628,9 +664,9 @@ public class FloatingViewService extends Service {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
 
-        builder.setSmallIcon(R.drawable.ic_v_cam);
+        builder.setSmallIcon(R.drawable.logo);
         builder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
-                R.drawable.ic_v_cam));
+                R.drawable.logo));
         builder.setContentTitle("Screen Recorder App");
         if(!Recording.isEmpty() && Recording.equals("Start")){
             builder.setContentText("Click here to stop");

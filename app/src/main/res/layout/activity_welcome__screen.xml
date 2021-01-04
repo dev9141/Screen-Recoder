@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorforoffwhite"
-    android:padding="10dp"
+    android:padding="5dp"
     >
 
 <androidx.viewpager.widget.ViewPager
     android:id="@+id/slider"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+    android:layout_height="wrap_content"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
@@ -34,7 +33,7 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/slider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -42,9 +41,10 @@
             android:id="@+id/get_started_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_margin="10dp"
             android:background="@color/colorPrimary"
             android:onClick="letgo"
+            android:padding="10dp"
             android:text="LETS GET STARTED"
             android:visibility="invisible" />
 
@@ -53,6 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:gravity="center"
             android:orientation="horizontal"
             android:paddingBottom="20dp" />
 
@@ -63,12 +65,11 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:backgroundTint="@color/coloryellow"
-            android:src="@drawable/mi_ic_next"
+            android:onClick="next"
             android:paddingBottom="30dp"
             android:scaleType="fitXY"
-            android:onClick="next"
-            app:tint="@color/coloryellow"
-             />
+            android:src="@drawable/mi_ic_next"
+            app:tint="@color/coloryellow" />
 
     </RelativeLayout>
 
