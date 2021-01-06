@@ -6,7 +6,7 @@
     android:background="@color/colorforoffwhite">
 
 
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
         android:id="@+id/slider_image"
         android:layout_width="0dp"
         android:layout_height="350dp"
@@ -16,21 +16,9 @@
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/videorecoder" />
+      />
 
-    <TextView
-        android:id="@+id/slider_heading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:gravity="center"
-        android:text="TextView"
-        android:textAlignment="center"
-        android:textColor="@color/coloryellow"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/slider_image" />
+
 
     <TextView
         android:id="@+id/slider_desc"
@@ -41,8 +29,8 @@
         android:padding="10dp"
         android:textColorHint="@color/coloryellow"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/slider_heading" />
+        app:layout_constraintTop_toBottomOf="@id/slider_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>

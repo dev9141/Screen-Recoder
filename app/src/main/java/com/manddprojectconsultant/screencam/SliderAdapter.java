@@ -1,10 +1,13 @@
+
 package com.manddprojectconsultant.screencam;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -19,16 +22,18 @@ public class SliderAdapter extends PagerAdapter {
         this.context = mContext;
     }
 
-    int gif[] = {
-            R.drawable.settingsvideo,
-            R.drawable.videorecoder,
-            R.drawable.screenshortforrecosing,
+    int image[] = {
+            R.drawable.dashboard,
+            R.drawable.videorecorder,
+            R.drawable.shake,
+
+
+
+
+
     };
-    int tittle[] = {
-            R.string.HomePage,
-            R.string.Videoscreenshort,
-            R.string.screenshort,
-    };
+
+
     int description[] =
             {
                     R.string.HomePagedescription,
@@ -38,7 +43,7 @@ public class SliderAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return tittle.length;
+        return description.length;
     }
 
     @Override
@@ -53,15 +58,13 @@ public class SliderAdapter extends PagerAdapter {
         View view = inflater.inflate(R.layout.welcome_page_1, container, false);
         // find view for init
 
-        GifImageView gifImageView = view.findViewById(R.id.slider_image);
-        TextView tvtitle = view.findViewById(R.id.slider_heading);
+        ImageView imageView = view.findViewById(R.id.slider_image);
         TextView tvdescription = view.findViewById(R.id.slider_desc);
 
 
-        gifImageView.setImageResource(gif[position]);
-        tvtitle.setText(tittle[position]);
+        imageView.setImageResource(image[position]);
         tvdescription.setHint(description[position]);
-
+        //Toast.makeText(context, "Position is: "+image[position], Toast.LENGTH_SHORT).show();
         container.addView(view);
 
         return view;

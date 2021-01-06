@@ -50,9 +50,7 @@
 
         <activity android:name="com.manddprojectconsultant.screencam.VideoPlayerActivity" />
         <activity android:name="com.manddprojectconsultant.screencam.SettingActivity" />
-        <activity
-            android:name="com.manddprojectconsultant.screencam.IntroActivity"
-            android:theme="@style/IntroTheme" />
+
         <activity
             android:name="com.manddprojectconsultant.screencam.SplashScreen"
             android:theme="@style/SplashTheme" />

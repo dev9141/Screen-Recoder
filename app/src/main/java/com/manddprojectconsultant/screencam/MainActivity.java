@@ -44,6 +44,8 @@ import java.util.concurrent.TimeUnit;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
+import uk.co.deanwild.materialshowcaseview.shape.CircleShape;
+import uk.co.deanwild.materialshowcaseview.shape.RectangleShape;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.RECORD_AUDIO;
@@ -203,8 +205,9 @@ public class MainActivity extends AppCompatActivity {
                 new MaterialShowcaseView.Builder(this)
                         .setTarget(ivlistforgridview)
                         .setDismissText("GOT IT")
-                        .setContentText("GridView,When you click on this button then it sorts Medium List")
+                        .setContentText("Click here for list /grid view")
                         .setMaskColour(getResources().getColor(R.color.coloryellow))
+
                         .build()
         );
 
@@ -212,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 new MaterialShowcaseView.Builder(this)
                         .setTarget(ivsettings)
                         .setDismissText("GOT IT")
-                        .setContentText("Settings,When you click on this button then it show Settings Screen")
+                        .setContentText("Set Video Configuration of resolution, frame, video quality, audio, camera view")
                         .setMaskColour(getResources().getColor(R.color.coloryellow))
                         .build()
         );

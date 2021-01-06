@@ -1,22 +1,12 @@
 <resources>
     <string name="app_name">Screen Cam</string>
-    <string name="title_1">Title 1</string>
-    <string name="description_1">description 1</string>
-    <string name="title_menu_reset_first_start">Reset "First start" flag</string>
-    <string name="description_home_screen">"Dashboard to show the List in a video"</string>
-    <string name="recording_parameters">RECORDING PARAMETERS</string>
-    <string name="resolution">Resolution</string>
     <string name="videos_with_higher_resolution_look_sharper">Videos with higher resolution</string>
-    <string name="_1280_720">1280*720</string>
     <string name="hd">HD</string>
     <string name="orientation">Orientation</string>
-    <string name="orientation_of_recorded_videos">Orientation of recorded videos</string>
     <string name="fps">FPS</string>
     <string name="_60fps">60FPS</string>
     <string name="audio_camera_setting"><![CDATA[AUDIO & CAMERA SETTING]]></string>
-    <string name="descriptionforwlecomescreenforsettings">In settings screen,when i click on resolution it show this screen</string>
 
-    <string name="videoswithhigher">Videos with higher resolution look sharper</string>
     <string name="videoquality">Higher quality means bigger file size</string>
     <string name="recordaudio">Record Audio</string>
     <string name="soundrecord">Sound record or not</string>
@@ -24,17 +14,13 @@
 
     <string name="camerafaces">Camera view</string>
 
-    <string name="appintro">App Introduction</string>
-    <string name="othersetting">OTHER SETTING</string>
     <string name="storage_emulated_0_screen_cam_recording">/storage/emulated/0/ScreenCam/Recording</string>
     <string name="main_folder_name">ScreenCam</string>
     <string name="count_down_before_start_the_screen_recording">Count Down Before Start the Recording</string>
     <string name="counting">Counting</string>
     <string name="preview_to_show_video">Preview the video size</string>
-    <string name="preview_frame_to_show_cam">Frame design of camera preview</string>
     <string name="medium">Medium</string>
     <string name="camera_preview">Camera Preview</string>
-    <string name="camera_frame_preview">Camera Preview Frame</string>
     <string name="show_bubble_while_recording">Show Bubble While Recording</string>
     <string name="bubble">Bubble</string>
 
@@ -78,11 +64,7 @@
         <item>Small</item>
     </string-array>
 
-    <string name="start">GOT IT</string>
-    <string name="next">NEXT</string>
 
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="_40fps">40FPS</string>
     <string name="_30fps">30FPS</string>
     <string name="_25fps">25FPS</string>
@@ -93,10 +75,7 @@
     <string name="cancel">Cancel</string>
     <string name="skip">Skip</string>
     <string name="settings">Settings</string>
-    <string name="HomePage">HomePage</string>
-    <string name="Videoscreenshort">Video+ScreenRecord</string>
-    <string name="screenshort">Screen Record</string>
-    <string name="HomePagedescription">How to use Dashboard,it show the process on this video</string>
-    <string name="Videoscreenshortdescription">How to use Video + Screen Recorder,it show the process on this video</string>
-    <string name="screenshortdescriptioon">How to use Screen Recorder,it show the process on this video</string>
+    <string name="HomePagedescription">Manage your recording by list/grid display and also can share with anyone by any application</string>
+    <string name="Videoscreenshortdescription">Record your screen with front or back camera.You Can record gaming videos, live streaming videos with good clarity…</string>
+    <string name="screenshortdescriptioon">It has shake and stop the feature. With this you can stop your recording by just shaking your device.No need to trim or crop</string>
 </resources>
