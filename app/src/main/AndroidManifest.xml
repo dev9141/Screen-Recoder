@@ -27,6 +27,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8674673470489334~1123104705"/>
+
         <activity android:name="com.manddprojectconsultant.screencam.Checkingforbutton"></activity>
         <activity android:name="com.manddprojectconsultant.screencam.GridLayoutActivity" />
         <activity android:name="com.manddprojectconsultant.screencam.Welcome_Screen">

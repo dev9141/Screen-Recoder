@@ -32,6 +32,10 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -60,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     String SHOWCASE_ID="custom example";
     ImageView ivsettings, ivlistforgridview;
     VideoListAdaper adaper;
+    AdView adsinlistview;
+
     ArrayList<VideoModel> lstVideo;
     VideoModel videoModel = new VideoModel();
     boolean firstStart;
@@ -70,8 +76,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
+
         ivlistforgridview = findViewById(R.id.ivlistforgridview);
 
+
+
+        //Ads
+
+        adsinlistview=findViewById(R.id.adsinlistview);
+
+        Adshow();
 
 
 
@@ -159,9 +176,12 @@ public class MainActivity extends AppCompatActivity {
         //}
     }
 
+    private void Adshow() {
+        MobileAds.initialize(this,"ca-app-pub-8674673470489334~1123104705");
+        AdRequest adRequest=new AdRequest.Builder().build();
+        adsinlistview.loadAd(adRequest);
 
-
-
+    }
 
     private void onclickforgridview() {
         ivlistforgridview.setOnClickListener(new View.OnClickListener() {

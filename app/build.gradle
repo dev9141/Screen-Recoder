@@ -45,8 +45,12 @@ android {
         implementation 'androidx.legacy:legacy-support-v4:1.0.0'
         //implementation 'com.writingminds:FFmpegAndroid:0.3.2'
 
-        //showcase view
+        //Google ads
 
+        implementation 'com.google.android.gms:play-services-ads:19.6.0'
+
+
+        //showcase view
         implementation 'com.github.deano2390:MaterialShowcaseView:1.3.4'
 
         //gif video dependency
