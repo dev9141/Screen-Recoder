@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -196,14 +197,21 @@ public class GridLayoutActivity extends AppCompatActivity {
             this.onLoad = onLoad;
         }
 
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             if (onLoad == false) {
                 progressDialog = new ProgressDialog(context);
                 progressDialog.setCancelable(false);
-                progressDialog.setTitle("Loading...");
-                progressDialog.setMessage("Please wait a few seconds");
+                progressDialog.setTitle("Loading");
+                // progressDialog.setIcon(getResources().getDrawable(R.drawable.loading));
+                //progressDialog.setProgressDrawable(getResources().getDrawable(R.drawable.loading));
+
+                progressDialog.setIndeterminateDrawable(getResources().getDrawable(R.drawable.loading));
+
+                // progressDialog.setProgress(getResources().getDrawable(R.drawable.loading));
+                progressDialog.setMessage("Please wait for few seconds while loading the files.... ");
                 progressDialog.show();
             }
         }
