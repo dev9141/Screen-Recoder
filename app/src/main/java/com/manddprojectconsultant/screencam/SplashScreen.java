@@ -77,9 +77,9 @@ public class SplashScreen extends AppCompatActivity {
 
     private void init() {
 
-        ivsplashlogo=findViewById(R.id.ivsplashlogo);
-        topanim = AnimationUtils.loadAnimation(this, R.anim.animation);
-        ivsplashlogo.setAnimation(topanim);
+        //ivsplashlogo=findViewById(R.id.ivsplashlogo);
+        /*topanim = AnimationUtils.loadAnimation(this, R.anim.animation);
+        ivsplashlogo.setAnimation(topanim);*/
 
     }
 

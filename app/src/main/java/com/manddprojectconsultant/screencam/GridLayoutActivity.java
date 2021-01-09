@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +23,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -43,19 +48,34 @@ public class GridLayoutActivity extends AppCompatActivity {
     ArrayList<VideoModel> lstVideo;
     VideoListforgridadapter adapter;
 
+    AdView adsingridview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_layout);
+
+
+
+
+
+
+
+
         lstVideo = new ArrayList<>();
         if (CheckingPermissionIsEnabledOrNot()) {
-
-
             init();
         }else {
             //Calling method to enable permission.
             RequestMultiplePermission();
         }
+
+
+        adsingridview=findViewById(R.id.adsingridview);
+        Adshow();
+
+
+
         ivsettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,6 +96,13 @@ public class GridLayoutActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
             }
         });*/
+    }
+
+    private void Adshow() {
+        MobileAds.initialize(this,"ca-app-pub-8674673470489334~1123104705");
+        AdRequest adRequest=new AdRequest.Builder().build();
+        adsingridview.loadAd(adRequest);
+
     }
 
     private void init() {
@@ -170,14 +197,21 @@ public class GridLayoutActivity extends AppCompatActivity {
             this.onLoad = onLoad;
         }
 
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             if (onLoad == false) {
                 progressDialog = new ProgressDialog(context);
                 progressDialog.setCancelable(false);
-                progressDialog.setTitle("Loading...");
-                progressDialog.setMessage("Please wait a few seconds");
+                progressDialog.setTitle("Loading");
+                // progressDialog.setIcon(getResources().getDrawable(R.drawable.loading));
+                //progressDialog.setProgressDrawable(getResources().getDrawable(R.drawable.loading));
+
+                progressDialog.setIndeterminateDrawable(getResources().getDrawable(R.drawable.loading));
+
+                // progressDialog.setProgress(getResources().getDrawable(R.drawable.loading));
+                progressDialog.setMessage("Please wait for few seconds while loading the files.... ");
                 progressDialog.show();
             }
         }

@@ -258,6 +258,9 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void stopRecording() {
         try {
+
+
+
             mediaRecorder.stop();
             mediaRecorder.reset();
             stopRecordScreen();
