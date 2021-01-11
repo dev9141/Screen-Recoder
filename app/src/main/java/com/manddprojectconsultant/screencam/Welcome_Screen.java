@@ -172,6 +172,8 @@ public class Welcome_Screen extends AppCompatActivity {
     public void skip(View view) {
         startActivity(new Intent(this, MainActivity.class));
         prefManager.setFirstTimeLaunch(false);
+        new GooglePlayStoreAppVersionNameLoader().execute();
+
         finish();
     }
 
@@ -188,6 +190,8 @@ public class Welcome_Screen extends AppCompatActivity {
     public void letgo(View view) {
         startActivity(new Intent(this, MainActivity.class));
         prefManager.setFirstTimeLaunch(false);
+        new GooglePlayStoreAppVersionNameLoader().execute();
+
         finish();
 
 

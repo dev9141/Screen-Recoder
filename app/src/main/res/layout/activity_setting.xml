@@ -66,11 +66,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="48dp"
+        android:orientation="vertical"
+        android:overScrollMode="never"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        android:overScrollMode="never"
         app:layout_constraintTop_toBottomOf="@+id/appbar">
 
         <LinearLayout
@@ -85,7 +85,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
 
 
                 <TextView
@@ -159,10 +158,6 @@
 
 
                 </RelativeLayout>
-
-
-
-
 
 
                 <RelativeLayout
@@ -357,7 +352,6 @@
             </RelativeLayout>
 
 
-
             <RelativeLayout
                 android:id="@+id/relativeforaudioandsettings"
                 android:layout_width="match_parent"
@@ -455,11 +449,6 @@
 
 
                 </RelativeLayout>
-
-
-
-
-
 
 
                 <RelativeLayout
@@ -573,8 +562,6 @@
 
 
                 </RelativeLayout>
-
-
 
 
                 <RelativeLayout
@@ -747,6 +734,77 @@
                             android:layout_marginEnd="15dp"
                             tools:ignore="Suspicious0dp,UseSwitchCompatOrMaterialXml" />
                     </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/llShare"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/llShowBubble"
+                    android:layout_marginTop="6dp"
+                    android:onClick="Sharethelink"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tvshare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:padding="3dp"
+                        android:text="Share"
+                        android:textColor="@color/coloryellow"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvsharethisapp"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvshare"
+                        android:layout_marginStart="25dp"
+                        android:hint="@string/share_this_app_to_your_circle"
+                        android:textAlignment="inherit"
+                        android:textSize="13sp" />
+
+
+                </RelativeLayout>
+
+
+
+
+                <RelativeLayout
+                    android:id="@+id/llrating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/llShare"
+                    android:layout_marginTop="6dp"
+                    android:onClick="Rating"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tvrating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:padding="3dp"
+                        android:text="@string/rating_and_feedback"
+                        android:textColor="@color/coloryellow"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvratingandfeedback"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvrating"
+                        android:layout_marginStart="25dp"
+                        android:hint="@string/rating_and_feedback_this_app"
+                        android:textAlignment="inherit"
+                        android:textSize="13sp" />
 
 
                 </RelativeLayout>

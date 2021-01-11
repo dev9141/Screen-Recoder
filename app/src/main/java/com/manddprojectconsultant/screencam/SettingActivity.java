@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -12,11 +13,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 public class SettingActivity extends AppCompatActivity implements CameraPreviewFragment.ItemClickListenercamerapreview,CameraFacingFragment.ItemClickListenercamerafacing ,OrientationFragment.ItemClickListenerorientation, FPSFragment.ItemClickListenerfps, QualitySheetFragment.ItemClickListenervideo, ResolutionSheetDialog.ItemClickListener {
     public static final int REQUEST_CODE_INTRO = 1;
     public static final String PREF_KEY_FIRST_START = "com.heinrichreimersoftware.materialintro.demo.PREF_KEY_FIRST_START";
     private RelativeLayout llResolution, llQuality, llFPS, llOrientation, llRecordAudio, llFileLocation, llCountDown,
-            llCamera, llCameraPreview, llShowBubble;
+            llCamera, llCameraPreview, llShowBubble,llRating,llShare;
     private TextView tvResolution, tvQuality, tvFPS, tvOrientation, tvCamera, tvCameraPreview;
     private Switch swRecordAudio, swCountDown, swAppIntro, swShowBubble;
     ImageView llAppIntro, ivbackbutton;
@@ -228,6 +230,9 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
 
 
 
+
+
+
         swRecordAudio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -406,6 +411,34 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
         startActivity(new Intent(SettingActivity.this, SettingActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
         finish();
         overridePendingTransition(0, 0);
+
+    }
+
+    public void Rating(View view) {
+
+        //Rating bar code
+
+        /*Uri uri = Uri.parse("market://details?id=" + getPackageName());
+        Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            startActivity(myAppLinkToMarket);
+        } catch (Exception e) {
+            Toast.makeText(this, " unable to find market app", Toast.LENGTH_LONG).show();
+        }*/
+
+
+        //Please check this out upwards code
+        Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    public void Sharethelink(View view) {
+
+
+        //Please check this out upwards code
+        Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
+
 
     }
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:background="@color/transpermt"
     tools:context=".MainActivity">
 
@@ -12,8 +12,8 @@
         android:id="@+id/llscreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:orientation="vertical"
+        android:padding="5dp"
         app:layout_constraintTop_toBottomOf="@id/appbar">
 
         <!--<ImageView
@@ -28,7 +28,6 @@
             app:tint="@color/coloryellow"
             android:src="@drawable/list"
             android:focusable="true" />-->
-
 
 
     </LinearLayout>
@@ -73,12 +72,12 @@
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
+                android:layout_marginStart="15dp"
                 android:clickable="true"
-               android:layout_marginStart="15dp"
+                android:focusable="true"
                 android:padding="5dp"
-                app:tint="@color/coloryellow"
                 android:src="@drawable/list"
-                android:focusable="true" />
+                app:tint="@color/coloryellow" />
 
             <ImageView
                 android:id="@+id/ivsetting"
@@ -88,11 +87,13 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
                 android:clickable="true"
+
+
+                android:focusable="true"
                 android:onClick="SettingClick"
-                app:tint="@color/coloryellow"
                 android:src="@drawable/ic_baseline_settings_24"
-                android:focusable="true" />
-                                  </RelativeLayout>
+                app:tint="@color/coloryellow" />
+        </RelativeLayout>
 
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -101,12 +102,12 @@
         android:id="@+id/rvVideoList1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="10dp"
-        android:layout_marginBottom="50dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
+        android:layout_marginBottom="50dp"
         android:elevation="5dp"
         android:fadeScrollbars="true"
+        android:padding="10dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -131,19 +132,16 @@
         app:layout_constraintVertical_bias="0.922">
 
 
-
         <com.google.android.gms.ads.AdView
             android:id="@+id/adsinlistview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-8674673470489334/4546332635"/>
+            ads:adUnitId="ca-app-pub-8674673470489334/4546332635" />
 
 
     </LinearLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
