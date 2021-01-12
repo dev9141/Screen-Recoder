@@ -15,5 +15,12 @@ public class Reference {
      *   ++ Home Screen check List video thumbail on 144P
      *   +-File Rename Option on Edit button on Home Screen
      *   ++ Info Screen remaining
+     * -- orientation camera preview
+     * -- camera preview frame
+     * --play and pause
+     * --camera flash
      * */
+
+
+
 }
