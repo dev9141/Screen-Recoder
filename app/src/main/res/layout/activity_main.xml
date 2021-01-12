@@ -8,29 +8,7 @@
     android:background="@color/transpermt"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/llscreen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp"
-        app:layout_constraintTop_toBottomOf="@id/appbar">
 
-        <!--<ImageView
-            android:id="@+id/ivlistforgridview"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="10dp"
-            android:clickable="true"
-            android:padding="5dp"
-            android:onClick="SettingClick"
-            app:tint="@color/coloryellow"
-            android:src="@drawable/list"
-            android:focusable="true" />-->
-
-
-    </LinearLayout>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -113,7 +91,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llscreen"
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
         app:layout_constraintVertical_bias="0.0">
 
     </androidx.recyclerview.widget.RecyclerView>
