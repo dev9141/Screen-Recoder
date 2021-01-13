@@ -418,18 +418,18 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
 
         //Rating bar code
 
-        /*Uri uri = Uri.parse("market://details?id=" + getPackageName());
+        Uri uri = Uri.parse("market://details?id=" + getPackageName());
         Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
         try {
             startActivity(myAppLinkToMarket);
         } catch (Exception e) {
             Toast.makeText(this, " unable to find market app", Toast.LENGTH_LONG).show();
-        }*/
+        }
 
 
-        //Please check this out upwards code
+        /*//Please check this out upwards code
         Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
-
+*/
 
     }
 
