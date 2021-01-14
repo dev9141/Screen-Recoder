@@ -745,16 +745,19 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
 
                 int CamPreviewWidth, CamPreviewHeight;
                 if(ratio.equals("Large")){
-                    CamPreviewWidth = 180;
-                    CamPreviewHeight = 300;
+                    CamPreviewWidth = 200;
+                    CamPreviewHeight = 200;
+                    //300
                 }
                 else if(ratio.equals("Medium")){
-                    CamPreviewWidth = 150;
-                    CamPreviewHeight = 250;
+                    CamPreviewWidth = 170;
+                    CamPreviewHeight = 170;
+                    //250
                 }
                 else {
-                    CamPreviewWidth = 120;
-                    CamPreviewHeight = 200;
+                    CamPreviewWidth = 140;
+                    CamPreviewHeight = 140;
+                    //200
                 }
 
                 LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)preview.getLayoutParams();

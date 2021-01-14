@@ -10,9 +10,9 @@
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 1,
-      "versionName": "1.0",
-      "outputFile": "Screen Cam1.0.apk"
+      "versionCode": 2,
+      "versionName": "1.2",
+      "outputFile": "Screen Cam1.2.apk"
     }
   ]
 }
