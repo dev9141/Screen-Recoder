@@ -96,7 +96,15 @@
     <string name="HomePage">HomePage</string>
     <string name="Videoscreenshort">Video+ScreenRecord</string>
     <string name="screenshort">Screen Record</string>
-    <string name="HomePagedescription">How to use Dashboard,it show the process on this video</string>
-    <string name="Videoscreenshortdescription">How to use Video + Screen Recorder,it show the process on this video</string>
-    <string name="screenshortdescriptioon">How to use Screen Recorder,it show the process on this video</string>
+    <string name="HomePagedescription">Manage your recording by list/grid display and also can share with anyone by any application</string>
+    <string name="Videoscreenshortdescription">Record your screen with front or back camera.You Can record gaming videos, live streaming videos with good clarity…</string>
+    <string name="screenshortdescriptioon">It has shake and stop the feature. With this you can stop your recording by just shaking your device.No need to trim or crop</string>
+
+    <string name="made_in_india">MADE IN INDIA</string>
+
+
+    <string name="share_this_app_to_your_circle">Share this app to your Circle</string>
+    <string name="rating_and_feedback">Rating and Feedback</string>
+    <string name="rating_and_feedback_this_app">Rating and Feedback this App</string>
+
 </resources>

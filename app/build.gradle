@@ -12,6 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     compileOptions {
@@ -58,9 +59,13 @@ android {
             implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
             implementation 'com.google.firebase:firebase-analytics:17.6.0'
 
-        //Ads
-       implementation 'com.facebook.android:audience-network-sdk:6.1.0'
+        //Google ads
 
+        implementation 'com.google.android.gms:play-services-ads:19.6.0'
+
+        //Dependecy for update in play store
+        implementation 'org.jsoup:jsoup:1.11.1'
+        implementation 'com.google.android.play:core:1.8.2'
 
         //Material Design
         implementation 'com.google.android.material:material:1.2.1'

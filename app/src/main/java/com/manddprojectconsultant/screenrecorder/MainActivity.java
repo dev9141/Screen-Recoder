@@ -43,6 +43,10 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -74,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     VideoModel videoModel = new VideoModel();
     boolean firstStart;
     PrefManager prefManager;
-
+    AdView adsinlistview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +86,11 @@ public class MainActivity extends AppCompatActivity {
 
         ivlistforgridview = findViewById(R.id.ivlistforgridview);
 
+        //Ads
 
+        adsinlistview=findViewById(R.id.adsinlistview);
+
+        Adshow();
 
 
 
@@ -169,9 +177,12 @@ public class MainActivity extends AppCompatActivity {
         //}
     }
 
+    private void Adshow() {
+        MobileAds.initialize(this,"ca-app-pub-8674673470489334~1123104705");
+        AdRequest adRequest=new AdRequest.Builder().build();
+        adsinlistview.loadAd(adRequest);
 
-
-
+    }
 
     private void onclickforgridview() {
         ivlistforgridview.setOnClickListener(new View.OnClickListener() {
@@ -215,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                 new MaterialShowcaseView.Builder(this)
                         .setTarget(ivlistforgridview)
                         .setDismissText("GOT IT")
-                        .setContentText("GridView,When you click on this button then it sorts Medium List")
+                        .setContentText("Click here for list /grid view")
                         .setMaskColour(getResources().getColor(R.color.coloryellow))
                         .build()
         );
@@ -224,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
                 new MaterialShowcaseView.Builder(this)
                         .setTarget(ivsettings)
                         .setDismissText("GOT IT")
-                        .setContentText("Settings,When you click on this button then it show Settings Screen")
+                        .setContentText("Set Video Configuration of resolution, frame, video quality, audio, camera view")
                         .setMaskColour(getResources().getColor(R.color.coloryellow))
                         .build()
         );

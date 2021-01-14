@@ -38,6 +38,7 @@ public class Welcome_Screen extends AppCompatActivity {
      ImageView btnnext;
     Animation animation;
     int currentPos;
+    TextView tvmadeinindia;
 
     PrefManager prefManager;
 
@@ -93,6 +94,7 @@ public class Welcome_Screen extends AppCompatActivity {
         letsGetStarted = findViewById(R.id.get_started_btn);
         btnskip=findViewById(R.id.btn_skip);
         btnnext=findViewById(R.id.btnnext);
+        tvmadeinindia=findViewById(R.id.tvmadeinindia);
 
     }
 
@@ -158,13 +160,15 @@ public class Welcome_Screen extends AppCompatActivity {
 
             if (position == 0) {
                 letsGetStarted.setVisibility(View.INVISIBLE);
+                tvmadeinindia.setVisibility(View.VISIBLE);
             } else if (position == 1) {
                 letsGetStarted.setVisibility(View.INVISIBLE);
-
+                tvmadeinindia.setVisibility(View.INVISIBLE);
             } else {
                 animation = AnimationUtils.loadAnimation(Welcome_Screen.this, R.anim.button_animation);
                 letsGetStarted.setAnimation(animation);
                 letsGetStarted.setVisibility(View.VISIBLE);
+                tvmadeinindia.setVisibility(View.INVISIBLE);
             }
 
         }
@@ -178,12 +182,17 @@ public class Welcome_Screen extends AppCompatActivity {
 
 
     public void skip(View view) {
+        new GooglePlayStoreAppVersionNameLoader().execute();
+
         startActivity(new Intent(this, MainActivity.class));
         prefManager.setFirstTimeLaunch(false);
         finish();
     }
 
     public void next(View view) {
+
+
+
         if(letsGetStarted.getVisibility() == View.INVISIBLE){
             viewPager.setCurrentItem(currentPos + 1);
         }
@@ -194,6 +203,7 @@ public class Welcome_Screen extends AppCompatActivity {
     }
 
     public void letgo(View view) {
+        new GooglePlayStoreAppVersionNameLoader().execute();
         startActivity(new Intent(this, MainActivity.class));
         prefManager.setFirstTimeLaunch(false);
         finish();

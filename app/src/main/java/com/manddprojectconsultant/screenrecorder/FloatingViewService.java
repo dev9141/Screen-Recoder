@@ -45,6 +45,11 @@ import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.Random;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -70,7 +75,7 @@ public class FloatingViewService extends Service {
     public static View expandedView;
 
     public RelativeLayout recordView;
-
+    InterstitialAd interstitialAd;
     public static MainActivity mainActivity;
 
     public String widget = "Big";
@@ -405,7 +410,7 @@ public class FloatingViewService extends Service {
 //                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 //                            intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
 //                            startActivity(intent);
-
+                            Advideo();
                             blankActivity.stopRecording();
                             ShowNotification("Stop");
                             //CamService.removeCamView();
@@ -574,6 +579,39 @@ public class FloatingViewService extends Service {
                 expandedView.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void Advideo() {
+        MobileAds.initialize(this, "ca-app-pub-8674673470489334~1123104705");
+        AdRequest adIRequest = new AdRequest.Builder().build();
+
+        // Prepare the Interstitial Ad Activity
+        interstitialAd = new InterstitialAd(this);
+
+        // Insert the Ad Unit ID
+        //add admob_interstitial_id unit id in string file
+        interstitialAd.setAdUnitId("ca-app-pub-8674673470489334/2654666467");
+
+        // Interstitial Ad load Request
+        interstitialAd.loadAd(adIRequest);
+
+        interstitialAd.setAdListener(new AdListener()
+        {
+            public void onAdLoaded()
+            {
+                // Call displayInterstitial() function when the Ad loads
+                displayInterstitial();
+            }
+        });
+    }
+
+    private void displayInterstitial() {
+
+
+        if (interstitialAd.isLoaded()) {
+            interstitialAd.show();
+        }
+
     }
 
     public int dpToPx(View v, int dp) {

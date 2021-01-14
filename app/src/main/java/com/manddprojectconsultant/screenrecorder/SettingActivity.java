@@ -420,4 +420,43 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
         overridePendingTransition(0, 0);
 
     }
+
+
+    public void Rating(View view) {
+
+        //Rating Screen Cam
+
+        Uri uri = Uri.parse("market://details?id=" + getPackageName());
+        Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            startActivity(myAppLinkToMarket);
+        } catch (Exception e) {
+            Toast.makeText(this, " unable to find market app", Toast.LENGTH_LONG).show();
+        }
+
+
+        /*//Please check this out upwards code
+        Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
+*/
+
+    }
+
+    public void Sharethelink(View view) {
+
+
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Screen Cam");
+            String shareMessage= "\nPlease recommend this app to your circle.\n";
+            shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+            startActivity(Intent.createChooser(shareIntent, "choose one"));
+        } catch(Exception e) {
+            //e.toString();
+        }
+
+
+    }
+
 }

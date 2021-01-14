@@ -25,6 +25,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -44,7 +48,7 @@ public class GridLayoutActivity extends AppCompatActivity {
     boolean firstStart;
     ArrayList<VideoModel> lstVideo;
     VideoListforgridadapter adapter;
-
+    AdView adsingridview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +62,13 @@ public class GridLayoutActivity extends AppCompatActivity {
             //Calling method to enable permission.
             RequestMultiplePermission();
         }
+
+
+
+
+        adsingridview=findViewById(R.id.adsingridview);
+        Adshow();
+
         ivsettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,6 +90,15 @@ public class GridLayoutActivity extends AppCompatActivity {
             }
         });*/
     }
+
+
+    private void Adshow() {
+        MobileAds.initialize(this,"ca-app-pub-8674673470489334~1123104705");
+        AdRequest adRequest=new AdRequest.Builder().build();
+        adsingridview.loadAd(adRequest);
+
+    }
+
 
     private void init() {
         ivlistnormallist = findViewById(R.id.ivlistnormallist);

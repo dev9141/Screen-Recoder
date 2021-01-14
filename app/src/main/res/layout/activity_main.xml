@@ -4,33 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:background="@color/transpermt"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/llscreen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/appbar">
 
-        <!--<ImageView
-            android:id="@+id/ivlistforgridview"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="10dp"
-            android:clickable="true"
-            android:padding="5dp"
-            android:onClick="SettingClick"
-            app:tint="@color/coloryellow"
-            android:src="@drawable/list"
-            android:focusable="true" />-->
-
-
-
-    </LinearLayout>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -96,6 +74,30 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvVideoList1"
+        app:layout_constraintVertical_bias="0.922">
+
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adsinlistview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-8674673470489334/4546332635" />
+
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvVideoList1"
         android:layout_width="0dp"
@@ -111,7 +113,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llscreen"
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
         app:layout_constraintVertical_bias="0.0">
 
     </androidx.recyclerview.widget.RecyclerView>
