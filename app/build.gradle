@@ -6,7 +6,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
     defaultConfig {
-        applicationId "com.manddprojectconsultant.screenrecorder"
+        applicationId "com.manddprojectconsultant.screencam"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
