@@ -1,6 +1,8 @@
 package com.manddprojectconsultant.screencam;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,10 +11,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.graphics.Point;
+import android.icu.number.Scale;
 import android.os.Build;
 import android.os.IBinder;
+import android.transition.Explode;
 import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.TransitionManager;
 import android.transition.TransitionSet;
+import android.transition.Visibility;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -21,7 +29,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -29,11 +41,9 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import java.util.Random;
 
@@ -65,7 +75,6 @@ public class FloatingViewService extends Service {
 
     public String widget = "Big";
 
-    InterstitialAd interstitialAd;
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -100,7 +109,7 @@ public class FloatingViewService extends Service {
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 //WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
                 //WindowManager.LayoutParams.TYPE_PHONE,
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
                         ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
                         : WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
@@ -238,7 +247,7 @@ public class FloatingViewService extends Service {
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
-                           // intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            // intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
                             backgroundActivity.finish();
 
@@ -315,7 +324,7 @@ public class FloatingViewService extends Service {
                                 params.y = initialY + (int) (event.getRawY() - initialTouchY);
                                 Log.e("initialY: ", initialY+"");
                                 Log.e("Y ", initialY+ " " + event.getRawY() +"-"+ initialTouchY);
-                               // Log.e("Widget Position: ", "before update x: "+params.x);
+                                // Log.e("Widget Position: ", "before update x: "+params.x);
                                 //Log.e("Widget Position: ", "before update y: "+params.y);
                                 //Update the layout with new X & Y coordinate
                                 mWindowManager.updateViewLayout(mFloatingViewExpand, params);
@@ -375,8 +384,6 @@ public class FloatingViewService extends Service {
 
                 if (gestureDetector.onTouchEvent(event)) {
 
-
-
                     //int Xdiff = (int) (event.getRawX() - initialTouchX);
                     int Ydiff = (int) (event.getRawY() - initialTouchY);
 
@@ -399,17 +406,8 @@ public class FloatingViewService extends Service {
 //                            intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
 //                            startActivity(intent);
 
-
-
-
-                            Advideo();
                             blankActivity.stopRecording();
                             ShowNotification("Stop");
-
-
-
-
-
                             //CamService.removeCamView();
                             //blankActivity.stopRecordingWithCam();
 
@@ -420,10 +418,8 @@ public class FloatingViewService extends Service {
 
 
 
+
                         }
-
-
-
                     }
                     return true;
                 } else {
@@ -481,6 +477,7 @@ public class FloatingViewService extends Service {
 
                     mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.VISIBLE);
                     mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.GONE);
+                    mFloatingView.findViewById(R.id.close_btn).setVisibility(View.GONE);
                     backgroundActivity.finish();
                     expandedView.setVisibility(View.GONE);
                     isExpand = 0;
@@ -528,6 +525,7 @@ public class FloatingViewService extends Service {
 
                     mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.VISIBLE);
                     mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.GONE);
+                    mFloatingView.findViewById(R.id.close_btn).setVisibility(View.GONE);
                     backgroundActivity.finish();
                     expandedView.setVisibility(View.GONE);
                     isExpand = 0;
@@ -578,42 +576,6 @@ public class FloatingViewService extends Service {
                 expandedView.setVisibility(View.GONE);
             }
         });
-    }
-
-    private void Advideo() {
-
-
-
-        MobileAds.initialize(this, "ca-app-pub-8674673470489334~1123104705");
-        AdRequest adIRequest = new AdRequest.Builder().build();
-
-        // Prepare the Interstitial Ad Activity
-        interstitialAd = new InterstitialAd(this);
-
-        // Insert the Ad Unit ID
-        //add admob_interstitial_id unit id in string file
-        interstitialAd.setAdUnitId("ca-app-pub-8674673470489334/2654666467");
-
-        // Interstitial Ad load Request
-        interstitialAd.loadAd(adIRequest);
-
-        interstitialAd.setAdListener(new AdListener()
-        {
-            public void onAdLoaded()
-            {
-                // Call displayInterstitial() function when the Ad loads
-                displayInterstitial();
-            }
-        });
-
-    }
-
-    private void displayInterstitial() {
-
-        if (interstitialAd.isLoaded()) {
-            interstitialAd.show();
-        }
-
     }
 
     public int dpToPx(View v, int dp) {
@@ -707,7 +669,7 @@ public class FloatingViewService extends Service {
         builder.setSmallIcon(R.drawable.logo);
         builder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
                 R.drawable.logo));
-        builder.setContentTitle("Screen Cam");
+        builder.setContentTitle("Screen Recorder App");
         if(!Recording.isEmpty() && Recording.equals("Start")){
             builder.setContentText("Click here to stop");
         }
@@ -724,7 +686,7 @@ public class FloatingViewService extends Service {
         String recordingStarted = SPVariables.getString("RecordStartOrStop", getApplicationContext());
 
         if(recordingStarted != null && recordingStarted.equals("STARTED")){
-        //if(!Recording.isEmpty() && Recording.equals("Start")){
+            //if(!Recording.isEmpty() && Recording.equals("Start")){
             builder.setContentIntent(pausePIntent);
         }
         else {

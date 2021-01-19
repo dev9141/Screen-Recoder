@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.manddprojectconsultant.screencam">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission
         android:name="android.permission.INTERNAL_SYSTEM_WINDOW"
@@ -33,46 +34,55 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8674673470489334~1123104705"/>
 
-        <activity android:name="com.manddprojectconsultant.screencam.Checkingforbutton"></activity>
-        <activity android:name="com.manddprojectconsultant.screencam.GridLayoutActivity" />
-        <activity android:name="com.manddprojectconsultant.screencam.Welcome_Screen">
+        <activity android:name=".Checkingforbutton"></activity>
+        <activity android:name=".GridLayoutActivity" />
+        <activity android:name=".Welcome_Screen"
+            android:stateNotNeeded="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.manddprojectconsultant.screencam.NotiRecordingStart" />
-        <activity android:name="com.manddprojectconsultant.screencam.NotiRecordingStop" />
+        <activity android:name=".NotiRecordingStart" />
+        <activity android:name=".NotiRecordingStop" />
         <activity
-            android:name="com.manddprojectconsultant.screencam.BackgroundActivity"
+            android:name=".BackgroundActivity"
             android:noHistory="true"
             android:theme="@style/Theme.AppCompat.Translucent" />
 
         <receiver
-            android:name="com.manddprojectconsultant.screencam.PlayReciever"
+            android:name=".PlayReciever"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name="com.manddprojectconsultant.screencam.VideoPlayerActivity" />
-        <activity android:name="com.manddprojectconsultant.screencam.SettingActivity" />
+        <activity android:name=".VideoPlayerActivity" />
+        <activity android:name=".SettingActivity" />
 
         <activity
-            android:name="com.manddprojectconsultant.screencam.SplashScreen"
+            android:name=".SplashScreen"
             android:theme="@style/SplashTheme" />
-        <activity android:name="com.manddprojectconsultant.screencam.MainActivity" />
-        <activity
-            android:name="com.manddprojectconsultant.screencam.BlankActivity"
-            android:launchMode="singleTop" />
+        <activity android:name=".MainActivity" />
 
-        <service
-            android:name="com.manddprojectconsultant.screencam.FloatingViewService"
+        <activity
+            android:name=".BlankActivity"
+            android:launchMode="singleTop"
             android:enabled="true"
             android:exported="false"
+            android:foregroundServiceType="mediaProjection"
+            tools:targetApi="q"
+            android:theme="@style/Theme.AppCompat.Translucent"/>
+
+        <service
+            android:name=".FloatingViewService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection"
+            tools:targetApi="q"
             android:theme="@style/Theme.AppCompat.Translucent" />
 
         <provider
-            android:name="com.manddprojectconsultant.screencam.GenericFileProvider"
+            android:name=".GenericFileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
