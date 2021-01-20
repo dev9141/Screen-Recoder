@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
-import android.graphics.Point;
 import android.hardware.Camera;
 import android.hardware.SensorManager;
 import android.hardware.display.DisplayManager;
@@ -26,7 +25,6 @@ import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.SparseIntArray;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,7 +32,6 @@ import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -62,10 +59,8 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
     private static final int REQUEST_CODE_PAUSE = 1002;
     private static final int REQUEST_CODE_PLAY = 1003;
     private static final int REQUEST_PERMISSION = 1001;
-
     private static final String CHANNEL_ID = "channel_id01";
     public static final int NOTIFICATION_ID = 1;
-
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private MediaProjectionManager mediaProjectionManager;
     private MediaProjection mediaProjection;
@@ -201,8 +196,6 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                                 Manifest.permission.RECORD_AUDIO
                         }, REQUEST_PERMISSION);
             }
-
-
         } else {
             mediaRecorder = new MediaRecorder();
             //new countdown().execute();
@@ -242,7 +235,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void pauseRecording() {
         if (mediaProjection != null) {
             startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), REQUEST_CODE_PAUSE);
@@ -250,7 +243,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void resumeRecording() {
         if (mediaProjection != null) {
             startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), REQUEST_CODE_PLAY);
@@ -258,13 +251,12 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void stopRecording() {
         try {
             mediaRecorder.stop();
             mediaRecorder.reset();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                stopRecordScreen();
-            }
+            stopRecordScreen();
             finish();
         } catch (Exception e) {
             e.printStackTrace();
@@ -297,11 +289,10 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                         Intent.FLAG_ACTIVITY_NO_ANIMATION));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void startRecording() {
         initRecorder();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            recordScreen();
-        }
+        recordScreen();
     }
 
     @Override
@@ -324,7 +315,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         String aaNoti = getIntent().getStringExtra("Notification");
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void recordScreen() {
         if (mediaProjection == null) {
             startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), REQUEST_CODE);
@@ -334,7 +325,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         mediaRecorder.start();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private VirtualDisplay createVirtualDisplay() {
         try {
             Surface aa = mediaRecorder.getSurface();
@@ -381,7 +372,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                     DISPLAY_HEIGHT = 1920;
                 }
             } else if (resolution.equals("720P")) {
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
                     profile = CamcorderProfile.get(CamcorderProfile.QUALITY_720P);
                     DISPLAY_WIDTH = profile.videoFrameHeight;
                     DISPLAY_HEIGHT = profile.videoFrameWidth;
@@ -390,7 +381,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                     DISPLAY_HEIGHT = 1280;
                 }
             } else if (resolution.equals("480P")) {
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
                     profile = CamcorderProfile.get(CamcorderProfile.QUALITY_480P);
                     DISPLAY_WIDTH = profile.videoFrameHeight;
                     DISPLAY_HEIGHT = profile.videoFrameWidth;
@@ -399,7 +390,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                     DISPLAY_HEIGHT = 640;
                 }
             } else if (resolution.equals("240P")) {
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
                     profile = CamcorderProfile.get(CamcorderProfile.QUALITY_QVGA);
                     DISPLAY_WIDTH = profile.videoFrameHeight;
                     DISPLAY_HEIGHT = profile.videoFrameWidth;
@@ -408,7 +399,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                     DISPLAY_HEIGHT = 320;
                 }
             } else if (resolution.equals("144P")) {
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
                     profile = CamcorderProfile.get(CamcorderProfile.QUALITY_LOW);
                     DISPLAY_WIDTH = profile.videoFrameHeight;
                     DISPLAY_HEIGHT = profile.videoFrameWidth;
@@ -447,7 +438,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
     }
     //Ctrl+o
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -483,7 +474,6 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
             builder.setOngoing(true);
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
             notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
-
             SPVariables.setString("RecordStartOrStop", "NOTSTARTED", getApplicationContext());
             mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.VISIBLE);
             mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.GONE);
@@ -524,7 +514,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         }*/
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private class MediaProjectionCallback extends MediaProjection.Callback {
         @Override
         public void onStop() {
@@ -539,7 +529,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void stopRecordScreen() {
         if (virtualDisplay == null)
             return;
@@ -549,7 +539,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         finish();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void destroyMediaProjetion() {
         if (mediaProjection != null) {
             mediaProjection.unregisterCallback(mediaProjectionCallback);
@@ -558,7 +548,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -606,7 +596,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
             return "";
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         protected void onPostExecute(Object o) {
             if (toggleButton) {
@@ -615,7 +605,6 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                 ll = (LinearLayout) LayoutInflater.from(BlankActivity.this)
                         .inflate(R.layout.llcount, null);
                 textView = ll.findViewById(R.id.txtCount);
-
                 final WindowManager.LayoutParams parameters = new WindowManager.LayoutParams(
                         LinearLayout.LayoutParams.FILL_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -693,7 +682,6 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         //private Button stop;
         private FrameLayout preview;
         private CameraPreview mPreview;
-
         //private View v;
 
         public FloatingCam() {
@@ -709,7 +697,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
             return "";
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         protected void onPostExecute(Object o) {
             if (toggleButton) {
@@ -717,8 +705,6 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                 wmCam = (WindowManager) getSystemService(WINDOW_SERVICE);
                 camPreivew = (LinearLayout) LayoutInflater.from(BlankActivity.this)
                         .inflate(R.layout.camera_preview, null);
-
-
                 //preview = camPreivew.findViewById(R.id.txtCount);
                 String IsFrontCam = SPVariables.getString("CameraFacing", BlankActivity.this);
                 if (IsFrontCam.equals("Front")) {
@@ -727,12 +713,9 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                     mCamera = getCameraInstance();
                 }
                 mPreview = new CameraPreview(BlankActivity.this, mCamera, wmCam);
-
                 String CameraFrame = SPVariables.getString("CameraFrame", BlankActivity.this);
                 preview = camPreivew.findViewById(R.id.camera_preview);
                 preview.setBackgroundResource(R.drawable.rounded);
-
-
 //                if (CameraFrame.equals("Square")) {
 //
 //                    preview.setBackgroundResource(R.drawable.rounded);
@@ -740,31 +723,23 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
 //                    //preview = camPreivew.findViewById(R.id.camera_preview_round);
 //                    preview.setBackgroundResource(R.drawable.round);
 //                }
-
-
                 String ratio = SPVariables.getString("CameraPreview", BlankActivity.this);
-
-
                 int CamPreviewWidth, CamPreviewHeight;
-                if(ratio.equals("Large")){
+                if (ratio.equals("Large")) {
                     CamPreviewWidth = 180;
                     CamPreviewHeight = 300;
-                }
-                else if(ratio.equals("Medium")){
+                } else if (ratio.equals("Medium")) {
                     CamPreviewWidth = 150;
                     CamPreviewHeight = 250;
-                }
-                else {
+                } else {
                     CamPreviewWidth = 120;
                     CamPreviewHeight = 200;
                 }
-
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)preview.getLayoutParams();
-                layoutParams.height=dpToPx(CamPreviewHeight);
-                layoutParams.weight=dpToPx(CamPreviewWidth);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) preview.getLayoutParams();
+                layoutParams.height = dpToPx(CamPreviewHeight);
+                layoutParams.weight = dpToPx(CamPreviewWidth);
                 preview.setBackgroundResource(R.drawable.rounded);
                 preview.setLayoutParams(layoutParams);
-
                 //mPreview.setRotation(90.0f);
                 preview.addView(mPreview);
                 final WindowManager.LayoutParams parameters = new WindowManager.LayoutParams(
@@ -780,10 +755,8 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                 parameters.y = 0;
                 //parameters.gravity = Gravity.RIGHT | Gravity.TOP;
                 wmCam.addView(camPreivew, parameters);
-
 //                int width = display.getWidth();
 //                int height = display.getHeight();
-
                 camPreivew.setOnTouchListener(new View.OnTouchListener() {
                     private WindowManager.LayoutParams updatedParameters = parameters;
                     int x, y;
@@ -858,8 +831,6 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.VISIBLE);
         mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.GONE);
         mFloatingView.findViewById(R.id.close_btn).setVisibility(View.VISIBLE);
-
-
 //        mediaRecorder.stop();
 //        mediaRecorder.reset();
 //        toggleButton = false;
@@ -875,7 +846,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         super.onDestroy();
         String RecordwithCam = getIntent().getStringExtra("RecordWithCamera") == null ? "NO" : getIntent().getStringExtra("RecordWithCamera");
         if (RecordwithCam.equals("YES")) {
-            if (mCamera!=null) {
+            if (mCamera != null) {
                 mCamera.stopPreview();
                 mCamera.release();
                 mCamera = null;
@@ -899,6 +870,4 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         }
         return dir.delete();
     }
-
-
 }
