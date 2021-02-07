@@ -109,7 +109,7 @@ public class FloatingViewService extends Service {
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 //WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
                 //WindowManager.LayoutParams.TYPE_PHONE,
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
                         ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
                         : WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
