@@ -123,8 +123,10 @@ public class GridLayoutActivity extends AppCompatActivity {
     public void ListClickforDashboard(View view) {
         Intent normal = new Intent(GridLayoutActivity.this, MainActivity.class);
         normal.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        normal.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(normal);
         overridePendingTransition(0, 0);
+        finish();
     }
 
     @Override

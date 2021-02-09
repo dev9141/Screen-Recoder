@@ -193,9 +193,10 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent gridlayout = new Intent(MainActivity.this, GridLayoutActivity.class);
                 gridlayout.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                gridlayout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(gridlayout);
                 overridePendingTransition(0, 0);
-
+                finish();
 
 
 
