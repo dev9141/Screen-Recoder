@@ -490,6 +490,12 @@ public class FloatingViewService extends Service {
                         mFloatingView.findViewById(R.id.close_btn).setVisibility(View.GONE);
 
                     }
+
+                    Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                            .setContentTitle("Recording")
+                            .build();
+
+                    startForeground(NOTIFICATION_ID, notification);
                     Intent intent = new Intent(getApplicationContext(), BlankActivity.class);
                     intent.putExtra("Record", "START");
                     intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
@@ -578,6 +584,17 @@ public class FloatingViewService extends Service {
         });
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                .setContentTitle("Recording")
+                .build();
+
+        startForeground(NOTIFICATION_ID, notification);
+        
+        return START_NOT_STICKY;
+    }
+
     public int dpToPx(View v, int dp) {
         DisplayMetrics displayMetrics = v.getContext().getResources().getDisplayMetrics();
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
@@ -621,8 +638,6 @@ public class FloatingViewService extends Service {
         }
     }
 
-
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void ShowNotification(String Recording) {
 
@@ -662,7 +677,6 @@ public class FloatingViewService extends Service {
         //StopIntent2.putExtra("OpenHome", "true");
         StopIntent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pausePIntent2 = PendingIntent.getActivity(this, generator.nextInt(),StopIntent2,PendingIntent.FLAG_ONE_SHOT);
-
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
 

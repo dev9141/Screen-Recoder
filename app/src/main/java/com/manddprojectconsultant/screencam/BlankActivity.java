@@ -1,6 +1,7 @@
 package com.manddprojectconsultant.screencam;
 
 import android.Manifest;
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -497,6 +498,14 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         }
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             mediaProjectionCallback = new MediaProjectionCallback();
+
+            Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                    .setContentTitle("Recording")
+                    .build();
+
+            floatingViewService.startForeground(NOTIFICATION_ID, notification);
+
+
             mediaProjection = mediaProjectionManager.getMediaProjection(resultCode, data);
             mediaProjection.registerCallback(mediaProjectionCallback, null);
             virtualDisplay = createVirtualDisplay();
