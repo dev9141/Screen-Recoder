@@ -105,7 +105,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
     String record = "";
     public static FloatingViewService floatingViewService;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -298,9 +298,10 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                         Intent.FLAG_ACTIVITY_NO_ANIMATION));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     public void startRecording() {
         initRecorder();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             recordScreen();
         }
     }
