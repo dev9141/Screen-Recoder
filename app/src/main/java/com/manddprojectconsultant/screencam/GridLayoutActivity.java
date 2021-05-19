@@ -55,13 +55,6 @@ public class GridLayoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_layout);
 
-
-
-
-
-
-
-
         lstVideo = new ArrayList<>();
         if (CheckingPermissionIsEnabledOrNot()) {
             init();
