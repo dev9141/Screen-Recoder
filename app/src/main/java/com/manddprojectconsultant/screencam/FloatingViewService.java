@@ -56,6 +56,8 @@ public class FloatingViewService extends Service {
     public static View mFloatingViewExpand;
     private static final String CHANNEL_ID = "channel_id01";
     public static final int NOTIFICATION_ID = 1;
+    public static final int NOTIFICATION_ID_2 = 2;
+
 
     private int isExpand = 0; //0 = not expand, 1 = expanded
 
@@ -495,7 +497,9 @@ public class FloatingViewService extends Service {
                             .setContentTitle("Recording")
                             .build();
 
-                    startForeground(NOTIFICATION_ID, notification);
+                    //startForeground(NOTIFICATION_ID, notification);
+                    startForeground(NOTIFICATION_ID_2, buildForegroundNotification());
+
                     Intent intent = new Intent(getApplicationContext(), BlankActivity.class);
                     intent.putExtra("Record", "START");
                     intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
@@ -545,6 +549,12 @@ public class FloatingViewService extends Service {
 
                     }
 
+                    Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                            .setContentTitle("Recording")
+                            .build();
+                    //startForeground(NOTIFICATION_ID, notification);
+                    startForeground(NOTIFICATION_ID_2, buildForegroundNotification());
+
                     Intent intent = new Intent(getApplicationContext(), BlankActivity.class);
                     intent.putExtra("Record", "START");
                     intent.putExtra("RecordWithCamera", "YES");
@@ -590,7 +600,8 @@ public class FloatingViewService extends Service {
                 .setContentTitle("Recording")
                 .build();
 
-        startForeground(NOTIFICATION_ID, notification);
+        //startForeground(NOTIFICATION_ID, notification);
+        startForeground(NOTIFICATION_ID_2, notification);
         
         return START_NOT_STICKY;
     }
@@ -747,5 +758,13 @@ public class FloatingViewService extends Service {
                 notificationManager.createNotificationChannel(notificationChannel);
             }
         }
+    }
+
+    private Notification buildForegroundNotification() {
+        NotificationCompat.Builder b=new NotificationCompat.Builder(this, CHANNEL_ID);
+        b.setChannelId(CHANNEL_ID);
+        b.setOngoing(true)
+                .setContentTitle("Screen Recorder");
+        return(b.build());
     }
 }

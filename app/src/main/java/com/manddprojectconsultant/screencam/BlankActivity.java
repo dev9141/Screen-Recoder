@@ -106,7 +106,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
     String record = "";
     public static FloatingViewService floatingViewService;
 
-
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,18 +165,21 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         mScreenDensity = metrics.densityDpi;
+        mediaProjectionManager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+
+
         //Get Screen
         //DISPLAY_HEIGHT2 = metrics.heightPixels;
         //DISPLAY_WIDTH = metrics.widthPixels;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mediaProjectionManager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
-        }
+        }*/
         //View
         //videoView = findViewById(R.id.videoView);
         //toggleButton = findViewById(R.id.toggleButton);
         rootLayout = findViewById(R.id.rootLayout);
         //audio = findViewById(R.id.audio);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (!Settings.canDrawOverlays(BlankActivity.this)) {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
                 startActivityForResult(intent, 0);
@@ -269,14 +272,16 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
             return;
         }
     }
-
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void stopRecording() {
         try {
             mediaRecorder.stop();
             mediaRecorder.reset();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            stopRecordScreen();
+
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 stopRecordScreen();
-            }
+            }*/
             finish();
         } catch (Exception e) {
             e.printStackTrace();
@@ -309,12 +314,13 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                         Intent.FLAG_ACTIVITY_NO_ANIMATION));
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void startRecording() {
         initRecorder();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        recordScreen();
+     /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             recordScreen();
-        }
+        }*/
     }
 
     @Override
@@ -337,18 +343,22 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         String aaNoti = getIntent().getStringExtra("Notification");
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void recordScreen() {
         if (mediaProjection == null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), REQUEST_CODE);
-            }
+            startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), REQUEST_CODE);
+
+           /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                }*/
             return;
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+        virtualDisplay = createVirtualDisplay();
+
+/*        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             virtualDisplay = createVirtualDisplay();
         }
-        mediaRecorder.start();
+ */       mediaRecorder.start();
     }
 
 
@@ -477,7 +487,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
     }
     //Ctrl+o
 
-
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -528,20 +538,30 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mediaProjectionCallback = new MediaProjectionCallback();
-            }
-            Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                    .setContentTitle("Recording")
-                    .build();
-
-            floatingViewService.startForeground(NOTIFICATION_ID, notification);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                        .setContentTitle("Recording")
+                        .build();
+                floatingViewService.startForeground(2, notification);
+                //   floatingViewService.startForeground(NOTIFICATION_ID, notification);
                 mediaProjection = mediaProjectionManager.getMediaProjection(resultCode, data);
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+
+/*
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                }
+*/
                 mediaProjection.registerCallback(mediaProjectionCallback, null);
+
+/*
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+*/
                 virtualDisplay = createVirtualDisplay();
+
+/*
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            }
+*/
             }
             final boolean recordingWithoutCountDown = SPVariables.getString("CountDown", BlankActivity.this).equals("TRUE") ? true : false;
             if (recordingWithoutCountDown) {
@@ -576,39 +596,47 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         public void onStop() {
             if (toggleButton) {
                 toggleButton = false;
-                mediaRecorder.stop();
+                if(createVirtualDisplay() != null){
+                    mediaRecorder.stop();
+                }
+
+                //mediaRecorder.stop();
                 mediaRecorder.reset();
             }
             mediaProjection = null;
             stopRecordScreen();
-            super.onStop();
+            //super.onStop();
         }
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void stopRecordScreen() {
         if (virtualDisplay == null)
             return;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        virtualDisplay.release();
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             virtualDisplay.release();
-        }
+        }*/
         destroyMediaProjetion();
         moveTaskToBack(false);
         finish();
     }
-
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void destroyMediaProjetion() {
         if (mediaProjection != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mediaProjection.unregisterCallback(mediaProjectionCallback);
+            mediaProjection.stop();
+
+     /*       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mediaProjection.unregisterCallback(mediaProjectionCallback);
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mediaProjection.stop();
             }
-            mediaProjection = null;
+     */       mediaProjection = null;
         }
     }
-
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -656,7 +684,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
             return "";
         }
 
-
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         protected void onPostExecute(Object o) {
             if (toggleButton) {
@@ -908,9 +936,11 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void hearShake() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            floatingViewService.ShowNotification("Stop");
-        }
+
+        floatingViewService.ShowNotification("Stop");
+
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        }*/
         stopRecording();
         mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.VISIBLE);
         mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.GONE);
@@ -927,6 +957,8 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         //videoView.start();
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -940,6 +972,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
             }
         }
         SPVariables.setString("RecordStartOrStop", "NOTSTARTED", getApplicationContext());
+        destroyMediaProjetion();
     }
 
     public static boolean deleteDir(File dir) {
