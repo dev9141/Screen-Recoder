@@ -1,6 +1,7 @@
 package com.manddprojectconsultant.screencam;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -580,8 +581,18 @@ public class MainActivity extends AppCompatActivity {
 
                // progressDialog.setProgress(getResources().getDrawable(R.drawable.loading));
                 progressDialog.setMessage("Please wait for few seconds while loading the files.... ");
-                progressDialog.show();
+                Activity act = MainActivity.this;
+
+                if(!act.isFinishing() && act.isDestroyed()){
+                    progressDialog.show();
+                }
             }
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            progressDialog = null;
         }
 
         @Override

@@ -5,18 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:id="@+id/llcount"
-    android:background="@color/colorSemiTranspernt"
+    android:background="@color/colorTranspernt"
     android:padding="10dp"
     android:layout_height="wrap_content">
-
+    <!--colorSemiTranspernt-->
 
     <TextView
         android:id="@+id/txtCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="50sp"
+        android:textSize="75sp"
         android:textColor="@color/coloryellow"
         android:gravity="center"
-        android:text="3" />
+        android:text="" />
 </LinearLayout>

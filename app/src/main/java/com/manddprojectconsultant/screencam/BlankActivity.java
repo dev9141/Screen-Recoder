@@ -24,6 +24,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -35,6 +36,10 @@ import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -105,6 +110,12 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
     public LinearLayout camPreivew;
     String record = "";
     public static FloatingViewService floatingViewService;
+
+    public static int c = 4;
+
+    Handler m_handler;
+    Runnable m_handlerTask ;
+    int secondsLeft=0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -708,7 +719,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                 parameters.y = 0;
                 parameters.gravity = Gravity.CENTER | Gravity.CENTER;
                 wm.addView(ll, parameters);
-                ll.setOnTouchListener(new View.OnTouchListener() {
+                /*ll.setOnTouchListener(new View.OnTouchListener() {
                     private WindowManager.LayoutParams updatedParameters = parameters;
                     int x, y;
                     float touchedX, touchedY;
@@ -732,23 +743,34 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                         }
                         return false;
                     }
-                });
+                });*/
 //                final boolean recordingWithoutCountDown = SPVariables.getString("CountDown", BlankActivity.this).equals("TRUE") ? true : false;
 //
 //                if (!recordingWithoutCountDown) {
 //                    mediaRecorder.start();
 //                }
-                new CountDownTimer(4000, 1000) {
+
+
+                /*new CountDownTimer(4000, 1000) {
                     public void onTick(long millisUntilFinished) {
-                        if (millisUntilFinished / 1000 > 0) {
+                        //Toast.makeText(BlankActivity.this, millisUntilFinished+"", Toast.LENGTH_SHORT).show();
+                        if (millisUntilFinished  > 999) {
+                            long sec = millisUntilFinished / 1000;
                             textView.setText(millisUntilFinished / 1000 + "");
+                            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
+                            textView.startAnimation(animation);
                         } else {
-                            //textView.setText("START");
+                            *//*textView.setText("START");
+                            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+                            textView.startAnimation(animation);*//*
                         }
                         //here you can have your logic to set text to edittext
                     }
 
                     public void onFinish() {
+                        textView.setText("START");
+                        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+                        textView.startAnimation(animation);
                         wm.removeView(ll);
 //                        if (recordingWithoutCountDown) {
 //                            mediaRecorder.start();
@@ -756,7 +778,35 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                         mediaRecorder.start();
                         //startOrStopRecording(v);
                     }
+                }.start();*/
+
+
+
+
+                new CountDownTimer(4000, 1000) {
+                    public void onTick(long millisUntilFinished) {
+                        if (millisUntilFinished/1000  > 0) {
+                            long seconds = millisUntilFinished / 1000;
+                            textView.setText(seconds+"");
+                            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
+                            textView.startAnimation(animation);
+                        }
+                        else {
+                            textView.setText("START");
+                            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+                            textView.startAnimation(animation);
+                        }
+                    }
+
+                    public void onFinish() {
+                        wm.removeView(ll);
+                        mediaRecorder.start();
+
+                        //startOrStopRecording(v);
+                    }
                 }.start();
+
+
             } else {
                 String aa = "";
                 //startOrStopRecording(v);
