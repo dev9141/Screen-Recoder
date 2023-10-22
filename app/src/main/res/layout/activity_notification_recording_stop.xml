@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/rootBGView"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootNotiStop"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transBalck"
-    tools:context=".activity.BackgroundActivity">
+    android:orientation="vertical"
+    tools:context=".activity.NotificationRecordingStopActivity">
 
-</RelativeLayout>
+</LinearLayout>

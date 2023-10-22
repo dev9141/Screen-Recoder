@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
-    android:background="@color/transpermt"
-    tools:context=".activity.GridLayoutActivity">
-
-
+    android:background="@color/transpermt">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -23,7 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -36,93 +32,100 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="@string/app_name"
                 android:textColor="@color/coloryellow"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                tools:ignore="RelativeOverlap" />
 
             <ImageView
-                android:id="@+id/ivlistnormallist"
+                android:id="@+id/ivlistforgridview"
                 android:layout_width="40dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
+                android:layout_gravity="end"
+                android:layout_marginStart="15dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="ListClickforDashboard"
-                android:layout_marginStart="15dp"
                 android:padding="5dp"
-                android:src="@drawable/normallist"
+                android:src="@drawable/list"
                 app:tint="@color/coloryellow" />
 
             <ImageView
-                android:id="@+id/ivsettings"
+                android:id="@+id/ivsetting"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
                 android:clickable="true"
-                app:tint="@color/coloryellow"
+
+
+                android:focusable="true"
+                android:onClick="SettingClick"
                 android:src="@drawable/ic_baseline_settings_24"
-                android:focusable="true" />
-
-
-
-
+                app:tint="@color/coloryellow" />
         </RelativeLayout>
 
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvVideoListforgridview"
+        android:id="@+id/rvVideoList1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fadeScrollbars="false"
-        android:fadingEdge="vertical"
-        android:fastScrollAlwaysVisible="true"
-        android:fastScrollEnabled="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="50dp"
+        android:elevation="5dp"
+        android:fadeScrollbars="true"
+        android:padding="10dp"
         android:scrollbars="none"
-        android:padding="8dp"
-        android:layout_marginBottom="60dp"
-        app:elevation="5dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintVertical_bias="0.0">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <FrameLayout
+        android:id="@+id/dashboardFrameLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        ads:layout_constraintBottom_toTopOf="@+id/llAdMob"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/appbar" />
 
 
     <LinearLayout
-
+        android:id="@+id/llAdMob"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        android:layout_marginBottom="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvVideoListforgridview"
+        app:layout_constraintTop_toBottomOf="@+id/rvVideoList1"
         app:layout_constraintVertical_bias="0.922">
 
 
-
         <com.google.android.gms.ads.AdView
-            android:id="@+id/adsingridview"
+            android:id="@+id/adsinlistview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-8674673470489334/4546332635"/>
+            ads:adUnitId="ca-app-pub-8674673470489334/4546332635" />
 
 
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

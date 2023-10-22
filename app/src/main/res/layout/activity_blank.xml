@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:id="@+id/rootLayout"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.DashboardActivity">
 
     <!--<FrameLayout
         android:id="@+id/camera_preview"
