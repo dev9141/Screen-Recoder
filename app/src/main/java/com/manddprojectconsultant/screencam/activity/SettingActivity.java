@@ -443,7 +443,7 @@ public class SettingActivity extends AppCompatActivity implements CameraPreviewF
 
     }
 
-    public void Sharethelink(View view) {
+    public void shareTheLink(View view) {
 
 
         try {

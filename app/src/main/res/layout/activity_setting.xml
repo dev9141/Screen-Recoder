@@ -744,7 +744,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/llShowBubble"
                     android:layout_marginTop="6dp"
-                    android:onClick="Sharethelink"
+                    android:onClick="shareTheLink"
                     android:orientation="vertical">
 
 
