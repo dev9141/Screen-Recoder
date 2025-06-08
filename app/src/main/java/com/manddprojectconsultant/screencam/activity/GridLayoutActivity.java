@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -26,6 +28,8 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.manddprojectconsultant.screencam.R;
 import com.manddprojectconsultant.screencam.adapter.VideoListforgridadapter;
 import com.manddprojectconsultant.screencam.model.VideoModel;
@@ -39,13 +43,34 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
 
-import static android.Manifest.permission.CAMERA;
-import static android.Manifest.permission.RECORD_AUDIO;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class GridLayoutActivity extends AppCompatActivity {
     ImageView ivlistnormallist, ivsettings;
     RecyclerView rvVideoListforgridview;
-    public static final int RequestPermissionCode = 7;
+    private static final int RequestPermissionCode = 7;
+    private static final String[] REQUIRED_PERMISSIONS;
+    
+    static {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13+ (API 33+) permissions
+            REQUIRED_PERMISSIONS = new String[]{
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.RECORD_AUDIO,
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO,
+                    Manifest.permission.READ_MEDIA_AUDIO,
+                    Manifest.permission.HIGH_SAMPLING_RATE_SENSORS
+            };
+        } else {
+            // Legacy permissions for Android 12 and below
+            REQUIRED_PERMISSIONS = new String[]{
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.RECORD_AUDIO,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.HIGH_SAMPLING_RATE_SENSORS
+            };
+        }
+    }
+
     boolean firstStart;
     ArrayList<VideoModel> lstVideo;
     VideoListforgridadapter adapter;
@@ -57,45 +82,27 @@ public class GridLayoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_layout);
 
-        lstVideo = new ArrayList<>();
-        if (CheckingPermissionIsEnabledOrNot()) {
-            init();
-        }else {
-            //Calling method to enable permission.
-            RequestMultiplePermission();
-        }
-
-
-        adsingridview=findViewById(R.id.adsingridview);
-        Adshow();
-
-
-
-        ivsettings.setOnClickListener(new View.OnClickListener() {
+        // Initialize the Mobile Ads SDK
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
-            public void onClick(View view) {
-                Intent setting = new Intent(GridLayoutActivity.this, SettingActivity.class);
-                setting.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(setting);
-                overridePendingTransition(0, 0);
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+                // Initialization completed
             }
         });
 
-        /*ivlistnormallist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //loadFragment(new FirstFragment());
-                Intent gridlayout = new Intent(GridLayoutActivity.this, MainActivity.class);
-                gridlayout.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(gridlayout);
-                overridePendingTransition(0, 0);
-            }
-        });*/
+        lstVideo = new ArrayList<>();
+        if (CheckingPermissionIsEnabledOrNot()) {
+            init();
+        } else {
+            RequestMultiplePermission();
+        }
+
+        adsingridview = findViewById(R.id.adsingridview);
+        Adshow();
     }
 
     private void Adshow() {
         try {
-            MobileAds.initialize(this,"ca-app-pub-8674673470489334~1123104705");
             AdRequest adRequest=new AdRequest.Builder().build();
             adsingridview.loadAd(adRequest);
         } catch (Exception e) {
@@ -109,13 +116,20 @@ public class GridLayoutActivity extends AppCompatActivity {
         rvVideoListforgridview = findViewById(R.id.rvVideoListforgridview);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
         rvVideoListforgridview.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
+        
+        // Set up click listeners
+        ivsettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent setting = new Intent(GridLayoutActivity.this, SettingActivity.class);
+                setting.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(setting);
+                overridePendingTransition(0, 0);
+            }
+        });
+
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
         new LoadVideos(GridLayoutActivity.this, false).execute();
-
-
-
-        /*adapter = new VideoListforgridadapter(lstVideo, this);
-        rvVideoListforgridview.setAdapter(adapter);*/
     }
 
     public void ListClickforDashboard(View view) {
@@ -128,28 +142,23 @@ public class GridLayoutActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case RequestPermissionCode:
-                if (grantResults.length > 0) {
-                    boolean CameraPermission = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    boolean RecordAudioPermission = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                    boolean WriteExternalStoragePermission = grantResults[2] == PackageManager.PERMISSION_GRANTED;
-                    if (CameraPermission && WriteExternalStoragePermission && RecordAudioPermission) {
-                        //Toast.makeText(ActivityLogin.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(this, DashboardActivity.class);
-                        startActivity(i);
-                        finish();
-                        if (!firstStart) {
-                            finish();
-                        }
-                    } else {
-                        finish();
-                        Toast.makeText(GridLayoutActivity.this, "Permission Denied 3", Toast.LENGTH_SHORT).show();
-                    }
+        if (requestCode == RequestPermissionCode) {
+            boolean allGranted = true;
+            for (int result : grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    allGranted = false;
+                    break;
                 }
-                break;
+            }
+            
+            if (allGranted) {
+                init();
+            } else {
+                Toast.makeText(this, "Required permissions not granted", Toast.LENGTH_SHORT).show();
+                finish();
+            }
         }
     }
 
@@ -170,22 +179,17 @@ public class GridLayoutActivity extends AppCompatActivity {
     }
 
     public boolean CheckingPermissionIsEnabledOrNot() {
-        int FirstPermissionResult = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
-        int SecondPermissionResult = ContextCompat.checkSelfPermission(getApplicationContext(), RECORD_AUDIO);
-        int ThirdPermissionResult = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
-        return FirstPermissionResult == PackageManager.PERMISSION_GRANTED &&
-                SecondPermissionResult == PackageManager.PERMISSION_GRANTED &&
-                ThirdPermissionResult == PackageManager.PERMISSION_GRANTED;
+        for (String permission : REQUIRED_PERMISSIONS) {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), permission) 
+                    != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void RequestMultiplePermission() {
-        // Creating String Array with Permissions.
-        ActivityCompat.requestPermissions(GridLayoutActivity.this, new String[]
-                {
-                        CAMERA,
-                        RECORD_AUDIO,
-                        WRITE_EXTERNAL_STORAGE
-                }, RequestPermissionCode);
+        ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, RequestPermissionCode);
     }
 
     class LoadVideos extends AsyncTask<String, String, String> {

@@ -71,10 +71,10 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
     private static final int REQUEST_CODE_PAUSE = 1002;
     private static final int REQUEST_CODE_PLAY = 1003;
     private static final int REQUEST_PERMISSION = 1001;
-
+    private static final int REQUEST_HIGH_SAMPLING_SENSORS = 1005;
+    private static final int REQUEST_MEDIA_PERMISSIONS = 1006;  // New request code for media permissions
     private static final String CHANNEL_ID = "channel_id01";
     public static final int NOTIFICATION_ID = 1;
-
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private MediaProjectionManager mediaProjectionManager;
     private MediaProjection mediaProjection;
@@ -113,12 +113,10 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
     public LinearLayout camPreivew;
     String record = "";
     public static FloatingViewService floatingViewService;
-
     public static int c = 4;
-
     Handler m_handler;
-    Runnable m_handlerTask ;
-    int secondsLeft=0;
+    Runnable m_handlerTask;
+    int secondsLeft = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -175,13 +173,23 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         //Shake to stop Recording
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         ShakeDetector shakeDetector = new ShakeDetector(BlankActivity.this);
+        // Check for HIGH_SAMPLING_RATE_SENSORS permission on Android 14+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.HIGH_SAMPLING_RATE_SENSORS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // Request the permission if not granted
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.HIGH_SAMPLING_RATE_SENSORS},
+                        REQUEST_HIGH_SAMPLING_SENSORS);
+                return; // Return here to wait for permission result
+            }
+        }
+        // Start shake detector if permission granted or not needed
         shakeDetector.start(sensorManager);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         mScreenDensity = metrics.densityDpi;
         mediaProjectionManager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
-
-
         //Get Screen
         //DISPLAY_HEIGHT2 = metrics.heightPixels;
         //DISPLAY_WIDTH = metrics.widthPixels;
@@ -199,51 +207,30 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                 startActivityForResult(intent, 0);
             }
         }
-        if (ContextCompat.checkSelfPermission(BlankActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                + ContextCompat.checkSelfPermission(BlankActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(BlankActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    || ActivityCompat.shouldShowRequestPermissionRationale(BlankActivity.this, Manifest.permission.RECORD_AUDIO)) {
-                toggleButton = false;
-                Snackbar.make(rootLayout, "Permissions", Snackbar.LENGTH_INDEFINITE).setAction("ENABLE", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ActivityCompat.requestPermissions(BlankActivity.this,
-                                new String[]{
-                                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                        Manifest.permission.RECORD_AUDIO
-                                }, REQUEST_PERMISSION);
-                    }
-                }).show();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13 and above - use media permissions
+            if (ContextCompat.checkSelfPermission(BlankActivity.this, Manifest.permission.READ_MEDIA_VIDEO) != PackageManager.PERMISSION_GRANTED ||
+                    ContextCompat.checkSelfPermission(BlankActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(BlankActivity.this,
+                        new String[]{
+                                Manifest.permission.READ_MEDIA_VIDEO,
+                                Manifest.permission.RECORD_AUDIO
+                        }, REQUEST_MEDIA_PERMISSIONS);
             } else {
+                initializeMediaRecorder();
+            }
+        } else {
+            // Android 12 and below - use storage permission
+            if (ContextCompat.checkSelfPermission(BlankActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                    ContextCompat.checkSelfPermission(BlankActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(BlankActivity.this,
                         new String[]{
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                 Manifest.permission.RECORD_AUDIO
                         }, REQUEST_PERMISSION);
-            }
-
-
-        } else {
-            mediaRecorder = new MediaRecorder();
-            //new countdown().execute();
-            String recordWithCam = getIntent().getStringExtra("RecordWithCamera") == null ? "NO" : getIntent().getStringExtra("RecordWithCamera");
-            if (recordWithCam.equals("YES")) {
-                new FloatingCam().execute();
-            }
-            record = getIntent().getStringExtra("Record") == null ? "" : getIntent().getStringExtra("Record");
-            if (record.equals("START")) {
-                toggleButton = true;
-                startRecording();
-                //startRecordingWithCam();
-                String aa = "";
-                String bb = aa;
-                //moveTaskToBack(true);
             } else {
-                toggleButton = false;
-                //stopRecording();
+                initializeMediaRecorder();
             }
-            //startOrStopRecording(toggleButton);
         }
         Boolean hasPlayIntent = getIntent().hasExtra("playRecording");
         Boolean hasPauseIntent = getIntent().hasExtra("pauseRecording");
@@ -267,6 +254,23 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         }
     }
 
+    private void initializeMediaRecorder() {
+        if (mediaRecorder != null) {
+            mediaRecorder.release();
+        }
+        mediaRecorder = new MediaRecorder();
+        String recordWithCam = getIntent().getStringExtra("RecordWithCamera") == null ? "NO" : getIntent().getStringExtra("RecordWithCamera");
+        if (recordWithCam.equals("YES")) {
+            new FloatingCam().execute();
+        }
+        record = getIntent().getStringExtra("Record") == null ? "" : getIntent().getStringExtra("Record");
+        if (record.equals("START")) {
+            toggleButton = true;
+            startRecording();
+        } else {
+            toggleButton = false;
+        }
+    }
 
     public void pauseRecording() {
         if (mediaProjection != null) {
@@ -277,7 +281,6 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         }
     }
 
-
     public void resumeRecording() {
         if (mediaProjection != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -286,48 +289,32 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
             return;
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void stopRecording() throws IOException {
         try {
-            mediaRecorder.stop();
-            mediaRecorder.reset();
+            if (mediaRecorder != null) {
+                mediaRecorder.stop();
+                mediaRecorder.reset();
+            }
             stopRecordScreen();
-
-            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                stopRecordScreen();
-            }*/
-            finish();
+            if (recordingFile != null && recordingFile.exists()) {
+                MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                retriever.setDataSource(getApplicationContext(), Uri.parse(recordingFile.getAbsolutePath()));
+                String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+                endMs = Long.parseLong(time);
+                retriever.release();
+            }
+            startActivity(new Intent(BlankActivity.this, DashboardActivity.class)
+                    .putExtra("OpenHome", true)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                            Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
+                            Intent.FLAG_ACTIVITY_NO_ANIMATION));
         } catch (Exception e) {
             e.printStackTrace();
+            // Handle the error gracefully
         }
-        //Toast.makeText(this, "Recording Stopped", Toast.LENGTH_SHORT).show();
-        //Play in video view
-        //videoView.setVisibility(View.VISIBLE);
-        //videoView.setVideoURI(Uri.parse(videoUri));
-        //videoView.start();
-
-            /*videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    duration = mp.getDuration() / 1000;
-                    endMs = duration;
-                }
-            });*/
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-//use one of overloaded setDataSource() functions to set your data source
-        //moveTaskToBack(false);
-        //TODO uncomment original
-        //retriever.setDataSource(getApplicationContext(), Uri.parse(videoUri));
-        retriever.setDataSource(getApplicationContext(), Uri.parse(recordingFile.getAbsolutePath()));
-        String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-        endMs = Long.parseLong(time);
-        retriever.release();
-        startActivity(new Intent(BlankActivity.this, DashboardActivity.class)
-                .putExtra("OpenHome", true)
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                        Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
-                        Intent.FLAG_ACTIVITY_NO_ANIMATION));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -359,23 +346,26 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void recordScreen() {
         if (mediaProjection == null) {
+            // Start the service first
+            Intent serviceIntent = new Intent(this, FloatingViewService.class);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(serviceIntent);
+            } else {
+                startService(serviceIntent);
+            }
+            // Then request media projection
             startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), REQUEST_CODE);
             return;
         }
-
         virtualDisplay = createVirtualDisplay();
-       mediaRecorder.start();
+        mediaRecorder.start();
     }
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private VirtualDisplay createVirtualDisplay() {
         try {
             Surface aa = null;
-
-                aa = mediaRecorder.getSurface();
-
+            aa = mediaRecorder.getSurface();
             Surface bb = aa;
         } catch (Exception e) {
             e.printStackTrace();
@@ -384,7 +374,6 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             MediaProjection mp = mediaProjection;
             MediaRecorder mr = mediaRecorder;
-
             return mediaProjection.createVirtualDisplay("MainActivity", DISPLAY_WIDTH, DISPLAY_HEIGHT, mScreenDensity,
                     DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC,
                     mediaRecorder.getSurface(), null, null);
@@ -398,48 +387,62 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initRecorder() {
         try {
+
+            String folderName = getResources().getString(R.string.main_folder_name);
+            File mainDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).toString() + File.separator + folderName);
+            if (!mainDir.exists()) {
+                if (!mainDir.mkdirs()) {
+                    Log.e(TAG, "Failed to create output directory");
+                    throw new RuntimeException("Failed to create output directory");
+                }
+            }
+            File outputDir = new File(mainDir, "Recording");
+            //File outputDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "ScreenRecorder");
+            if (!outputDir.exists()) {
+                if (!outputDir.mkdirs()) {
+                    Log.e(TAG, "Failed to create output directory");
+                    throw new RuntimeException("Failed to create output directory");
+                }
+            }
+            // Create output file
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+            recordingFile = new File(outputDir, "ScreenRecording_" + timestamp + ".mp4");
+            if (recordingFile.exists()) {
+                recordingFile.delete();
+            }
+            // Initialize MediaRecorder
+            if (mediaRecorder != null) {
+                mediaRecorder.release();
+            }
+            mediaRecorder = new MediaRecorder();
+            // Reset MediaRecorder to ensure clean state
+            mediaRecorder.reset();
+
+            // Set audio source first if audio recording is enabled
             audio = SPVariables.getString("RecordAudio", BlankActivity.this);
             boolean checkAudio = audio.equals("TRUE") ? true : false;
             if (checkAudio) {
                 mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                mediaRecorder.setAudioChannels(2);
+                mediaRecorder.setAudioEncodingBitRate(128 * 1000);
+                mediaRecorder.setAudioSamplingRate(44100);
             }
-            mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
-            int aa = MediaRecorder.VideoSource.SURFACE;
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
 
-            String folderName = getResources().getString(R.string.main_folder_name);
-            File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES)+File.separator+folderName);
-            if (!directory.exists()) directory.mkdirs();
-            File subFolderPath =  new File(directory
-                    + File.separator + ""
-                    + ".temp");
-            if (!subFolderPath.exists()) subFolderPath.mkdirs();
-            File file = new File(directory
-                    + File.separator + ""
-                    + "Recording");
-            if (!file.exists()) file.mkdirs();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
-            String fileName = "Recording_" + sdf.format(new Date()) + ".mp4";
-            try {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    // Request the permission
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE);
-                }
-                else {
-                    recordingFile = new File(file
-                            + File.separator + ""
-                            + fileName);
-                    if (!recordingFile.createNewFile()) {
-                        Log.d(TAG, "Cannot not create the file");
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            // Set video source and other configurations
+            mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
+            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                mediaRecorder.setOutputFile(recordingFile);
+            }
+            else {
+                mediaRecorder.setOutputFile(recordingFile.getAbsolutePath());
             }
             CamcorderProfile profile = null;
-            String resolution = SPVariables.getString("Resolution", BlankActivity.this);
+            String resolution = SPVariables.getString("Resolution", com.manddprojectconsultant.screencam.activity.BlankActivity.this);
             if (resolution.equals("1080P")) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     profile = CamcorderProfile.get(CamcorderProfile.QUALITY_1080P);
@@ -486,28 +489,17 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                     DISPLAY_HEIGHT = 176;
                 }
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                //TODO uncomment after test
-                //mediaRecorder.setOutputFile(new File(videoUri));
-                mediaRecorder.setOutputFile(recordingFile);
-            }
-            else{
-                //TODO uncomment after test
-                //mediaRecorder.setOutputFile(videoUri);
-                mediaRecorder.setOutputFile(recordingFile.getAbsolutePath());
-            }
-            //DISPLAY_WIDTH = profile.videoFrameHeight;
-            //DISPLAY_HEIGHT= profile.videoFrameWidth;
+
             mediaRecorder.setVideoSize(DISPLAY_WIDTH, DISPLAY_HEIGHT);
-            //mediaRecorder.setVideoSize(420, 720);
-            mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
+            mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+            //mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
             int FPS = Integer.parseInt(SPVariables.getString("FPS", BlankActivity.this).substring(0, 2));
-//            mediaRecorder.setVideoFrameRate(30);
+            //mediaRecorder.setVideoFrameRate(30);
             mediaRecorder.setVideoFrameRate(FPS);
-            mediaRecorder.setVideoEncodingBitRate(profile != null ? profile.videoBitRate : 25000000); // 512000  //30000000
+            //mediaRecorder.setVideoEncodingBitRate(512 * 1000);  // 512000  //30000000
+            mediaRecorder.setVideoEncodingBitRate(profile != null ? profile.videoBitRate : 25000000);  // 512000  //30000000
             if (checkAudio) {
                 mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                //mediaRecorder.setAudioSamplingRate(1); //16000
             }
             String ori = SPVariables.getString("Orientation", BlankActivity.this);
             int rotation = getWindowManager().getDefaultDisplay().getRotation();
@@ -518,14 +510,32 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                 orientation = ORIENTATIONS.get((rotation + 90));
             }
             mediaRecorder.setOrientationHint(orientation);
-            mediaRecorder.prepare();
+
+            try {
+                mediaRecorder.prepare();
+                Log.d(TAG, "MediaRecorder prepared successfully");
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to prepare MediaRecorder: " + e.getMessage());
+                e.printStackTrace();
+                // Clean up resources
+                if (mediaRecorder != null) {
+                    mediaRecorder.release();
+                    mediaRecorder = null;
+                }
+                throw new RuntimeException("Failed to prepare MediaRecorder: " + e.getMessage());
+            }
         } catch (Exception e) {
+            Log.e(TAG, "Error initializing recorder: " + e.getMessage());
             e.printStackTrace();
+            // Clean up resources
+            if (mediaRecorder != null) {
+                mediaRecorder.release();
+                mediaRecorder = null;
+            }
+            //throw new RuntimeException("Error initializing recorder: " + e.getMessage());
         }
     }
     //Ctrl+o
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -562,8 +572,17 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
             builder.setAutoCancel(false);
             builder.setOngoing(true);
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
-
             SPVariables.setString("RecordStartOrStop", "NOTSTARTED", getApplicationContext());
             mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.VISIBLE);
             mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.GONE);
@@ -627,19 +646,15 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         }*/
     }
 
-
-
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private class MediaProjectionCallback extends MediaProjection.Callback {
         @Override
         public void onStop() {
             if (toggleButton) {
                 toggleButton = false;
-                if(createVirtualDisplay() != null){
+                if (createVirtualDisplay() != null) {
                     mediaRecorder.stop();
                 }
-
                 //mediaRecorder.stop();
                 mediaRecorder.reset();
             }
@@ -674,67 +689,66 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mediaProjection.stop();
             }
-     */       mediaProjection = null;
+     */mediaProjection = null;
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case REQUEST_PERMISSION: {
-                if ((grantResults.length > 0) && (grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
-                    //startOrStopRecording(toggleButton);
-                    startRecording();
-                } else {
-                    toggleButton = false;
-                    Snackbar.make(rootLayout, "Permissions", Snackbar.LENGTH_INDEFINITE)
-                            .setAction("ENABLE", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    ActivityCompat.requestPermissions(BlankActivity.this,
-                                            new String[]{
-                                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                                    Manifest.permission.RECORD_AUDIO
-                                            }, REQUEST_PERMISSION);
-                                }
-                            }).show();
-                }
-                return;
+        if (requestCode == REQUEST_HIGH_SAMPLING_SENSORS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+                ShakeDetector shakeDetector = new ShakeDetector(BlankActivity.this);
+                shakeDetector.start(sensorManager);
+                initializeMediaRecorder();
+            } else {
+                Toast.makeText(this, "High sampling sensors permission is required for shake detection", Toast.LENGTH_SHORT).show();
+                finish();
             }
-            case REQUEST_CODE_WRITE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permission Accepted", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (requestCode == REQUEST_MEDIA_PERMISSIONS || requestCode == REQUEST_PERMISSION) {
+            if (grantResults.length > 0) {
+                boolean allGranted = true;
+                for (int result : grantResults) {
+                    if (result != PackageManager.PERMISSION_GRANTED) {
+                        allGranted = false;
+                        break;
+                    }
+                }
+                if (allGranted) {
+                    initializeMediaRecorder();
                 } else {
-                    Toast.makeText(this, "Permission denied 2", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Required permissions not granted", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         }
     }
 
-    public class countdown extends AsyncTask {
+    public class countdown extends AsyncTask<Void, Void, Void> {
         private WindowManager wm;
         private LinearLayout ll;
-        //private Button stop;
         private TextView textView;
-        //private View v;
 
         public countdown() {
+            wm = (WindowManager) getSystemService(WINDOW_SERVICE);
         }
 
         public countdown(View v) {
-            //this.v = v;
+            wm = (WindowManager) getSystemService(WINDOW_SERVICE);
         }
 
         @Override
-        protected Object doInBackground(Object[] objects) {
-            //startService(new Intent(BlankActivity.this, HoverSong.class));
-            return "";
+        protected Void doInBackground(Void... voids) {
+            return null;
         }
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
-        protected void onPostExecute(Object o) {
+        protected void onPostExecute(Void aVoid) {
             try {
                 if (toggleButton) {
                     //Toast.makeText(BlankActivity.this, "welcome", Toast.LENGTH_SHORT).show();
@@ -742,7 +756,6 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                     ll = (LinearLayout) LayoutInflater.from(BlankActivity.this)
                             .inflate(R.layout.llcount, null);
                     textView = ll.findViewById(R.id.txtCount);
-
                     final WindowManager.LayoutParams parameters = new WindowManager.LayoutParams(
                             LinearLayout.LayoutParams.FILL_PARENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -782,11 +795,11 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                             return false;
                         }
                     });*/
-    //                final boolean recordingWithoutCountDown = SPVariables.getString("CountDown", BlankActivity.this).equals("TRUE") ? true : false;
-    //
-    //                if (!recordingWithoutCountDown) {
-    //                    mediaRecorder.start();
-    //                }
+                    //                final boolean recordingWithoutCountDown = SPVariables.getString("CountDown", BlankActivity.this).equals("TRUE") ? true : false;
+                    //
+                    //                if (!recordingWithoutCountDown) {
+                    //                    mediaRecorder.start();
+                    //                }
 
 
                     /*new CountDownTimer(4000, 1000) {
@@ -817,19 +830,14 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                             //startOrStopRecording(v);
                         }
                     }.start();*/
-
-
-
-
                     new CountDownTimer(4000, 1000) {
                         public void onTick(long millisUntilFinished) {
-                            if (millisUntilFinished/1000  > 0) {
+                            if (millisUntilFinished / 1000 > 0) {
                                 long seconds = millisUntilFinished / 1000;
-                                textView.setText(seconds+"");
+                                textView.setText(seconds + "");
                                 Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
                                 textView.startAnimation(animation);
-                            }
-                            else {
+                            } else {
                                 textView.setText("START");
                                 Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
                                 textView.startAnimation(animation);
@@ -847,8 +855,6 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                             //startOrStopRecording(v);
                         }
                     }.start();
-
-
                 } else {
                     String aa = "";
                     //startOrStopRecording(v);
@@ -856,42 +862,34 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            super.onPostExecute(o);
+            super.onPostExecute(aVoid);
         }
     }
 
-    public class FloatingCam extends AsyncTask {
-        //        public WindowManager wmCam;
-//        public LinearLayout camPreivew;
-        //private Button stop;
+    public class FloatingCam extends AsyncTask<Void, Void, Void> {
         private FrameLayout preview;
         private CameraView mPreview;
 
-        //private View v;
-
         public FloatingCam() {
+            wmCam = (WindowManager) getSystemService(WINDOW_SERVICE);
         }
 
         public FloatingCam(View v) {
-            //this.v = v;
+            wmCam = (WindowManager) getSystemService(WINDOW_SERVICE);
         }
 
         @Override
-        protected Object doInBackground(Object[] objects) {
-            //startService(new Intent(BlankActivity.this, HoverSong.class));
-            return "";
+        protected Void doInBackground(Void... voids) {
+            return null;
         }
 
-
         @Override
-        protected void onPostExecute(Object o) {
+        protected void onPostExecute(Void aVoid) {
             if (toggleButton) {
                 //Toast.makeText(BlankActivity.this, "welcome", Toast.LENGTH_SHORT).show();
                 wmCam = (WindowManager) getSystemService(WINDOW_SERVICE);
                 camPreivew = (LinearLayout) LayoutInflater.from(BlankActivity.this)
                         .inflate(R.layout.camera_preview, null);
-
-
                 //preview = camPreivew.findViewById(R.id.txtCount);
                 String IsFrontCam = SPVariables.getString("CameraFacing", BlankActivity.this);
                 if (IsFrontCam.equals("Front")) {
@@ -900,12 +898,9 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                     mCamera = getCameraInstance();
                 }
                 mPreview = new CameraView(BlankActivity.this, mCamera, wmCam);
-
                 String CameraFrame = SPVariables.getString("CameraFrame", BlankActivity.this);
                 preview = camPreivew.findViewById(R.id.camera_preview);
                 preview.setBackgroundResource(R.drawable.rounded);
-
-
 //                if (CameraFrame.equals("Square")) {
 //
 //                    preview.setBackgroundResource(R.drawable.rounded);
@@ -913,31 +908,23 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
 //                    //preview = camPreivew.findViewById(R.id.camera_preview_round);
 //                    preview.setBackgroundResource(R.drawable.round);
 //                }
-
-
                 String ratio = SPVariables.getString("CameraPreview", BlankActivity.this);
-
-
                 int CamPreviewWidth, CamPreviewHeight;
-                if(ratio.equals("Large")){
+                if (ratio.equals("Large")) {
                     CamPreviewWidth = 180;
                     CamPreviewHeight = 300;
-                }
-                else if(ratio.equals("Medium")){
+                } else if (ratio.equals("Medium")) {
                     CamPreviewWidth = 150;
                     CamPreviewHeight = 250;
-                }
-                else {
+                } else {
                     CamPreviewWidth = 120;
                     CamPreviewHeight = 200;
                 }
-
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)preview.getLayoutParams();
-                layoutParams.height=dpToPx(CamPreviewHeight);
-                layoutParams.weight=dpToPx(CamPreviewWidth);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) preview.getLayoutParams();
+                layoutParams.height = dpToPx(CamPreviewHeight);
+                layoutParams.weight = dpToPx(CamPreviewWidth);
                 preview.setBackgroundResource(R.drawable.rounded);
                 preview.setLayoutParams(layoutParams);
-
                 //mPreview.setRotation(90.0f);
                 preview.addView(mPreview);
                 final WindowManager.LayoutParams parameters = new WindowManager.LayoutParams(
@@ -957,10 +944,8 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                 parameters.y = 0;
                 //parameters.gravity = Gravity.RIGHT | Gravity.TOP;
                 wmCam.addView(camPreivew, parameters);
-
 //                int width = display.getWidth();
 //                int height = display.getHeight();
-
                 camPreivew.setOnTouchListener(new View.OnTouchListener() {
                     private WindowManager.LayoutParams updatedParameters = parameters;
                     int x, y;
@@ -990,7 +975,7 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
                 String aa = "";
                 //startOrStopRecording(v);
             }
-            super.onPostExecute(o);
+            super.onPostExecute(aVoid);
         }
     }
 
@@ -1027,11 +1012,9 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void hearShake() {
-
         floatingViewService.ShowNotification("Stop");
 
        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -1044,8 +1027,6 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.VISIBLE);
         mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.GONE);
         mFloatingView.findViewById(R.id.close_btn).setVisibility(View.VISIBLE);
-
-
 //        mediaRecorder.stop();
 //        mediaRecorder.reset();
 //        toggleButton = false;
@@ -1056,14 +1037,13 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         //videoView.start();
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onDestroy() {
         super.onDestroy();
         String RecordwithCam = getIntent().getStringExtra("RecordWithCamera") == null ? "NO" : getIntent().getStringExtra("RecordWithCamera");
         if (RecordwithCam.equals("YES")) {
-            if (mCamera!=null) {
+            if (mCamera != null) {
                 mCamera.stopPreview();
                 mCamera.release();
                 mCamera = null;
@@ -1088,6 +1068,4 @@ public class BlankActivity extends AppCompatActivity implements ShakeDetector.Li
         }
         return dir.delete();
     }
-
-
 }

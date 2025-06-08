@@ -1,8 +1,9 @@
 package com.manddprojectconsultant.screencam.activity;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,11 +13,16 @@ import android.widget.LinearLayout;
 import static com.manddprojectconsultant.screencam.service.FloatingViewService.mFloatingView;
 
 import com.manddprojectconsultant.screencam.service.FloatingViewService;
-import com.manddprojectconsultant.screencam.R;
 import com.manddprojectconsultant.screencam.utils.SPVariables;
-
 import java.io.IOException;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.manddprojectconsultant.screencam.R;
+
 public class NotificationRecordingStopActivity extends AppCompatActivity {
+    private static final String TAG = "NotificationRecordingStop";
     @SuppressLint("StaticFieldLeak")
     public static BlankActivity blankActivity;
     @SuppressLint("StaticFieldLeak")
@@ -29,29 +35,43 @@ public class NotificationRecordingStopActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_recording_stop);
-
         rootNotiStop = findViewById(R.id.rootNotiStop);
         rootNotiStop.setBackgroundColor(getResources().getColor(R.color.transpermt));
 
         SPVariables.setString("RecordStartOrStop", "NOTSTARTED", getApplicationContext());
-        try {
-            blankActivity.stopRecording();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        String RecordwithCam = getIntent().hasExtra("RecordWithCamera")?"YES":"NO";
-        if (RecordwithCam.equals("YES")) {
-            blankActivity.mCamera.stopPreview();
-            blankActivity.mCamera.release();
-            blankActivity.mCamera = null;
-            blankActivity.wmCam.removeView(blankActivity.camPreivew);
+
+        if (blankActivity != null) {
+            try {
+                blankActivity.stopRecording();
+            } catch (IOException e) {
+                e.printStackTrace();
+                // Handle the error gracefully
+            }
+
+            String RecordwithCam = getIntent().hasExtra("RecordWithCamera") ? "YES" : "NO";
+            if (RecordwithCam.equals("YES") && blankActivity.mCamera != null) {
+                try {
+                    blankActivity.mCamera.stopPreview();
+                    blankActivity.mCamera.release();
+                    blankActivity.mCamera = null;
+                    if (blankActivity.wmCam != null && blankActivity.camPreivew != null) {
+                        blankActivity.wmCam.removeView(blankActivity.camPreivew);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
-        mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.VISIBLE);
-        mFloatingView.findViewById(R.id.close_btn).setVisibility(View.VISIBLE);
-        mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.GONE);
+        if (mFloatingView != null) {
+            mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.VISIBLE);
+            mFloatingView.findViewById(R.id.close_btn).setVisibility(View.VISIBLE);
+            mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.GONE);
+        }
 
-        floatingViewService.ShowNotification("Stop");
+        if (floatingViewService != null) {
+            floatingViewService.ShowNotification("Stop");
+        }
 
         finish();
     }

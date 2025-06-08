@@ -1,5 +1,6 @@
 package com.manddprojectconsultant.screencam.service;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -8,6 +9,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ServiceInfo;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.os.Build;
@@ -28,8 +31,10 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
 import java.io.IOException;
 import java.util.Random;
@@ -45,31 +50,21 @@ import com.manddprojectconsultant.screencam.activity.NotificationRecordingStartA
 import com.manddprojectconsultant.screencam.activity.NotificationRecordingStopActivity;
 import com.manddprojectconsultant.screencam.activity.SettingActivity;
 public class FloatingViewService extends Service {
-
     private WindowManager mWindowManager;
     public static View mFloatingView;
     public static View mFloatingViewExpand;
     private static final String CHANNEL_ID = "channel_id01";
     public static final int NOTIFICATION_ID = 1;
     public static final int NOTIFICATION_ID_2 = 2;
-
-
     private int isExpand = 0; //0 = not expand, 1 = expanded
-
-
     private GestureDetector gestureDetector;
     public static int recordFlag = 0;
     WindowManager.LayoutParams Rparams;
-
     public static BlankActivity blankActivity;
     public static BackgroundActivity backgroundActivity = new BackgroundActivity();
-
-    public static View expandedView;
-
+    public View expandedView;
     public RelativeLayout recordView;
-
     public static DashboardActivity dashboardActivity;
-
     public String widget = "Big";
 
     @Override
@@ -81,25 +76,17 @@ public class FloatingViewService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        BackgroundActivity.floatingViewService = this;
         BlankActivity.floatingViewService = this;
         NotificationRecordingStopActivity.floatingViewService = this;
         NotificationRecordingStartActivity.floatingViewService = this;
-
         mFloatingView = LayoutInflater.from(this).inflate(R.layout.layout_floating_widget, null);
         mFloatingViewExpand = LayoutInflater.from(this).inflate(R.layout.layout_floating_widget_expand, null);
-
         gestureDetector = new GestureDetector(this, new SingleTapConfirm());
         gestureDetector.setIsLongpressEnabled(true);
-
-        backgroundActivity = (BackgroundActivity) backgroundActivity.context;
-
+        backgroundActivity = (BackgroundActivity) backgroundActivity.getContext();
         recordView = mFloatingView.findViewById(R.id.recordView);
-
         CreateNotificationChannel();
         ShowNotification("");
-
         //Add the view to the window.
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -119,40 +106,34 @@ public class FloatingViewService extends Service {
                 WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);*/
-
         //Specify the view position
         //params.gravity = Gravity.TOP | Gravity.LEFT;        //Initially view will be added to top-left corner
-        params.gravity = Gravity.CENTER | Gravity.RIGHT ;        //Initially view will be added to center-right
+        params.gravity = Gravity.CENTER | Gravity.RIGHT;        //Initially view will be added to center-right
 //        params.x = 600;
 //        params.y = 0;
-        Log.e("Widget Position: ", "Default x: "+params.x);
-        Log.e("Widget Position: ", "Default y: "+params.y);
-
+        Log.e("Widget Position: ", "Default x: " + params.x);
+        Log.e("Widget Position: ", "Default y: " + params.y);
         //Add the view to the window
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mWindowManager.addView(mFloatingViewExpand, params);
         mWindowManager.addView(mFloatingView, params);
-
         try {
             Display display = mWindowManager.getDefaultDisplay();
             int width = display.getWidth();
             int height = display.getHeight();
-            Log.e("Widget Height:", " "+height);
-            Log.e("Widget width:", ""+width);
+            Log.e("Widget Height:", " " + height);
+            Log.e("Widget width:", "" + width);
         } catch (Exception e) {
             e.printStackTrace();
         }
         Rparams = params;
-
         //new countdown(getApplicationContext()).execute();
-
         //The root element of the collapsed view layout
         //final View collapsedView = mFloatingView.findViewById(R.id.collapse_view);
         //The root element of the expanded view layout
         expandedView = mFloatingViewExpand.findViewById(R.id.expanded_container);
         //final View expandedViewClose = mFloatingView.findViewById(R.id.expanded_container_close);
-
-        if(expandedView.getVisibility() == View.GONE) {
+        if (expandedView.getVisibility() == View.GONE) {
             //expandedView.setVisibility(View.VISIBLE);
             Intent intent = new Intent(getApplicationContext(), BackgroundActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -172,7 +153,6 @@ public class FloatingViewService extends Service {
                 }
                 stopSelf();
                 closeNotification();
-
                 //blankActivity.finishAffinity();
                 //backgroundActivity.killSelf();
                 backgroundActivity.finishAndRemoveTask();
@@ -181,10 +161,8 @@ public class FloatingViewService extends Service {
 
                 /*int pid = android.os.Process.myPid();
                 android.os.Process.killProcess(pid);*/
-
             }
         });
-
         mFloatingView.findViewById(R.id.collapse_view).setOnTouchListener(new View.OnTouchListener() {
             private int initialX;
             private int initialY;
@@ -198,12 +176,9 @@ public class FloatingViewService extends Service {
                 set.setDuration(100);
                 set.addTransition(new Fade());
                 set.addTarget(v);
-
                 if (gestureDetector.onTouchEvent(event)) {
-
                     int Xdiff = (int) (event.getRawX() - initialTouchX);
                     int Ydiff = (int) (event.getRawY() - initialTouchY);
-
                     //The check for Xdiff <10 && YDiff< 10 because sometime elements moves a little while clicking.
                     //So that is click event.
                     if (Xdiff < 10 && Ydiff < 10) {
@@ -215,23 +190,18 @@ public class FloatingViewService extends Service {
                             //and expanded view will become visible.
                             //collapsedView.setVisibility(View.GONE);
                             isExpand = 1;
-
 //                            FrameLayout.LayoutParams params =
 //                                    (FrameLayout.LayoutParams)recordView.getLayoutParams();
 //                            params.setMargins(dpToPx(recordView, 75), dpToPx(recordView, 61), 0, 0);
 //                            recordView.setLayoutParams(params);
-
                             expandedView.setVisibility(View.VISIBLE);
-
                             Intent intent = new Intent(getApplicationContext(), BackgroundActivity.class);
                             //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-
                             // intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
                             backgroundActivity.finish();
-
                         } else {
                             isExpand = 0;
                             expandedView.setVisibility(View.GONE);
@@ -247,27 +217,20 @@ public class FloatingViewService extends Service {
                 } else {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
-
                             //remember the initial position.
                             initialX = params.x;
                             initialY = params.y;
-
-                            Log.e("Action Down initialY: ", initialY+"");
-
+                            Log.e("Action Down initialY: ", initialY + "");
                             //get the touch location
                             initialTouchX = event.getRawX();
                             initialTouchY = event.getRawY();
                             return true;
-
                         case MotionEvent.ACTION_BUTTON_PRESS:
                             //Toast.makeText(FloatingViewService.this, "hello", Toast.LENGTH_SHORT).show();
                         case MotionEvent.ACTION_MOVE:
-
                             int Xdiff = (int) (event.getRawX() - initialTouchX);
                             int Ydiff = (int) (event.getRawY() - initialTouchY);
                             //Log.e("Wegdet event Y", "onTouch: "+ event.getRawY());
-
-
                             if (Xdiff != 0 && Ydiff != 0) {
                                 if (expandedView.getVisibility() == View.VISIBLE) {
                                     //if (isExpand == 1) {
@@ -280,30 +243,25 @@ public class FloatingViewService extends Service {
                                     expandedView.setVisibility(View.GONE);
                                 }
                             }
-
                             //Calculate the X and Y coordinates of the view.
                             //params.x = initialX + (int) (event.getRawX() - initialTouchX);
-
                             Display display = mWindowManager.getDefaultDisplay();
                             int width = display.getWidth();
                             int height = display.getHeight();
-                            height=((90*height)/100);
-                            Log.e("Widget Height:", " "+height);
+                            height = ((90 * height) / 100);
+                            Log.e("Widget Height:", " " + height);
                             //Log.e("Widget width:", ""+width);
-
-                            int diffheight = height-params.y;
-
+                            int diffheight = height - params.y;
                             int heightU = dashboardActivity.heightU;
                             int heightB = dashboardActivity.heightB;
-
                             //Log.e("Widget Y diff", "onTouch: "+ (height - event.getRawY()));
 //                            if(event.getRawY()<=1600 && event.getRawY()>=420) {
                             //if((height - event.getRawY())>=280 && (height - event.getRawY())<=1600) {
                             //if(heightU>=500 && heightB <=2032) {
-                            if(event.getRawY()>= heightU && event.getRawY()<=(dashboardActivity.height<1200?heightB-50:heightB)) {
+                            if (event.getRawY() >= heightU && event.getRawY() <= (dashboardActivity.height < 1200 ? heightB - 50 : heightB)) {
                                 params.y = initialY + (int) (event.getRawY() - initialTouchY);
-                                Log.e("initialY: ", initialY+"");
-                                Log.e("Y ", initialY+ " " + event.getRawY() +"-"+ initialTouchY);
+                                Log.e("initialY: ", initialY + "");
+                                Log.e("Y ", initialY + " " + event.getRawY() + "-" + initialTouchY);
                                 // Log.e("Widget Position: ", "before update x: "+params.x);
                                 //Log.e("Widget Position: ", "before update y: "+params.y);
                                 //Update the layout with new X & Y coordinate
@@ -319,7 +277,6 @@ public class FloatingViewService extends Service {
                 return false;
             }
         });
-
         mFloatingView.findViewById(R.id.collapse_view).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -327,7 +284,6 @@ public class FloatingViewService extends Service {
                 if (expandedView.getVisibility() == View.VISIBLE) {
                     backgroundActivity.finish();
                     expandedView.setVisibility(View.GONE);
-
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mFloatingView.findViewById(R.id.collapse_view).getLayoutParams();
                     params.setMargins(0, dpToPx(mFloatingView.findViewById(R.id.collapse_view), 60), 0, 0);
                     mFloatingView.findViewById(R.id.collapse_view).setLayoutParams(params);
@@ -346,8 +302,6 @@ public class FloatingViewService extends Service {
                 mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.GONE);
             }
         });*/
-
-
         mFloatingView.findViewById(R.id.collapse_view_stop).setOnTouchListener(new View.OnTouchListener() {
             private int initialX;
             private int initialY;
@@ -357,12 +311,9 @@ public class FloatingViewService extends Service {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
                 if (gestureDetector.onTouchEvent(event)) {
-
                     //int Xdiff = (int) (event.getRawX() - initialTouchX);
                     int Ydiff = (int) (event.getRawY() - initialTouchY);
-
                     //The check for Xdiff <10 && YDiff< 10 because sometime elements moves a little while clicking.
                     //So that is click event.
                     if (/*Xdiff < 10 && */Ydiff < 10) {
@@ -372,9 +323,7 @@ public class FloatingViewService extends Service {
                             //visibility of the collapsed layout will be changed to "View.GONE"
                             //and expanded view will become visible.
                             //collapsedView.setVisibility(View.GONE);
-
                             SPVariables.setString("RecordStartOrStop", "NOTSTARTED", getApplicationContext());
-
 //                            Intent intent = new Intent(getApplicationContext(), BlankActivity.class);
 //                            intent.putExtra("Record2", "STOP");
 //                            intent.putExtra("Record", "STOP");
@@ -389,149 +338,110 @@ public class FloatingViewService extends Service {
                             ShowNotification("Stop");
                             //CamService.removeCamView();
                             //blankActivity.stopRecordingWithCam();
-
                             mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.VISIBLE);
                             mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.GONE);
                             mFloatingView.findViewById(R.id.close_btn).setVisibility(View.VISIBLE);
-
-
-
-
-
                         }
                     }
                     return true;
                 } else {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
-
                             //remember the initial position.
                             //initialX = params.x;
                             initialY = params.y;
-
                             //get the touch location
                             //initialTouchX = event.getRawX();
                             initialTouchY = event.getRawY();
                             return true;
-
                         case MotionEvent.ACTION_BUTTON_PRESS:
                             //Toast.makeText(FloatingViewService.this, "hello", Toast.LENGTH_SHORT).show();
                         case MotionEvent.ACTION_MOVE:
                             //Calculate the X and Y coordinates of the view.
                             //params.x = initialX + (int) (event.getRawX() - initialTouchX);
                             params.y = initialY + (int) (event.getRawY() - initialTouchY);
-
                             //Update the layout with new X & Y coordinate
                             mWindowManager.updateViewLayout(mFloatingViewExpand, params);
                             mWindowManager.updateViewLayout(mFloatingView, params);
-
                             Rparams = params;
                             return true;
                     }
                 }
-
                 return false;
             }
-
         });
-
-
         mFloatingViewExpand.findViewById(R.id.iv_Record).setOnClickListener(new View.OnClickListener() {
-
             @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
                 //Toast.makeText(FloatingViewService.this, SPVariables.getString("RecordStartOrStop", getApplicationContext()), Toast.LENGTH_SHORT).show();
-
 //              params.x = 600;
 //              params.y = 0;
                 mWindowManager.updateViewLayout(mFloatingViewExpand, params);
                 mWindowManager.updateViewLayout(mFloatingView, params);
                 Rparams = params;
-
                 if (SPVariables.getString("RecordStartOrStop", getApplicationContext()).equals("NOTSTARTED")) {
                     SPVariables.setString("RecordStartOrStop", "STARTED", getApplicationContext());
-
                     //new countdown(getApplicationContext()).execute();
-
                     mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.VISIBLE);
                     mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.GONE);
                     mFloatingView.findViewById(R.id.close_btn).setVisibility(View.GONE);
                     backgroundActivity.finish();
                     expandedView.setVisibility(View.GONE);
                     isExpand = 0;
-
                     ShowNotification("Start");
                     String bubbleShow = SPVariables.getString("ShowBubble", getApplicationContext());
-                    if(bubbleShow.equals("FALSE")){
+                    if (bubbleShow.equals("FALSE")) {
                         mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.GONE);
                         mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.GONE);
                         mFloatingView.findViewById(R.id.close_btn).setVisibility(View.GONE);
-
                     }
-
                     Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                             .setContentTitle("Recording")
                             .build();
-
                     //startForeground(NOTIFICATION_ID, notification);
                     startForeground(NOTIFICATION_ID_2, buildForegroundNotification());
-
                     Intent intent = new Intent(getApplicationContext(), BlankActivity.class);
                     intent.putExtra("Record", "START");
                     intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     //blankActivity.startRecording();
-
                 } else if (SPVariables.getString("RecordStartOrStop", getApplicationContext()).equals("STARTED")) {
                     SPVariables.setString("RecordStartOrStop", "NOTSTARTED", getApplicationContext());
                 }
-
-
             }
         });
-
-
-
         mFloatingViewExpand.findViewById(R.id.iv_Record_Cam).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(FloatingViewService.this, "Recording with Camera Start", Toast.LENGTH_SHORT).show();
                 //Toast.makeText(FloatingViewService.this, SPVariables.getString("RecordStartOrStop", getApplicationContext()), Toast.LENGTH_SHORT).show();
-
 //                params.x = 600;
 //                params.y = 0;
                 mWindowManager.updateViewLayout(mFloatingViewExpand, params);
                 mWindowManager.updateViewLayout(mFloatingView, params);
                 Rparams = params;
-
                 if (SPVariables.getString("RecordStartOrStop", getApplicationContext()).equals("NOTSTARTED")) {
                     SPVariables.setString("RecordStartOrStop", "STARTED", getApplicationContext());
-
                     //new countdown(getApplicationContext()).execute();
-
                     mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.VISIBLE);
                     mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.GONE);
                     mFloatingView.findViewById(R.id.close_btn).setVisibility(View.GONE);
                     backgroundActivity.finish();
                     expandedView.setVisibility(View.GONE);
                     isExpand = 0;
-
                     ShowNotification("Start");
                     String bubbleShow = SPVariables.getString("ShowBubble", getApplicationContext());
-                    if(bubbleShow.equals("FALSE")){
+                    if (bubbleShow.equals("FALSE")) {
                         mFloatingView.findViewById(R.id.collapse_view_stop).setVisibility(View.GONE);
                         mFloatingView.findViewById(R.id.collapse_view).setVisibility(View.GONE);
                         mFloatingView.findViewById(R.id.close_btn).setVisibility(View.GONE);
-
                     }
-
                     Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                             .setContentTitle("Recording")
                             .build();
                     //startForeground(NOTIFICATION_ID, notification);
                     startForeground(NOTIFICATION_ID_2, buildForegroundNotification());
-
                     Intent intent = new Intent(getApplicationContext(), BlankActivity.class);
                     intent.putExtra("Record", "START");
                     intent.putExtra("RecordWithCamera", "YES");
@@ -542,7 +452,6 @@ public class FloatingViewService extends Service {
                 }
             }
         });
-
         mFloatingViewExpand.findViewById(R.id.iv_Setting).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -551,7 +460,6 @@ public class FloatingViewService extends Service {
                 expandedView.setVisibility(View.GONE);
             }
         });
-
         mFloatingViewExpand.findViewById(R.id.iv_Home).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -560,7 +468,6 @@ public class FloatingViewService extends Service {
                 expandedView.setVisibility(View.GONE);
             }
         });
-
         mFloatingViewExpand.findViewById(R.id.iv_Video_Edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -569,16 +476,46 @@ public class FloatingViewService extends Service {
                 expandedView.setVisibility(View.GONE);
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Screen Recorder Service",
+                    NotificationManager.IMPORTANCE_LOW
+            );
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
+        // Create notification with media projection type
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Screen Recorder")
+                .setContentText("Recording in progress")
+                .setSmallIcon(R.drawable.ic_v_cam)
+                .setPriority(NotificationCompat.PRIORITY_LOW);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(NOTIFICATION_ID, builder.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION);
+        } else {
+            startForeground(NOTIFICATION_ID, builder.build());
+        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                .setContentTitle("Recording")
-                .build();
-
-        //startForeground(NOTIFICATION_ID, notification);
-        startForeground(NOTIFICATION_ID_2, notification);
+        try {
+            // Create and start the foreground notification
+            Notification notification = buildForegroundNotification();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                startForeground(NOTIFICATION_ID_2, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION);
+            } else {
+                startForeground(NOTIFICATION_ID_2, notification);
+            }
+        } catch (SecurityException e) {
+            // If we can't start as foreground service, stop the service
+            stopSelf();
+            return START_NOT_STICKY;
+        }
         
         return START_NOT_STICKY;
     }
@@ -613,7 +550,6 @@ public class FloatingViewService extends Service {
     }
 
     private class SingleTapConfirm extends GestureDetector.SimpleOnGestureListener {
-
         @Override
         public boolean onSingleTapUp(MotionEvent event) {
             return true;
@@ -628,9 +564,7 @@ public class FloatingViewService extends Service {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void ShowNotification(String Recording) {
-
         //CreateNotificationChannel();
-
 //        Intent pauseIntent = new Intent(this, BlankActivity.class);
 //        pauseIntent.putExtra("pauseRecording", true);
 //        //pauseIntent .setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
@@ -642,7 +576,6 @@ public class FloatingViewService extends Service {
 //        PlayIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //        //PlayIntent.setFlags(Intent. FLAG_ACTIVITY_CLEAR_TOP | Intent. FLAG_ACTIVITY_SINGLE_TOP);
 //        PendingIntent PlayPIntent = PendingIntent.getActivity(this,0,PlayIntent,PendingIntent.FLAG_ONE_SHOT);
-
 //        Intent PauseIntent = new Intent(this,BlankActivity.class);
 //        PauseIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //        PendingIntent PlayPIntent = PendingIntent.getActivity(this,0,PauseIntent,PendingIntent.FLAG_ONE_SHOT);
@@ -650,51 +583,40 @@ public class FloatingViewService extends Service {
 //        Intent StopIntent = new Intent(this,MainActivity.class);
 //        StopIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //        PendingIntent pausePIntent = PendingIntent.getActivity(this,0,StopIntent,PendingIntent.FLAG_ONE_SHOT);
-
         String aa = Recording;
-
         Random generator = new Random();
-
-        Intent StopIntent = new Intent(this, NotificationRecordingStopActivity.class);//BlankActivity.class);
-        //StopIntent.putExtra("Notification", "stop");
+        Intent StopIntent = new Intent(this, NotificationRecordingStopActivity.class);
         StopIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pausePIntent = PendingIntent.getActivity(this, generator.nextInt(), StopIntent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
-
-
-        Intent StopIntent2 = new Intent(this, NotificationRecordingStartActivity.class);         //NotiRecordingStart.class
-        //StopIntent2.putExtra("OpenHome", "true");
+        PendingIntent pausePIntent = PendingIntent.getActivity(this, generator.nextInt(), StopIntent, 
+            PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+        
+        Intent StopIntent2 = new Intent(this, NotificationRecordingStartActivity.class);
         StopIntent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pausePIntent2 = PendingIntent.getActivity(this, generator.nextInt(), StopIntent2, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_MUTABLE);
-
+        PendingIntent pausePIntent2 = PendingIntent.getActivity(this, generator.nextInt(), StopIntent2, 
+            PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
-
         builder.setSmallIcon(R.drawable.logo);
         builder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
                 R.drawable.logo));
         builder.setContentTitle("Screen Recorder App");
-        if(!Recording.isEmpty() && Recording.equals("Start")){
+        if (!Recording.isEmpty() && Recording.equals("Start")) {
             builder.setContentText("Click here to stop");
         }
-        if(!Recording.isEmpty() && Recording.equals("Stop")){
+        if (!Recording.isEmpty() && Recording.equals("Stop")) {
             builder.setContentText("");
         }
         //builder.setContentText("Description of Notification");
         //builder.setPriority(NotificationCompat.PRIORITY_HIGH);
-
         builder.setChannelId(CHANNEL_ID);
         builder.setAutoCancel(false);
         builder.setOngoing(true);
-
         String recordingStarted = SPVariables.getString("RecordStartOrStop", getApplicationContext());
-
-        if(recordingStarted != null && recordingStarted.equals("STARTED")){
+        if (recordingStarted != null && recordingStarted.equals("STARTED")) {
             //if(!Recording.isEmpty() && Recording.equals("Start")){
             builder.setContentIntent(pausePIntent);
-        }
-        else {
+        } else {
             builder.setContentIntent(pausePIntent2);
         }
-
         //if(Recording.isEmpty()){
         /*if(!Recording.isEmpty() && Recording.equals("Stop")){
             //builder.setContentIntent(pausePIntent2);
@@ -705,8 +627,17 @@ public class FloatingViewService extends Service {
         //builder.addAction(R.drawable.ic_play,"Play",PlayPIntent);
         //builder.addAction(R.drawable.ic_pause,"Pause",pausePIntent);
         //builder.addAction(R.drawable.ic_stop,"Stop",StopPIntent);
-
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
 
     }
@@ -738,10 +669,12 @@ public class FloatingViewService extends Service {
     }
 
     private Notification buildForegroundNotification() {
-        NotificationCompat.Builder b=new NotificationCompat.Builder(this, CHANNEL_ID);
+        NotificationCompat.Builder b = new NotificationCompat.Builder(this, CHANNEL_ID);
         b.setChannelId(CHANNEL_ID);
         b.setOngoing(true)
-                .setContentTitle("Screen Recorder");
-        return(b.build());
+          .setContentTitle("Screen Recorder")
+          .setSmallIcon(R.drawable.logo)
+          .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        return b.build();
     }
 }

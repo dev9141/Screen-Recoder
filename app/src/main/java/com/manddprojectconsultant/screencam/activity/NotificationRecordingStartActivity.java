@@ -8,9 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-
-import static com.manddprojectconsultant.screencam.service.FloatingViewService.expandedView;
-
 import com.manddprojectconsultant.screencam.service.FloatingViewService;
 import com.manddprojectconsultant.screencam.R;
 public class NotificationRecordingStartActivity extends AppCompatActivity {
@@ -32,7 +29,7 @@ public class NotificationRecordingStartActivity extends AppCompatActivity {
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                         Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NO_ANIMATION));
         backgroundActivity.finish();
-        expandedView.setVisibility(View.GONE);
+        floatingViewService.expandedView.setVisibility(View.GONE);
 
         /*rootNotiStart = findViewById(R.id.rootNotiStart);
         rootNotiStart.setBackgroundColor(getResources().getColor(R.color.transpermt));
