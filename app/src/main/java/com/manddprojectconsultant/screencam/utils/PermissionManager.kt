@@ -33,7 +33,8 @@ class PermissionManager(private val activity: Activity) {
 
         // Additional permissions for Android 14+ (API 34+)
         private val ANDROID_14_PERMISSIONS = arrayOf(
-            Manifest.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION
+            Manifest.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION,
+            Manifest.permission.POST_NOTIFICATIONS
         )
         
         // Get all required permissions based on Android version

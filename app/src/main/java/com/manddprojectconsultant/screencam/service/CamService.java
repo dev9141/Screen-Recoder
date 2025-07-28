@@ -38,53 +38,20 @@ public class CamService extends Service {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate() {
-
         super.onCreate();
-
 
         wm = (WindowManager) getSystemService(WINDOW_SERVICE);
 
-
         camPreivew = (LinearLayout) LayoutInflater.from(this)
                 .inflate(R.layout.camera_preview, null);
-        preview = camPreivew.findViewById(R.id.txtCount);
-
-
-        //mCamera = openFrontFacingCameraGingerbread();
-        mCamera = getCameraInstance();
-        //mCamera = getCameraInstance();
-        // Create our Preview view and set it as the content of our activity.
-        mPreview = new CameraView(this, mCamera, wm);
+        //preview = camPreivew.findViewById(R.id.txtCount);
         preview = camPreivew.findViewById(R.id.camera_preview);
-        //mPreview.setRotation(90.0f);
+        mCamera = getCameraInstance();
+        mPreview = new CameraView(this, mCamera, wm);
 
         mPreview.setBackgroundResource(R.drawable.rounded);
-
         preview.addView(mPreview);
-        //preview.setBackgroundResource(R.drawable.rounded);
 
-
-              /*  camPreivew = new LinearLayout(MainActivity.this);
-                //stop = new Button(this);
-                preview = new TextView(MainActivity.this);
-
-                ViewGroup.LayoutParams btnParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                //stop.setText("Stop");
-                //stop.setLayoutParams(btnParameters);
-
-                preview.setLayoutParams(btnParameters);
-                preview.setText("This is a sample TextView...");
-                preview.setTextColor(Color.parseColor("#ff0000"));
-
-
-                LinearLayout.LayoutParams llParameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                camPreivew.setBackgroundColor(Color.argb(66, 255, 0, 0));
-                camPreivew.setLayoutParams(llParameters);
-
-
-
-                //camPreivew.addView(stop);
-                camPreivew.addView(preview);*/
         final WindowManager.LayoutParams parameters = new WindowManager.LayoutParams(dpToPx(100), dpToPx(100),
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);

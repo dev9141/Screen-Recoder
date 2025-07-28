@@ -493,9 +493,12 @@ public class FloatingViewService extends Service {
                 .setContentText("Recording in progress")
                 .setSmallIcon(R.drawable.ic_v_cam)
                 .setPriority(NotificationCompat.PRIORITY_LOW);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            int result = ContextCompat.checkSelfPermission(this, Manifest.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION);
+            Log.e("PermissionCheck", "FOREGROUND_SERVICE_MEDIA_PROJECTION granted: " + (result == PackageManager.PERMISSION_GRANTED));
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            startForeground(NOTIFICATION_ID, builder.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION);
+            startForeground(NOTIFICATION_ID, builder.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA);
         } else {
             startForeground(NOTIFICATION_ID, builder.build());
         }
@@ -504,15 +507,23 @@ public class FloatingViewService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
-            // Create and start the foreground notification
+            // Check if we have the required permission
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                if (ContextCompat.checkSelfPermission(this, 
+                        Manifest.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION) 
+                        != PackageManager.PERMISSION_GRANTED) {
+                    stopSelf();
+                    return START_NOT_STICKY;
+                }
+            }
+            
             Notification notification = buildForegroundNotification();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                startForeground(NOTIFICATION_ID_2, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION);
+                startForeground(NOTIFICATION_ID_2, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA);
             } else {
                 startForeground(NOTIFICATION_ID_2, notification);
             }
         } catch (SecurityException e) {
-            // If we can't start as foreground service, stop the service
             stopSelf();
             return START_NOT_STICKY;
         }

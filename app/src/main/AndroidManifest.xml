@@ -17,15 +17,20 @@
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
-    <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.PROJECT_MEDIA" tools:ignore="ProtectedPermissions" />
+<!--    <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT"/>-->
+<!--    <uses-permission android:name="android.permission.PROJECT_MEDIA" />-->
 
     <!-- Android 13+ (API 33+) permissions -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
+    <!-- Foreground service permissions -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+
 
     <uses-feature
         android:glEsVersion="0x00010001"
@@ -49,7 +54,8 @@
         <service
             android:name=".service.ScreenRecordingService"
             android:exported="false"
-            android:foregroundServiceType="mediaProjection" />
+            android:foregroundServiceType="camera|microphone"/>
+<!--            android:foregroundServiceType="mediaProjection" />-->
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -105,18 +111,20 @@
             android:name=".activity.BlankActivity"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="mediaProjection"
             android:launchMode="singleTop"
             android:theme="@style/Theme.AppCompat.Translucent"
+            android:foregroundServiceType="camera|microphone"
             tools:targetApi="q" />
+        <!--            android:foregroundServiceType="mediaProjection"-->
 
         <service
             android:name=".service.FloatingViewService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="mediaProjection"
+            android:foregroundServiceType="camera|microphone"
             android:theme="@style/Theme.AppCompat.Translucent"
             tools:targetApi="q" />
+        <!--            android:foregroundServiceType="mediaProjection"-->
 
         <provider
             android:name=".utils.GenericFileProvider"

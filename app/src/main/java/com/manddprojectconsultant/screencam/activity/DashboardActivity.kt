@@ -106,6 +106,7 @@ class DashboardActivity : AppCompatActivity() {
         
         //setAllSP if SP is empty
         setSP(this@DashboardActivity)
+        binding!!.ivsetting.setOnClickListener { SettingClick(it) }
         checkOrCreateFolder()
         initializeView()
         loadVideos()

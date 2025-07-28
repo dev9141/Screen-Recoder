@@ -138,6 +138,7 @@ public class SplashScreen extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case RequestPermissionCode:
                 if (grantResults.length > 0) {
@@ -145,12 +146,11 @@ public class SplashScreen extends AppCompatActivity {
                     boolean RecordAudioPermission = grantResults[1] == PackageManager.PERMISSION_GRANTED;
                     boolean WriteExternalStoragePermission = grantResults[2] == PackageManager.PERMISSION_GRANTED;
                     if (CameraPermission && WriteExternalStoragePermission && RecordAudioPermission) {
-                        //Toast.makeText(ActivityLogin.this, "Permission Granted", Toast.LENGTH_SHORT).show();
                         init();
                         Animationhandling();
                     } else {
                         finish();
-                        Toast.makeText(SplashScreen.this, "Permission Denied 4", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SplashScreen.this, "Permission Denied", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;

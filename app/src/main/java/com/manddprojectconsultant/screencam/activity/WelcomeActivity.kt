@@ -64,6 +64,9 @@ class WelcomeActivity : AppCompatActivity() {
         btnskip = findViewById(R.id.btn_skip)
         btnnext = findViewById(R.id.btnnext)
         tvmadeinindia = findViewById(R.id.tvmadeinindia)
+        btnskip!!.setOnClickListener { skip(it) }
+        letsGetStarted!!.setOnClickListener { letgo(it) }
+        btnnext!!.setOnClickListener { next(it) }
     }
 
     private fun restorePrefData() {

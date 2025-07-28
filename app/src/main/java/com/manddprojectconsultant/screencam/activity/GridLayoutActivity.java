@@ -116,7 +116,14 @@ public class GridLayoutActivity extends AppCompatActivity {
         rvVideoListforgridview = findViewById(R.id.rvVideoListforgridview);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
         rvVideoListforgridview.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
-        
+
+        ivlistnormallist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ListClickforDashboard(view);
+            }
+        });
+
         // Set up click listeners
         ivsettings.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -43,7 +43,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#00000000"
-        android:onClick="skip"
         android:padding="10dp"
         android:text="@string/skip"
         android:textColor="@color/coloryellow"
@@ -64,7 +63,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@color/colorPrimary"
-            android:onClick="letgo"
             android:padding="10dp"
             android:text="LETS GET STARTED"
             android:visibility="invisible" />
@@ -86,7 +84,6 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:backgroundTint="@color/coloryellow"
-            android:onClick="next"
             android:paddingBottom="30dp"
             android:scaleType="fitXY"
             android:src="@drawable/mi_ic_next"

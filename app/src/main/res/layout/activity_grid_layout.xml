@@ -49,7 +49,6 @@
                 android:layout_centerVertical="true"
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="ListClickforDashboard"
                 android:layout_marginStart="15dp"
                 android:padding="5dp"
                 android:src="@drawable/normallist"

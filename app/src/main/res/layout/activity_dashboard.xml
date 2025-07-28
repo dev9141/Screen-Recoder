@@ -61,10 +61,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
                 android:clickable="true"
-
-
                 android:focusable="true"
-                android:onClick="SettingClick"
                 android:src="@drawable/ic_baseline_settings_24"
                 app:tint="@color/coloryellow" />
         </RelativeLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -121,7 +122,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:background="#00000000"
-                    android:tint="@color/coloryellow"
+                    app:tint="@color/coloryellow"
                     android:src="@drawable/ic_baseline_share_24" />
 
                 <ImageButton
@@ -131,7 +132,7 @@
                     android:layout_weight="1"
                     android:layout_marginTop="5dp"
                     android:background="#00000000"
-                    android:tint="@color/coloryellow"
+                    app:tint="@color/coloryellow"
                     android:src="@drawable/ic_baseline_edit_24" />
 
                 <ImageButton
@@ -140,7 +141,7 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:layout_marginTop="5dp"
-                    android:tint="@color/coloryellow"
+                    app:tint="@color/coloryellow"
                     android:background="#00000000"
                     android:src="@drawable/ic_baseline_delete_24" />
             </LinearLayout>

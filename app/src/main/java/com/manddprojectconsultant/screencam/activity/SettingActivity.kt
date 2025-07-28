@@ -185,6 +185,9 @@ class SettingActivity : AppCompatActivity(), ItemClickListenercamerapreview,
     }
 
     private fun allOnClicks() {
+        binding.llShare.setOnClickListener { shareTheLink() }
+        binding.llrating.setOnClickListener { Rating() }
+        binding.ivbackbutton.setOnClickListener { onBackPressed() }
         binding.llResolution.setOnClickListener { /*DialogFragment SingleChoiceDialog = new SingleChoiceDialogFragment(ResolutionList, "Resolution", binding.tvResolution.getText().toString());
                     SingleChoiceDialog.setCancelable(true);
                     SingleChoiceDialog.show(getSupportFragmentManager(), "Single Choice Dialog");*/
